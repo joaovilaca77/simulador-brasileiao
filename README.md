@@ -110,6 +110,8 @@ O site usa o logotipo e as cores do Brasileirão:
 
 O verde-limão só aparece sobre o grafite ou como fundo de botões com texto grafite: sobre branco ele não tem contraste. As cores das séries do gráfico seguem uma paleta validada para daltonismo; se mudar a ordem, valide de novo.
 
+O site tem tema claro e escuro: o botão no cabeçalho alterna entre os dois e a escolha fica salva no navegador; sem escolha, vale o tema do sistema.
+
 Para trocar o logo, substitua os arquivos em `img/` mantendo os nomes.
 
 > "Brasileirão" e o seu logotipo são marcas da CBF. Este é um projeto de torcedores, sem vínculo oficial, e o rodapé do site diz isso.

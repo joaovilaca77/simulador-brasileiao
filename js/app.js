@@ -216,6 +216,7 @@ function renderTabela() {
       el('td', { class: 'num opc', text: l.d }),
       el('td', { class: 'num', text: l.sg > 0 ? `+${l.sg}` : l.sg }),
       el('td', { class: 'num opc', text: l.gp }),
+      el('td', { class: 'num opc', text: l.gc }),
       el('td', { class: 'num opc', text: l.aproveitamento.toLocaleString('pt-BR') }),
     ));
   }
@@ -403,6 +404,46 @@ async function prepararLogin() {
   estado.firebase.aoMudarUsuario((u) => { aoMudarUsuario(u); });
 }
 
+// ---------- Tema ----------
+
+const CHAVE_TEMA = 'simulador:tema';
+
+function temaSalvo() {
+  try {
+    const t = localStorage.getItem(CHAVE_TEMA);
+    return t === 'claro' || t === 'escuro' ? t : null;
+  } catch {
+    return null;
+  }
+}
+
+function aplicarTema(tema) {
+  document.documentElement.dataset.tema = tema;
+  const botao = $('#btn-tema');
+  const proximo = tema === 'escuro' ? 'claro' : 'escuro';
+  botao.setAttribute('aria-label', `Usar tema ${proximo}`);
+  botao.title = `Usar tema ${proximo}`;
+}
+
+// O <head> já aplicou o tema inicial; aqui ficam o botão e o acompanhamento
+// do sistema enquanto a pessoa não escolheu um tema.
+function ligarTema() {
+  const sistema = window.matchMedia?.('(prefers-color-scheme: dark)');
+  aplicarTema(document.documentElement.dataset.tema === 'escuro' ? 'escuro' : 'claro');
+  $('#btn-tema').addEventListener('click', () => {
+    const novo = document.documentElement.dataset.tema === 'escuro' ? 'claro' : 'escuro';
+    aplicarTema(novo);
+    try {
+      localStorage.setItem(CHAVE_TEMA, novo);
+    } catch {
+      // sem storage: vale só nesta visita
+    }
+  });
+  sistema?.addEventListener('change', (ev) => {
+    if (!temaSalvo()) aplicarTema(ev.matches ? 'escuro' : 'claro');
+  });
+}
+
 // ---------- Início ----------
 
 function trocarAba(aba) {
@@ -444,6 +485,7 @@ function ligarControles() {
 }
 
 async function iniciar() {
+  ligarTema();
   try {
     const resp = await fetch('data/brasileirao.json', { cache: 'no-cache' });
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);

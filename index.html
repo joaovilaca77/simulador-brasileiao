@@ -8,6 +8,17 @@
   <meta name="theme-color" content="#131428">
   <link rel="icon" type="image/png" href="img/favicon.png">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <script>
+    // Aplica o tema salvo (ou o do sistema) antes de desenhar a página.
+    (function () {
+      var tema = null;
+      try { tema = localStorage.getItem('simulador:tema'); } catch (e) {}
+      if (tema !== 'claro' && tema !== 'escuro') {
+        tema = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'escuro' : 'claro';
+      }
+      document.documentElement.dataset.tema = tema;
+    })();
+  </script>
   <link rel="preload" href="fonts/barlow-condensed-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
   <script type="module" src="js/app.js"></script>
@@ -31,13 +42,19 @@
           <p id="atualizado" class="atualizado"></p>
         </div>
       </div>
-      <div class="conta">
-        <span id="status-salvamento" class="status" aria-live="polite"></span>
-        <button id="btn-entrar" class="botao primario" type="button" hidden>Entrar com Google</button>
-        <div id="usuario" class="usuario" hidden>
-          <img id="usuario-foto" alt="" referrerpolicy="no-referrer" width="30" height="30">
-          <span id="usuario-nome"></span>
-          <button id="btn-sair" class="botao link" type="button">Sair</button>
+      <div class="acoes-topo">
+        <button id="btn-tema" class="botao tema" type="button" aria-label="Alternar tema claro ou escuro">
+          <svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+          <svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+        </button>
+        <div class="conta">
+          <span id="status-salvamento" class="status" aria-live="polite"></span>
+          <button id="btn-entrar" class="botao primario" type="button" hidden>Entrar com Google</button>
+          <div id="usuario" class="usuario" hidden>
+            <img id="usuario-foto" alt="" referrerpolicy="no-referrer" width="30" height="30">
+            <span id="usuario-nome"></span>
+            <button id="btn-sair" class="botao link" type="button">Sair</button>
+          </div>
         </div>
       </div>
     </div>
@@ -52,21 +69,7 @@
 
   <main>
     <section id="aba-palpites" class="painel grade" role="tabpanel" aria-labelledby="tab-palpites">
-      <div class="cartao">
-        <div class="rodada-nav">
-          <button id="rodada-ant" class="botao icone" type="button" aria-label="Rodada anterior">‹</button>
-          <select id="rodada-select" aria-label="Escolher rodada"></select>
-          <button id="rodada-prox" class="botao icone" type="button" aria-label="Próxima rodada">›</button>
-        </div>
-        <ul id="lista-jogos" class="jogos"></ul>
-        <p id="resumo-palpites" class="mudo resumo"></p>
-        <div class="acoes">
-          <button id="limpar-rodada" class="botao" type="button">Limpar palpites da rodada</button>
-          <button id="limpar-todos" class="botao" type="button">Limpar todos</button>
-        </div>
-      </div>
-
-      <div class="cartao">
+      <div class="cartao cartao-tabela">
         <h2 class="titulo-cartao">Classificação com seus palpites</h2>
         <div class="tabela-wrap">
           <table id="tabela" class="tabela">
@@ -81,6 +84,7 @@
                 <th scope="col" class="num opc" title="Derrotas">D</th>
                 <th scope="col" class="num" title="Saldo de gols">SG</th>
                 <th scope="col" class="num opc" title="Gols pró">GP</th>
+                <th scope="col" class="num opc" title="Gols contra">GC</th>
                 <th scope="col" class="num opc" title="Aproveitamento">%</th>
               </tr>
             </thead>
@@ -90,6 +94,20 @@
         <ul id="legenda-zonas" class="legenda-zonas"></ul>
         <p class="mudo nota">▲▼ mostra quantas posições o time ganha ou perde em relação à tabela real.</p>
       </div>
+      <div class="cartao cartao-jogos">
+        <div class="rodada-nav">
+          <button id="rodada-ant" class="botao icone" type="button" aria-label="Rodada anterior">‹</button>
+          <select id="rodada-select" aria-label="Escolher rodada"></select>
+          <button id="rodada-prox" class="botao icone" type="button" aria-label="Próxima rodada">›</button>
+        </div>
+        <ul id="lista-jogos" class="jogos"></ul>
+        <p id="resumo-palpites" class="mudo resumo"></p>
+        <div class="acoes">
+          <button id="limpar-rodada" class="botao" type="button">Limpar palpites da rodada</button>
+          <button id="limpar-todos" class="botao" type="button">Limpar todos</button>
+        </div>
+      </div>
+
     </section>
 
     <section id="aba-evolucao" class="painel" role="tabpanel" aria-labelledby="tab-evolucao" hidden>

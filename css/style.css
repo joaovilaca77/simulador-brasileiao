@@ -59,42 +59,42 @@
   --fonte-titulo: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --acento: #c7ff00;
-    --plano: #0a0b17;
-    --superficie: #171934;
-    --superficie-2: #20233f;
-    --zebra: #1b1d3a;
-    --tinta: #ffffff;
-    --tinta-2: #c9cbdc;
-    --mudo: #9496b0;
-    --linha: #262949;
-    --eixo: #34375c;
-    --borda: rgba(255, 255, 255, 0.1);
-    --destaque: #4a83ff;
-    --erro: #ff6b6b;
-    --ok: #c7ff00;
-    --placar-fundo: #262949;
-    --cabecalho-tabela: #262949;
-    --botao-icone: #262949;
-    --botao-icone-tinta: #c7ff00;
-    --botao-icone-hover: #34375c;
-    --chip-ativo: #34375c;
-    --sombra: none;
+/* Tema escuro: escolhido no botão do cabeçalho ou herdado do sistema
+   (o script no <head> de index.html define data-tema). */
+:root[data-tema="escuro"] {
+  color-scheme: dark;
+  --acento: #c7ff00;
+  --plano: #0a0b17;
+  --superficie: #171934;
+  --superficie-2: #20233f;
+  --zebra: #1b1d3a;
+  --tinta: #ffffff;
+  --tinta-2: #c9cbdc;
+  --mudo: #9496b0;
+  --linha: #262949;
+  --eixo: #34375c;
+  --borda: rgba(255, 255, 255, 0.1);
+  --destaque: #4a83ff;
+  --erro: #ff6b6b;
+  --ok: #c7ff00;
+  --placar-fundo: #262949;
+  --cabecalho-tabela: #262949;
+  --botao-icone: #262949;
+  --botao-icone-tinta: #c7ff00;
+  --botao-icone-hover: #34375c;
+  --chip-ativo: #34375c;
+  --sombra: none;
 
-    --zona-libertadores: #4a83ff;
-    --zona-pre-libertadores: #9cc3ff;
-    --zona-sul-americana: #1fc070;
-    --zona-rebaixamento: #ff5c5c;
+  --zona-libertadores: #4a83ff;
+  --zona-pre-libertadores: #9cc3ff;
+  --zona-sul-americana: #1fc070;
+  --zona-rebaixamento: #ff5c5c;
 
-    --serie-1: #3987e5;
-    --serie-2: #d95926;
-    --serie-3: #199e70;
-    --serie-4: #c98500;
-    --contexto: #2c2f52;
-  }
+  --serie-1: #3987e5;
+  --serie-2: #d95926;
+  --serie-3: #199e70;
+  --serie-4: #c98500;
+  --contexto: #2c2f52;
 }
 
 * { box-sizing: border-box; }
@@ -104,7 +104,7 @@ body {
   background: var(--plano);
   color: var(--tinta);
   font-family: var(--fonte);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.45;
 }
 
@@ -115,7 +115,7 @@ h1, h2 { margin: 0; }
 .faixa :focus-visible { outline-color: var(--lima); }
 
 .topo, .abas, main, .aviso, .rodape > div {
-  max-width: 1200px;
+  max-width: 1440px;
   margin-inline: auto;
   padding-inline: 16px;
 }
@@ -179,6 +179,24 @@ h1, h2 { margin: 0; }
 .status { color: var(--na-faixa-2); }
 .status:empty { display: none; }
 .status.erro { color: #ff9a9a; }
+.acoes-topo { display: flex; align-items: center; gap: 10px; }
+.botao.tema {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--lima);
+}
+.botao.tema:hover:not(:disabled) { background: rgba(255, 255, 255, 0.16); }
+.botao.tema svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.botao.tema .icone-lua { fill: currentColor; stroke: none; }
+/* Mostra o tema para o qual o botão vai trocar */
+:root[data-tema="escuro"] .botao.tema .icone-lua,
+:root:not([data-tema="escuro"]) .botao.tema .icone-sol { display: none; }
 .usuario { display: flex; align-items: center; gap: 8px; color: var(--na-faixa); }
 .usuario img { border-radius: 50%; background: var(--escuro-2); border: 2px solid var(--lima); }
 .usuario .botao.link { color: var(--na-faixa-2); }
@@ -255,8 +273,8 @@ main { padding-block: 16px; }
 
 .grade {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: 16px;
+  grid-template-columns: minmax(0, 2fr) minmax(380px, 1fr);
+  gap: 24px;
   align-items: start;
 }
 
@@ -308,6 +326,7 @@ main { padding-block: 16px; }
 }
 .rodada-nav select option { font-family: var(--fonte); font-size: 1rem; text-transform: none; color: #0b1f4b; background: #ffffff; }
 
+.cartao-jogos { container-type: inline-size; }
 .jogos { list-style: none; margin: 0; padding: 0; }
 .jogo {
   display: grid;
@@ -390,7 +409,7 @@ img.escudo { background: none; box-shadow: none; border-radius: 0; object-fit: c
 
 /* ---------- Tabela ---------- */
 .tabela-wrap { overflow-x: auto; border-radius: 8px; }
-.tabela { width: 100%; border-collapse: collapse; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+.tabela { width: 100%; border-collapse: collapse; font-size: 1rem; font-variant-numeric: tabular-nums; }
 .tabela thead th {
   font-family: var(--fonte-titulo);
   font-size: 0.85rem;
@@ -399,14 +418,16 @@ img.escudo { background: none; box-shadow: none; border-radius: 0; object-fit: c
   text-transform: uppercase;
   color: #ffffff;
   background: var(--cabecalho-tabela);
-  padding: 8px 6px;
+  padding: 10px 8px;
 }
-.tabela td { padding: 6px 6px; border-bottom: 1px solid var(--linha); white-space: nowrap; }
+.tabela td { padding: 10px 8px; border-bottom: 1px solid var(--linha); white-space: nowrap; }
 .tabela tbody tr:nth-child(even) { background: var(--zebra); }
 .tabela .num { text-align: right; }
 .tabela .esq { text-align: left; }
-.tabela td.num { font-family: var(--fonte-titulo); font-weight: 600; font-size: 1.02rem; }
-.tabela td.pts { font-weight: 800; font-size: 1.12rem; }
+.tabela td.num { font-family: var(--fonte-titulo); font-weight: 600; font-size: 1.12rem; }
+.tabela .time { gap: 10px; font-size: 1.02rem; }
+.tabela .escudo { width: 24px; height: 24px; }
+.tabela td.pts { font-weight: 800; font-size: 1.25rem; }
 .tabela td.pos { border-left: 5px solid transparent; font-weight: 800; }
 .tabela tr.zona-libertadores td.pos { border-left-color: var(--zona-libertadores); }
 .tabela tr.zona-pre-libertadores td.pos { border-left-color: var(--zona-pre-libertadores); }
@@ -502,8 +523,9 @@ img.escudo { background: none; box-shadow: none; border-radius: 0; object-fit: c
 }
 .rodape > div { padding-block: 20px 28px; }
 
-@media (max-width: 860px) {
+@media (max-width: 960px) {
   .grade { grid-template-columns: minmax(0, 1fr); }
+  .cartao-jogos { order: -1; }
 }
 
 @media (max-width: 520px) {
@@ -516,7 +538,12 @@ img.escudo { background: none; box-shadow: none; border-radius: 0; object-fit: c
   .tabela td, .tabela th { padding-inline: 4px; }
   .placar input, .placar .real { width: 42px; }
   .jogo { column-gap: 6px; }
-  .jogo .time { flex-direction: column; gap: 4px; text-align: center; font-size: 0.88rem; }
+}
+
+/* Coluna de jogos estreita (celular ou desktop menor): escudo acima do nome */
+@container (max-width: 400px) {
+  .jogo { column-gap: 6px; }
+  .jogo .time { flex-direction: column; gap: 4px; text-align: center; font-size: 0.9rem; }
   .jogo .mandante { flex-direction: column-reverse; justify-content: center; text-align: center; }
   .jogo .time .nome { white-space: normal; line-height: 1.2; max-width: 100%; }
 }
