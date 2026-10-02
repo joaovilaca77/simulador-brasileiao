@@ -310,7 +310,14 @@ main { padding-block: 16px; }
 
 /* ---------- Rodadas e jogos ---------- */
 .rodada-nav { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px; }
-.rodada-nav select {
+.botao.icone { display: grid; place-items: center; }
+.botao.icone svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+
+.seletor-rodada { position: relative; }
+.rodada-botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-family: var(--fonte-titulo);
   font-weight: 800;
   font-size: 1.45rem;
@@ -320,11 +327,62 @@ main { padding-block: 16px; }
   background: transparent;
   border: 0;
   border-bottom: 3px solid var(--acento);
-  border-radius: 0;
-  padding: 2px 6px;
+  padding: 2px 4px 2px 8px;
   cursor: pointer;
 }
-.rodada-nav select option { font-family: var(--fonte); font-size: 1rem; text-transform: none; color: #0b1f4b; background: #ffffff; }
+.rodada-botao:hover { background: var(--superficie-2); }
+.rodada-botao .chevron { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.15s; }
+.rodada-botao[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+
+.rodada-painel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  padding: 14px;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(19, 20, 40, 0.22);
+}
+.rodada-grade { display: grid; grid-template-columns: repeat(7, 40px); gap: 6px; }
+.rodada-grade button {
+  position: relative;
+  height: 40px;
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--tinta);
+  background: var(--superficie-2);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.rodada-grade button:hover { border-color: var(--tinta-2); }
+.rodada-grade button.encerrada { color: var(--mudo); background: transparent; border-color: var(--linha); }
+.rodada-grade button.atual::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: var(--lima);
+  box-shadow: 0 0 0 1.5px var(--escuro);
+}
+.rodada-grade button[aria-current="true"] { background: var(--escuro); color: var(--lima); border-color: var(--escuro); }
+:root[data-tema="escuro"] .rodada-grade button[aria-current="true"] { background: var(--lima); color: var(--escuro); border-color: var(--lima); }
+.rodada-grade button[aria-current="true"].atual::after { background: currentColor; box-shadow: none; }
+.rodada-legenda { list-style: none; display: flex; gap: 14px; margin: 12px 0 0; padding: 0; font-size: 0.78rem; color: var(--mudo); }
+.rodada-legenda li { display: flex; align-items: center; gap: 6px; }
+.rodada-legenda i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
+.rodada-legenda .marca-encerrada { border: 1px solid var(--eixo); }
+.rodada-legenda .marca-atual { width: 7px; height: 7px; border-radius: 50%; background: var(--lima); box-shadow: 0 0 0 1.5px var(--escuro); }
 
 .cartao-jogos { container-type: inline-size; position: relative; }
 .jogos { list-style: none; margin: 0; padding: 0; }

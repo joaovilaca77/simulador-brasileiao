@@ -20,8 +20,8 @@
     })();
   </script>
   <link rel="preload" href="fonts/barlow-condensed-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=3fe06855e4">
-  <script type="module" src="js/app.js?v=3fe06855e4"></script>
+  <link rel="stylesheet" href="css/style.css?v=0925a1f091">
+  <script type="module" src="js/app.js?v=0925a1f091"></script>
 </head>
 <body>
   <header class="faixa">
@@ -107,9 +107,25 @@
       <div class="cartao cartao-jogos">
         <button id="mostrar-tabela" class="botao pequeno mostrar-tabela" type="button" aria-controls="cartao-tabela" aria-expanded="false" hidden>Mostrar tabela</button>
         <div class="rodada-nav">
-          <button id="rodada-ant" class="botao icone" type="button" aria-label="Rodada anterior">‹</button>
-          <select id="rodada-select" aria-label="Escolher rodada"></select>
-          <button id="rodada-prox" class="botao icone" type="button" aria-label="Próxima rodada">›</button>
+          <button id="rodada-ant" class="botao icone" type="button" aria-label="Rodada anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6 8.5 12l6 6"/></svg>
+          </button>
+          <div class="seletor-rodada">
+            <button id="rodada-botao" class="rodada-botao" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="rodada-painel">
+              <span id="rodada-titulo">Rodada</span>
+              <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+            </button>
+            <div id="rodada-painel" class="rodada-painel" role="dialog" aria-label="Escolher rodada" hidden>
+              <div id="rodada-grade" class="rodada-grade"></div>
+              <ul class="rodada-legenda" aria-hidden="true">
+                <li><i class="marca-encerrada"></i>Encerrada</li>
+                <li><i class="marca-atual"></i>Rodada atual</li>
+              </ul>
+            </div>
+          </div>
+          <button id="rodada-prox" class="botao icone" type="button" aria-label="Próxima rodada">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6l6 6-6 6"/></svg>
+          </button>
         </div>
         <ul id="lista-jogos" class="jogos"></ul>
         <p id="resumo-palpites" class="mudo resumo"></p>

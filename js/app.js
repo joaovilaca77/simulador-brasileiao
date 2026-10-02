@@ -1,9 +1,9 @@
-import { calcularClassificacao, jogoTravado, palpiteCompleto, ZONAS, GOLS_MAX } from './tabela.js?v=3fe06855e4';
-import { rodadaAtual, montarSnapshot, mesclarPalpites, filtrarPalpites, definirPalpite } from './projecao.js?v=3fe06855e4';
-import { LocalStore, FirebaseStore } from './armazenamento.js?v=3fe06855e4';
-import { firebaseConfig } from './firebase-config.js?v=3fe06855e4';
-import { iniciarFirebase } from './firebase.js?v=3fe06855e4';
-import { desenharEvolucao } from './evolucao.js?v=3fe06855e4';
+import { calcularClassificacao, jogoTravado, palpiteCompleto, ZONAS, GOLS_MAX } from './tabela.js?v=0925a1f091';
+import { rodadaAtual, montarSnapshot, mesclarPalpites, filtrarPalpites, definirPalpite } from './projecao.js?v=0925a1f091';
+import { LocalStore, FirebaseStore } from './armazenamento.js?v=0925a1f091';
+import { firebaseConfig } from './firebase-config.js?v=0925a1f091';
+import { iniciarFirebase } from './firebase.js?v=0925a1f091';
+import { desenharEvolucao } from './evolucao.js?v=0925a1f091';
 
 const $ = (sel) => document.querySelector(sel);
 const ESPERA_SALVAR = 800;
@@ -158,10 +158,74 @@ function renderJogos() {
     ));
   }
 
-  $('#rodada-select').value = String(estado.rodadaVisivel);
+  atualizarSeletorRodada();
   $('#rodada-ant').disabled = estado.rodadaVisivel <= 1;
   $('#rodada-prox').disabled = estado.rodadaVisivel >= totalRodadas();
   renderResumo();
+}
+
+// ---------- Seletor de rodada ----------
+
+const COLUNAS_GRADE = 7;
+
+function abrirSeletorRodada(abrir) {
+  const painel = $('#rodada-painel');
+  if (abrir === !painel.hidden) return;
+  painel.hidden = !abrir;
+  $('#rodada-botao').setAttribute('aria-expanded', String(abrir));
+  if (abrir) $('#rodada-grade [aria-current="true"]')?.focus();
+}
+
+function irParaRodada(n) {
+  estado.rodadaVisivel = n;
+  renderJogos();
+}
+
+function atualizarSeletorRodada() {
+  $('#rodada-titulo').textContent = `Rodada ${estado.rodadaVisivel}`;
+  const atual = rodadaAtual(estado.dados.jogos);
+  for (const b of $('#rodada-grade').children) {
+    const n = Number(b.dataset.rodada);
+    const jogos = estado.dados.jogos.filter((j) => j.rodada === n);
+    const encerrada = jogos.length > 0 && jogos.every((j) => j.status === 'encerrado');
+    b.classList.toggle('encerrada', encerrada);
+    b.classList.toggle('atual', n === atual);
+    b.setAttribute('aria-current', String(n === estado.rodadaVisivel));
+    b.setAttribute('aria-label', `Rodada ${n}${n === atual ? ', rodada atual' : encerrada ? ', encerrada' : ''}`);
+  }
+}
+
+function ligarSeletorRodada() {
+  const grade = $('#rodada-grade');
+  for (let r = 1; r <= totalRodadas(); r += 1) {
+    grade.append(el('button', { type: 'button', text: r, 'data-rodada': r }));
+  }
+  $('#rodada-botao').addEventListener('click', () => abrirSeletorRodada($('#rodada-painel').hidden));
+  grade.addEventListener('click', (ev) => {
+    const b = ev.target.closest('button[data-rodada]');
+    if (!b) return;
+    irParaRodada(Number(b.dataset.rodada));
+    abrirSeletorRodada(false);
+    $('#rodada-botao').focus();
+  });
+  // Setas do teclado andam pela grade; Esc fecha.
+  grade.addEventListener('keydown', (ev) => {
+    const passos = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -COLUNAS_GRADE, ArrowDown: COLUNAS_GRADE };
+    if (!(ev.key in passos)) return;
+    const botoes = [...grade.children];
+    const i = botoes.indexOf(document.activeElement);
+    botoes[Math.min(botoes.length - 1, Math.max(0, i + passos[ev.key]))]?.focus();
+    ev.preventDefault();
+  });
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && !$('#rodada-painel').hidden) {
+      abrirSeletorRodada(false);
+      $('#rodada-botao').focus();
+    }
+  });
+  document.addEventListener('pointerdown', (ev) => {
+    if (!ev.target.closest('.seletor-rodada')) abrirSeletorRodada(false);
+  });
 }
 
 function totalRodadas() {
@@ -525,11 +589,9 @@ function ligarControles() {
   };
   $('#esconder-tabela').addEventListener('click', () => alternarTabela(true));
   $('#mostrar-tabela').addEventListener('click', () => alternarTabela(false));
-  const select = $('#rodada-select');
-  for (let r = 1; r <= totalRodadas(); r += 1) select.append(el('option', { value: r, text: `Rodada ${r}` }));
-  select.addEventListener('change', () => { estado.rodadaVisivel = Number(select.value); renderJogos(); });
-  $('#rodada-ant').addEventListener('click', () => { estado.rodadaVisivel -= 1; renderJogos(); });
-  $('#rodada-prox').addEventListener('click', () => { estado.rodadaVisivel += 1; renderJogos(); });
+  ligarSeletorRodada();
+  $('#rodada-ant').addEventListener('click', () => irParaRodada(estado.rodadaVisivel - 1));
+  $('#rodada-prox').addEventListener('click', () => irParaRodada(estado.rodadaVisivel + 1));
   $('#limpar-rodada').addEventListener('click', () => {
     limpar(estado.dados.jogos.filter((j) => j.rodada === estado.rodadaVisivel));
   });
