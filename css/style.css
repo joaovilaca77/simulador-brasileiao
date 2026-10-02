@@ -326,7 +326,7 @@ main { padding-block: 16px; }
 }
 .rodada-nav select option { font-family: var(--fonte); font-size: 1rem; text-transform: none; color: #0b1f4b; background: #ffffff; }
 
-.cartao-jogos { container-type: inline-size; }
+.cartao-jogos { container-type: inline-size; position: relative; }
 .jogos { list-style: none; margin: 0; padding: 0; }
 .jogo {
   display: grid;
@@ -546,4 +546,59 @@ img.escudo { background: none; box-shadow: none; border-radius: 0; object-fit: c
   .jogo .time { flex-direction: column; gap: 4px; text-align: center; font-size: 0.9rem; }
   .jogo .mandante { flex-direction: column-reverse; justify-content: center; text-align: center; }
   .jogo .time .nome { white-space: normal; line-height: 1.2; max-width: 100%; }
+}
+
+/* ---------- Controles da tabela ---------- */
+.cabecalho-cartao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-bottom: 12px;
+}
+.cabecalho-cartao .titulo-cartao { margin-bottom: 0; }
+.controles-tabela { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.botao.pequeno { font-size: 0.82rem; padding: 5px 12px; }
+
+.segmentado {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--eixo);
+  border-radius: 999px;
+  background: var(--superficie-2);
+}
+.segmentado button {
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--tinta-2);
+  cursor: pointer;
+}
+.segmentado button:hover { color: var(--tinta); }
+.segmentado button[aria-checked="true"] { background: var(--chip-ativo); color: #ffffff; }
+
+.tabela.so-simulados td.pos { border-left-color: transparent !important; }
+
+.mostrar-tabela { position: absolute; top: 16px; right: 16px; z-index: 1; }
+
+/* ---------- Tabela escondida: jogos em duas colunas ---------- */
+.painel.tabela-oculta { grid-template-columns: minmax(0, 1fr); }
+.painel.tabela-oculta .cartao-jogos { order: 0; }
+@container (min-width: 760px) {
+  .tabela-oculta .jogos {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(var(--linhas, 5), auto);
+    column-gap: 40px;
+  }
+  .tabela-oculta .jogo { border-top: 0; border-bottom: 1px solid var(--linha); }
+}
+@container (max-width: 520px) {
+  .mostrar-tabela { position: static; display: block; margin: 0 auto 10px; }
 }

@@ -1,6 +1,6 @@
 // Tabela projetada por rodada e mesclagem de palpites.
 
-import { calcularClassificacao, palpiteCompleto, jogoTravado } from './tabela.js?v=7ef6d49681';
+import { calcularClassificacao, palpiteCompleto, jogoTravado } from './tabela.js?v=3fe06855e4';
 
 function agruparPorRodada(jogos) {
   const rodadas = new Map();

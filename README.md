@@ -3,6 +3,7 @@
 Site estático para palpitar os jogos restantes do Brasileirão Série A e ver a classificação se recalcular na hora. Com login Google (Firebase), cada pessoa guarda os próprios palpites na nuvem, e a **tabela final projetada** de cada rodada fica registrada para acompanhar como a sua previsão mudou ao longo do campeonato.
 
 - **Palpites:** digite o placar dos jogos que ainda não começaram. A tabela mostra cores de zona e setas ▲▼ comparando com a tabela real.
+- **Visões da tabela:** "Completa" mostra a classificação com resultados reais e palpites; "Só simulados" soma apenas os jogos palpitados. "Esconder tabela" deixa só os jogos da rodada, em duas colunas.
 - **Trava:** o palpite de um jogo fica bloqueado quando a bola rola.
 - **Evolução:** gráfico com a posição projetada de até 4 times por rodada, mais a tabela completa.
 - **Sem login:** funciona no modo visitante, com os palpites guardados só no navegador. Ao entrar com Google, eles são mesclados com os da nuvem.

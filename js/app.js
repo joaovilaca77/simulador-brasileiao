@@ -1,9 +1,9 @@
-import { calcularClassificacao, jogoTravado, palpiteCompleto, ZONAS, GOLS_MAX } from './tabela.js?v=7ef6d49681';
-import { rodadaAtual, montarSnapshot, mesclarPalpites, filtrarPalpites, definirPalpite } from './projecao.js?v=7ef6d49681';
-import { LocalStore, FirebaseStore } from './armazenamento.js?v=7ef6d49681';
-import { firebaseConfig } from './firebase-config.js?v=7ef6d49681';
-import { iniciarFirebase } from './firebase.js?v=7ef6d49681';
-import { desenharEvolucao } from './evolucao.js?v=7ef6d49681';
+import { calcularClassificacao, jogoTravado, palpiteCompleto, ZONAS, GOLS_MAX } from './tabela.js?v=3fe06855e4';
+import { rodadaAtual, montarSnapshot, mesclarPalpites, filtrarPalpites, definirPalpite } from './projecao.js?v=3fe06855e4';
+import { LocalStore, FirebaseStore } from './armazenamento.js?v=3fe06855e4';
+import { firebaseConfig } from './firebase-config.js?v=3fe06855e4';
+import { iniciarFirebase } from './firebase.js?v=3fe06855e4';
+import { desenharEvolucao } from './evolucao.js?v=3fe06855e4';
 
 const $ = (sel) => document.querySelector(sel);
 const ESPERA_SALVAR = 800;
@@ -116,6 +116,8 @@ function renderJogos() {
   const jogos = estado.dados.jogos.filter((j) => j.rodada === estado.rodadaVisivel);
   const agora = Date.now();
   lista.replaceChildren();
+  // Com a tabela escondida, os jogos se dividem em duas colunas.
+  lista.style.setProperty('--linhas', Math.max(1, Math.ceil(jogos.length / 2)));
 
   for (const jogo of jogos) {
     const mandante = estado.times.get(jogo.mandante);
@@ -191,22 +193,72 @@ function limpar(jogos) {
 
 // ---------- Tabela ----------
 
+// Como a tabela aparece: completa (reais + palpites) ou só com os palpites;
+// e se está escondida. Fica guardado no navegador.
+const CHAVE_VISAO = 'simulador:visao';
+const visao = { modo: 'completa', oculta: false };
+
+function lerVisao() {
+  try {
+    const v = JSON.parse(localStorage.getItem(CHAVE_VISAO));
+    if (v?.modo === 'simulados') visao.modo = 'simulados';
+    visao.oculta = v?.oculta === true;
+  } catch {
+    // sem storage: usa o padrão
+  }
+}
+
+function gravarVisao() {
+  try {
+    localStorage.setItem(CHAVE_VISAO, JSON.stringify(visao));
+  } catch {
+    // ignora
+  }
+}
+
+function aplicarVisao() {
+  const simulados = visao.modo === 'simulados';
+  for (const b of document.querySelectorAll('.segmentado [data-modo]')) {
+    b.setAttribute('aria-checked', String(b.dataset.modo === visao.modo));
+  }
+  $('#titulo-tabela').textContent = simulados ? 'Classificação só dos seus palpites' : 'Classificação com seus palpites';
+  $('#tabela').classList.toggle('so-simulados', simulados);
+  $('#legenda-zonas').hidden = simulados;
+
+  $('#aba-palpites').classList.toggle('tabela-oculta', visao.oculta);
+  $('#cartao-tabela').hidden = visao.oculta;
+  $('#mostrar-tabela').hidden = !visao.oculta;
+  $('#esconder-tabela').setAttribute('aria-expanded', String(!visao.oculta));
+  $('#mostrar-tabela').setAttribute('aria-expanded', String(!visao.oculta));
+}
+
 function renderTabela() {
   const { jogos } = estado.dados;
   const listaTimes = [...estado.times.values()];
+  const simulados = visao.modo === 'simulados';
+  // Só simulados: sem os jogos encerrados, a classificação soma apenas os palpites.
+  const pendentes = jogos.filter((j) => j.status !== 'encerrado');
+  const palpitados = pendentes.filter((j) => palpiteCompleto(estado.palpites[j.id])).length;
   const real = new Map(calcularClassificacao(listaTimes, jogos).map((l) => [l.timeId, l.pos]));
-  const projetada = calcularClassificacao(listaTimes, jogos, estado.palpites);
+  const linhas = calcularClassificacao(listaTimes, simulados ? pendentes : jogos, estado.palpites);
   const corpo = $('#tabela tbody');
   corpo.replaceChildren();
 
-  for (const l of projetada) {
-    const diferenca = real.get(l.timeId) - l.pos;
+  const vazia = simulados && palpitados === 0;
+  $('#tabela-vazia').hidden = !vazia;
+  $('#tabela').closest('.tabela-wrap').hidden = vazia;
+  $('#nota-tabela').textContent = simulados
+    ? `Pontos apenas dos ${palpitados} ${palpitados === 1 ? 'jogo que você palpitou' : 'jogos que você palpitou'}, sem os resultados reais.`
+    : '▲▼ mostra quantas posições o time ganha ou perde em relação à tabela real.';
+
+  for (const l of linhas) {
     const delta = el('span', { class: 'delta' });
+    const diferenca = simulados ? 0 : real.get(l.timeId) - l.pos;
     if (diferenca > 0) { delta.textContent = `▲${diferenca}`; delta.classList.add('sobe'); }
     else if (diferenca < 0) { delta.textContent = `▼${-diferenca}`; delta.classList.add('desce'); }
     if (diferenca) delta.title = `Na tabela real: ${real.get(l.timeId)}º`;
 
-    corpo.append(el('tr', { class: l.zona ? `zona-${l.zona}` : '' },
+    corpo.append(el('tr', { class: !simulados && l.zona ? `zona-${l.zona}` : '' },
       el('td', { class: 'num pos' }, `${l.pos}`, delta),
       el('td', { class: 'esq' }, el('span', { class: 'time' }, escudo(estado.times.get(l.timeId)), el('span', { class: 'nome', text: l.nome }))),
       el('td', { class: 'num pts', text: l.pts }),
@@ -456,6 +508,23 @@ function trocarAba(aba) {
 }
 
 function ligarControles() {
+  for (const b of document.querySelectorAll('.segmentado [data-modo]')) {
+    b.addEventListener('click', () => {
+      if (visao.modo === b.dataset.modo) return;
+      visao.modo = b.dataset.modo;
+      gravarVisao();
+      aplicarVisao();
+      renderTabela();
+    });
+  }
+  const alternarTabela = (oculta) => {
+    visao.oculta = oculta;
+    gravarVisao();
+    aplicarVisao();
+    (oculta ? $('#mostrar-tabela') : $('#esconder-tabela')).focus();
+  };
+  $('#esconder-tabela').addEventListener('click', () => alternarTabela(true));
+  $('#mostrar-tabela').addEventListener('click', () => alternarTabela(false));
   const select = $('#rodada-select');
   for (let r = 1; r <= totalRodadas(); r += 1) select.append(el('option', { value: r, text: `Rodada ${r}` }));
   select.addEventListener('change', () => { estado.rodadaVisivel = Number(select.value); renderJogos(); });
@@ -511,6 +580,8 @@ async function iniciar() {
   Object.assign(estado, await carregarDoStore(estado.local));
 
   ligarControles();
+  lerVisao();
+  aplicarVisao();
   renderLegendaZonas();
   renderTudo();
   await garantirProjecaoDaRodada();

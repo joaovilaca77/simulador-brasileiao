@@ -20,8 +20,8 @@
     })();
   </script>
   <link rel="preload" href="fonts/barlow-condensed-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=7ef6d49681">
-  <script type="module" src="js/app.js?v=7ef6d49681"></script>
+  <link rel="stylesheet" href="css/style.css?v=3fe06855e4">
+  <script type="module" src="js/app.js?v=3fe06855e4"></script>
 </head>
 <body>
   <header class="faixa">
@@ -69,8 +69,18 @@
 
   <main>
     <section id="aba-palpites" class="painel grade" role="tabpanel" aria-labelledby="tab-palpites">
-      <div class="cartao cartao-tabela">
-        <h2 class="titulo-cartao">Classificação com seus palpites</h2>
+      <div id="cartao-tabela" class="cartao cartao-tabela">
+        <div class="cabecalho-cartao">
+          <h2 id="titulo-tabela" class="titulo-cartao">Classificação com seus palpites</h2>
+          <div class="controles-tabela">
+            <div class="segmentado" role="radiogroup" aria-label="Dados da tabela">
+              <button type="button" role="radio" aria-checked="true" data-modo="completa">Completa</button>
+              <button type="button" role="radio" aria-checked="false" data-modo="simulados">Só simulados</button>
+            </div>
+            <button id="esconder-tabela" class="botao pequeno" type="button" aria-controls="cartao-tabela" aria-expanded="true">Esconder tabela</button>
+          </div>
+        </div>
+        <p id="tabela-vazia" class="vazio" hidden>Você ainda não palpitou nenhum jogo. Faça palpites ao lado para ver quem soma mais pontos só com eles.</p>
         <div class="tabela-wrap">
           <table id="tabela" class="tabela">
             <thead>
@@ -92,9 +102,10 @@
           </table>
         </div>
         <ul id="legenda-zonas" class="legenda-zonas"></ul>
-        <p class="mudo nota">▲▼ mostra quantas posições o time ganha ou perde em relação à tabela real.</p>
+        <p id="nota-tabela" class="mudo nota">▲▼ mostra quantas posições o time ganha ou perde em relação à tabela real.</p>
       </div>
       <div class="cartao cartao-jogos">
+        <button id="mostrar-tabela" class="botao pequeno mostrar-tabela" type="button" aria-controls="cartao-tabela" aria-expanded="false" hidden>Mostrar tabela</button>
         <div class="rodada-nav">
           <button id="rodada-ant" class="botao icone" type="button" aria-label="Rodada anterior">‹</button>
           <select id="rodada-select" aria-label="Escolher rodada"></select>
@@ -107,7 +118,6 @@
           <button id="limpar-todos" class="botao" type="button">Limpar todos</button>
         </div>
       </div>
-
     </section>
 
     <section id="aba-evolucao" class="painel" role="tabpanel" aria-labelledby="tab-evolucao" hidden>

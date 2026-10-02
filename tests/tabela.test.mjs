@@ -104,3 +104,17 @@ test('zonas da tabela', () => {
   assert.equal(zonaDaPosicao(13), null);
   assert.equal(zonaDaPosicao(17).id, 'rebaixamento');
 });
+
+test('só com jogos não encerrados, a tabela soma apenas os palpites', () => {
+  const real = jogo(1, 2, 3, 0);
+  const pendente = jogo(3, 1, null, null);
+  const semPalpite = jogo(2, 4, null, null);
+  const jogos = [real, pendente, semPalpite];
+  const palpites = { [real.id]: { m: 0, v: 5 }, [pendente.id]: { m: 1, v: 1 } };
+  const t = calcularClassificacao(TIMES, jogos.filter((j) => j.status !== 'encerrado'), palpites);
+  const porNome = Object.fromEntries(t.map((l) => [l.nome, l]));
+  assert.deepEqual([porNome.Alfa.pts, porNome.Alfa.j], [1, 1]);
+  assert.deepEqual([porNome.Gama.pts, porNome.Gama.j], [1, 1]);
+  assert.deepEqual([porNome.Beta.pts, porNome.Beta.j], [0, 0]);
+  assert.deepEqual([porNome.Delta.pts, porNome.Delta.j], [0, 0]);
+});
