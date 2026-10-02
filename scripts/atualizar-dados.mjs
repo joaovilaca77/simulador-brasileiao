@@ -1,126 +1,129 @@
 #!/usr/bin/env node
-// Baixa a tabela de jogos do Brasileirão Série A no Sofascore e grava
-// data/brasileirao.json. A API do Sofascore não é oficial e pode mudar.
+// Baixa a tabela de jogos do Brasileirão Série A e grava data/brasileirao.json,
+// junto com os escudos dos clubes em img/escudos/.
 //
-// Uso: node scripts/atualizar-dados.mjs [--temporada 2026]
+// Uso: node scripts/atualizar-dados.mjs [--temporada 2026] [--fonte auto|sofascore|football-data] [--escudos]
+//
+// Fonte: a de --fonte ou FONTE_DADOS; senão, a mesma do arquivo atual; se o
+// arquivo ainda for o exemplo, tenta o Sofascore e depois o football-data.org
+// (este exige FOOTBALL_DATA_TOKEN).
 
-import { readFile, writeFile } from 'node:fs/promises';
+import { access, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
+import * as sofascore from './fontes/sofascore.mjs';
+import * as footballData from './fontes/football-data.mjs';
+import { esperar } from './fontes/comum.mjs';
 
-const API = 'https://api.sofascore.com/api/v1';
-const TORNEIO = 325; // Brasileirão Série A
-const RODADAS = 38;
 const TOTAL_JOGOS = 380;
 const TOTAL_TIMES = 20;
 
 const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ARQUIVO = path.join(RAIZ, 'data', 'brasileirao.json');
+const PASTA_ESCUDOS = path.join(RAIZ, 'img', 'escudos');
+const PREFIXO_ESCUDOS = 'img/escudos';
 
-const CABECALHOS = {
-  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36',
-  Accept: 'application/json, text/plain, */*',
-  'Accept-Language': 'pt-BR,pt;q=0.9',
-  Referer: 'https://www.sofascore.com/',
-  Origin: 'https://www.sofascore.com',
+export const COLETORES = {
+  sofascore: sofascore.coletar,
+  'football-data': footballData.coletar,
 };
 
-const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
-
-export async function buscarJSON(url, { fetch = globalThis.fetch, tentativas = 4, pausaBase = 2000 } = {}) {
-  for (let i = 1; ; i += 1) {
-    const resp = await fetch(url, { headers: CABECALHOS });
-    if (resp.ok) return resp.json();
-    const repetir = [403, 429, 500, 502, 503, 504].includes(resp.status);
-    if (!repetir || i >= tentativas) throw new Error(`HTTP ${resp.status} em ${url}`);
-    await esperar(pausaBase * 2 ** (i - 1));
-  }
-}
-
-const STATUS = {
-  finished: 'encerrado',
-  notstarted: 'agendado',
-  inprogress: 'ao_vivo',
-  postponed: 'adiado',
-  canceled: 'adiado',
-  cancelled: 'adiado',
-  delayed: 'adiado',
-  interrupted: 'adiado',
-  suspended: 'adiado',
-  abandoned: 'adiado',
-};
-
-export function normalizarEvento(ev) {
-  const status = STATUS[ev.status?.type] ?? 'agendado';
-  const placar = (s) => (status === 'encerrado' && Number.isInteger(s?.current) ? s.current : null);
-  return {
-    id: ev.id,
-    rodada: ev.roundInfo?.round,
-    inicio: new Date(ev.startTimestamp * 1000).toISOString(),
-    mandante: ev.homeTeam.id,
-    visitante: ev.awayTeam.id,
-    golsMandante: placar(ev.homeScore),
-    golsVisitante: placar(ev.awayScore),
-    status,
-  };
-}
-
-export function normalizarTime(t) {
-  return {
-    id: t.id,
-    nome: t.shortName || t.name,
-    sigla: (t.nameCode || t.name.slice(0, 3)).toUpperCase(),
-    cores: {
-      primaria: t.teamColors?.primary ?? '#888888',
-      secundaria: t.teamColors?.secondary ?? '#ffffff',
-    },
-  };
-}
-
-export function montarDados(eventos, temporada, agora = new Date()) {
-  const porId = new Map();
-  for (const ev of eventos) porId.set(ev.id, ev);
-  const unicos = [...porId.values()];
-
-  const times = new Map();
-  for (const ev of unicos) {
-    times.set(ev.homeTeam.id, normalizarTime(ev.homeTeam));
-    times.set(ev.awayTeam.id, normalizarTime(ev.awayTeam));
-  }
-
-  const jogos = unicos.map(normalizarEvento)
-    .sort((a, b) => a.rodada - b.rodada || a.inicio.localeCompare(b.inicio) || a.id - b.id);
-
-  if (times.size !== TOTAL_TIMES) throw new Error(`Esperava ${TOTAL_TIMES} times, vieram ${times.size}`);
+export function validar({ times, jogos }) {
+  if (times.length !== TOTAL_TIMES) throw new Error(`Esperava ${TOTAL_TIMES} times, vieram ${times.length}`);
   if (jogos.length !== TOTAL_JOGOS) throw new Error(`Esperava ${TOTAL_JOGOS} jogos, vieram ${jogos.length}`);
   if (jogos.some((j) => !Number.isInteger(j.rodada))) throw new Error('Jogo sem rodada definida');
+  const ids = new Set(times.map((t) => t.id));
+  if (jogos.some((j) => !ids.has(j.mandante) || !ids.has(j.visitante))) throw new Error('Jogo com time desconhecido');
+}
 
+export function montarDados(coleta, temporada, agora = new Date()) {
+  validar(coleta);
   return {
-    fonte: 'sofascore',
-    temporada: String(temporada),
+    fonte: coleta.fonte,
+    temporada: String(temporada ?? new Date().getFullYear()),
     atualizadoEm: agora.toISOString(),
-    times: [...times.values()].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR')),
-    jogos,
+    times: coleta.times
+      .map(({ escudoUrl, ...time }) => time)
+      .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR')),
+    jogos: [...coleta.jogos]
+      .sort((a, b) => a.rodada - b.rodada || a.inicio.localeCompare(b.inicio) || a.id - b.id),
   };
 }
 
-export async function coletar({ temporada, fetch = globalThis.fetch, pausa = 400, log = console.log } = {}) {
-  const { seasons } = await buscarJSON(`${API}/unique-tournament/${TORNEIO}/seasons`, { fetch });
-  const ano = String(temporada ?? new Date().getFullYear());
-  const season = seasons.find((s) => String(s.year) === ano);
-  if (!season) throw new Error(`Temporada ${ano} não encontrada no Sofascore`);
-  log(`Temporada ${ano}: id ${season.id}`);
+// A fonte só muda quando alguém pede: trocar de fonte muda os IDs dos jogos
+// e os palpites já feitos deixariam de corresponder.
+export function escolherFontes({ forcada, atual, token }) {
+  if (forcada && forcada !== 'auto') {
+    if (!COLETORES[forcada]) throw new Error(`Fonte desconhecida: ${forcada}`);
+    return [forcada];
+  }
+  if (atual && COLETORES[atual]) return [atual];
+  return token ? ['sofascore', 'football-data'] : ['sofascore'];
+}
 
-  const eventos = [];
-  for (let rodada = 1; rodada <= RODADAS; rodada += 1) {
-    const { events = [] } = await buscarJSON(
-      `${API}/unique-tournament/${TORNEIO}/season/${season.id}/events/round/${rodada}`, { fetch },
-    );
-    eventos.push(...events);
-    log(`Rodada ${rodada}: ${events.length} jogos`);
+export async function coletarDados({ fontes, temporada, token, fetch = globalThis.fetch, log = console.log, coletores = COLETORES }) {
+  const erros = [];
+  for (const nome of fontes) {
+    try {
+      const coleta = await coletores[nome]({ temporada, fetch, token, log });
+      validar(coleta);
+      return coleta;
+    } catch (erro) {
+      erros.push(`${nome}: ${erro.message}`);
+      log(`Falha em ${nome}: ${erro.message}`);
+    }
+  }
+  throw new Error(erros.join(' | '));
+}
+
+const EXTENSOES = { 'image/png': 'png', 'image/svg+xml': 'svg', 'image/webp': 'webp', 'image/jpeg': 'jpg' };
+
+async function existe(arquivo) {
+  try {
+    await access(arquivo);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// Baixa o escudo de cada time e preenche `time.escudo` com o caminho local.
+// Falhas não interrompem a coleta: o site mostra as cores do time no lugar.
+export async function baixarEscudos(times, {
+  fetch = globalThis.fetch, pasta = PASTA_ESCUDOS, prefixo = PREFIXO_ESCUDOS,
+  cabecalhos = {}, forcar = false, pausa = 200, log = console.log,
+} = {}) {
+  await mkdir(pasta, { recursive: true });
+  let baixados = 0;
+  for (const time of times) {
+    let atual = null;
+    for (const ext of Object.values(EXTENSOES)) {
+      if (await existe(path.join(pasta, `${time.id}.${ext}`))) { atual = ext; break; }
+    }
+    if (atual && !forcar) {
+      time.escudo = `${prefixo}/${time.id}.${atual}`;
+      continue;
+    }
+    if (!time.escudoUrl) continue;
+    try {
+      const resp = await fetch(time.escudoUrl, { headers: { ...cabecalhos, Accept: 'image/*' } });
+      const tipo = (resp.headers.get('content-type') ?? '').split(';')[0].trim();
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const ext = EXTENSOES[tipo];
+      if (!ext) throw new Error(`tipo inesperado "${tipo}"`);
+      const bytes = Buffer.from(await resp.arrayBuffer());
+      if (bytes.length < 100) throw new Error('imagem vazia');
+      await writeFile(path.join(pasta, `${time.id}.${ext}`), bytes);
+      time.escudo = `${prefixo}/${time.id}.${ext}`;
+      baixados += 1;
+    } catch (erro) {
+      log(`Escudo de ${time.nome} não baixado: ${erro.message}`);
+      if (atual) time.escudo = `${prefixo}/${time.id}.${atual}`;
+    }
     if (pausa) await esperar(pausa);
   }
-  return montarDados(eventos, ano);
+  log(`Escudos: ${baixados} baixados, ${times.filter((t) => t.escudo).length} de ${times.length} disponíveis.`);
+  return times;
 }
 
 // Compara ignorando a data de atualização, para não commitar à toa.
@@ -130,9 +133,15 @@ export function mudou(antigo, novo) {
   return JSON.stringify(semData(antigo)) !== JSON.stringify(semData(novo));
 }
 
+function lerArgumento(nome) {
+  const i = process.argv.indexOf(nome);
+  return i > -1 ? process.argv[i + 1] : undefined;
+}
+
 async function principal() {
-  const idx = process.argv.indexOf('--temporada');
-  const temporada = idx > -1 ? process.argv[idx + 1] : undefined;
+  const temporada = lerArgumento('--temporada');
+  const forcada = lerArgumento('--fonte') ?? process.env.FONTE_DADOS;
+  const token = process.env.FOOTBALL_DATA_TOKEN;
 
   let antigo = null;
   try {
@@ -141,18 +150,30 @@ async function principal() {
     // primeira execução
   }
 
-  const novo = await coletar({ temporada });
+  const fontes = escolherFontes({ forcada, atual: antigo?.fonte, token });
+  console.log(`Fontes a tentar: ${fontes.join(', ')}`);
+  const coleta = await coletarDados({ fontes, temporada, token });
+
+  await baixarEscudos(coleta.times, {
+    forcar: process.argv.includes('--escudos'),
+    cabecalhos: coleta.fonte === 'sofascore' ? sofascore.CABECALHOS : {},
+  });
+
+  const novo = montarDados(coleta, temporada);
   if (!mudou(antigo, novo)) {
     console.log('Nenhuma mudança nos dados.');
     return;
   }
   await writeFile(ARQUIVO, `${JSON.stringify(novo, null, 2)}\n`);
-  console.log(`Gravado ${path.relative(RAIZ, ARQUIVO)} (${novo.jogos.length} jogos).`);
+  console.log(`Gravado ${path.relative(RAIZ, ARQUIVO)}: ${novo.jogos.length} jogos, fonte ${novo.fonte}.`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   principal().catch((erro) => {
     console.error(`Falha ao atualizar os dados: ${erro.message}`);
+    if (!process.env.FOOTBALL_DATA_TOKEN) {
+      console.error('Dica: com uma chave grátis do football-data.org em FOOTBALL_DATA_TOKEN, ele é usado como alternativa.');
+    }
     process.exit(1);
   });
 }

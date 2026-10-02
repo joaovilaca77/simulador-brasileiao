@@ -5,33 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Simulador do Brasileirão</title>
   <meta name="description" content="Palpite os jogos restantes do Brasileirão Série A e veja a classificação se recalcular na hora.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+  <meta name="theme-color" content="#0b1f4b">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><rect width='48' height='48' rx='10' fill='%230b1f4b'/><path fill='%23ffd23f' d='M16 9h16v7c0 5-3.6 9-8 9s-8-4-8-9z'/><path fill='none' stroke='%23ffd23f' stroke-width='2.5' d='M16 12h-4v2c0 3 2 5 5 5M32 12h4v2c0 3-2 5-5 5'/><rect x='22' y='25' width='4' height='6' fill='%23ffd23f'/><path fill='%2300a651' d='M16 31h16l1.5 7h-19z'/></svg>">
+  <link rel="preload" href="fonts/barlow-condensed-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
   <script type="module" src="js/app.js"></script>
 </head>
 <body>
-  <header class="topo">
-    <div class="marca">
-      <h1>Simulador do Brasileirão <span id="temporada"></span></h1>
-      <p id="atualizado" class="mudo"></p>
-    </div>
-    <div class="conta">
-      <span id="status-salvamento" class="mudo" aria-live="polite"></span>
-      <button id="btn-entrar" class="botao primario" type="button" hidden>Entrar com Google</button>
-      <div id="usuario" class="usuario" hidden>
-        <img id="usuario-foto" alt="" referrerpolicy="no-referrer" width="28" height="28">
-        <span id="usuario-nome"></span>
-        <button id="btn-sair" class="botao link" type="button">Sair</button>
+  <header class="faixa">
+    <svg class="faixa-padrao" viewBox="0 0 420 160" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+      <polygon points="150,0 205,0 120,160 65,160" fill="#00a651"/>
+      <polygon points="215,0 245,0 160,160 130,160" fill="#ffd23f"/>
+      <polygon points="255,0 345,0 260,160 170,160" fill="#1e5bd7"/>
+      <polygon points="355,0 380,0 295,160 270,160" fill="#00a651"/>
+      <polygon points="390,0 420,0 420,160 305,160" fill="#ffd23f"/>
+    </svg>
+
+    <div class="topo">
+      <div class="marca">
+        <svg class="trofeu" viewBox="0 0 48 48" aria-hidden="true">
+          <path fill="#ffd23f" d="M15 6h18v9c0 6-4 11-9 11s-9-5-9-11z"/>
+          <path fill="none" stroke="#ffd23f" stroke-width="3" stroke-linecap="round" d="M15 10h-5v3c0 4 2.5 7 6.5 7.5M33 10h5v3c0 4-2.5 7-6.5 7.5"/>
+          <rect x="21.5" y="26" width="5" height="7" fill="#ffd23f"/>
+          <path fill="#00a651" d="M15 33h18l2 9H13z"/>
+          <path fill="#0b1f4b" d="m24 10 1.5 3.1 3.4.5-2.5 2.4.6 3.4-3-1.6-3 1.6.6-3.4-2.5-2.4 3.4-.5z"/>
+        </svg>
+        <div>
+          <p class="sobretitulo">Simulador</p>
+          <h1>Brasileirão <span id="temporada"></span></h1>
+          <p id="atualizado" class="atualizado"></p>
+        </div>
+      </div>
+      <div class="conta">
+        <span id="status-salvamento" class="status" aria-live="polite"></span>
+        <button id="btn-entrar" class="botao primario" type="button" hidden>Entrar com Google</button>
+        <div id="usuario" class="usuario" hidden>
+          <img id="usuario-foto" alt="" referrerpolicy="no-referrer" width="30" height="30">
+          <span id="usuario-nome"></span>
+          <button id="btn-sair" class="botao link" type="button">Sair</button>
+        </div>
       </div>
     </div>
+
+    <nav class="abas" role="tablist" aria-label="Seções">
+      <button id="tab-palpites" role="tab" type="button" aria-selected="true" aria-controls="aba-palpites" data-aba="palpites">Palpites</button>
+      <button id="tab-evolucao" role="tab" type="button" aria-selected="false" aria-controls="aba-evolucao" data-aba="evolucao">Evolução</button>
+    </nav>
   </header>
 
   <div id="aviso" class="aviso" role="status" hidden></div>
-
-  <nav class="abas" role="tablist" aria-label="Seções">
-    <button id="tab-palpites" role="tab" type="button" aria-selected="true" aria-controls="aba-palpites" data-aba="palpites">Palpites</button>
-    <button id="tab-evolucao" role="tab" type="button" aria-selected="false" aria-controls="aba-evolucao" data-aba="evolucao">Evolução</button>
-  </nav>
 
   <main>
     <section id="aba-palpites" class="painel grade" role="tabpanel" aria-labelledby="tab-palpites">
@@ -50,7 +72,7 @@
       </div>
 
       <div class="cartao">
-        <h2>Classificação com seus palpites</h2>
+        <h2 class="titulo-cartao">Classificação com seus palpites</h2>
         <div class="tabela-wrap">
           <table id="tabela" class="tabela">
             <thead>
@@ -77,15 +99,18 @@
 
     <section id="aba-evolucao" class="painel" role="tabpanel" aria-labelledby="tab-evolucao" hidden>
       <div class="cartao">
-        <h2>Evolução da sua projeção</h2>
+        <h2 class="titulo-cartao">Evolução da sua projeção</h2>
         <p class="mudo">Posição final que seus palpites previam para cada time, guardada a cada rodada.</p>
         <div id="evolucao"></div>
       </div>
     </section>
   </main>
 
-  <footer class="rodape mudo">
-    Dados dos jogos: Sofascore (API não oficial). Projeto sem vínculo com a CBF ou o Sofascore.
+  <footer class="rodape">
+    <div>
+      Simulador feito por torcedores, sem vínculo com a CBF ou com os clubes.
+      Dados dos jogos: <span id="fonte-dados">—</span>. Escudos são marcas dos respectivos clubes.
+    </div>
   </footer>
 </body>
 </html>

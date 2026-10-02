@@ -22,20 +22,44 @@ Depois, abra http://localhost:3000.
 
 Testes (Node 20+): `npm test`.
 
-## Dados dos jogos (Sofascore)
+## Como atualizar os dados
 
-O arquivo `data/brasileirao.json` é gerado por `scripts/atualizar-dados.mjs`, que lê a API **não oficial** do Sofascore (torneio 325, as 38 rodadas). O site nunca chama o Sofascore direto, porque a API não libera acesso de outros domínios (CORS).
+Os jogos ficam em `data/brasileirao.json` e os escudos em `img/escudos/`. Quem gera esses arquivos é `scripts/atualizar-dados.mjs`. O site nunca chama as APIs direto, porque elas não liberam acesso de outros domínios (CORS).
+
+### 1. Pelo GitHub (recomendado)
+
+O workflow **Atualizar dados** roda sozinho a cada 3 horas na branch padrão. Para rodar agora:
+
+1. Abra a aba **Actions** do repositório.
+2. Clique em **Atualizar dados** → **Run workflow** → **Run workflow**.
+3. Em cerca de 1 minuto, o bot faz um commit com os dados novos e o GitHub Pages republica o site.
+
+Opções do *Run workflow*: fonte (`auto`, `sofascore` ou `football-data`), ano da temporada e "baixar de novo todos os escudos".
+
+### 2. Se o Sofascore bloquear o GitHub: football-data.org
+
+O Sofascore às vezes recusa servidores (HTTP 403 no log do workflow). Nesse caso, use o [football-data.org](https://www.football-data.org), uma API oficial com plano gratuito que inclui a Série A:
+
+1. Crie uma conta grátis em https://www.football-data.org/client/register. A chave chega por e-mail.
+2. No GitHub: **Settings** → **Secrets and variables** → **Actions** → **New repository secret**, com o nome `FOOTBALL_DATA_TOKEN` e a chave como valor.
+3. Rode o workflow de novo.
+
+Enquanto o site ainda estiver com os dados de exemplo, o modo `auto` tenta o Sofascore e, se falhar, o football-data. Depois da primeira coleta, ele **continua na mesma fonte**. Para trocar de fonte, escolha-a no *Run workflow* ou crie a variável de repositório `FONTE_DADOS` (*Settings* → *Secrets and variables* → *Actions* → aba *Variables*) com `sofascore` ou `football-data`.
+
+> Trocar de fonte muda os IDs dos jogos: os palpites já feitos deixam de corresponder aos jogos. Prefira escolher a fonte antes de começar a palpitar.
+
+### 3. No seu computador
+
+Com Node 20 ou mais recente:
 
 ```bash
-npm run dados                          # temporada do ano atual
-node scripts/atualizar-dados.mjs --temporada 2026
+npm run dados                                   # fonte automática
+node scripts/atualizar-dados.mjs --fonte sofascore --temporada 2026
+FOOTBALL_DATA_TOKEN=sua-chave node scripts/atualizar-dados.mjs --fonte football-data
+git add data img && git commit -m "Atualiza dados" && git push
 ```
 
-O script só grava se vierem os 380 jogos e se algo tiver mudado. Se a coleta falhar, o arquivo anterior fica intacto.
-
-**Atualização automática:** o workflow `.github/workflows/atualizar-dados.yml` roda a cada 3 horas e também pode ser disparado à mão (aba *Actions* → *Atualizar dados* → *Run workflow*). Quando os dados mudam, ele faz o commit do JSON. Observações:
-- Workflows agendados só rodam na branch padrão (`main`).
-- O Sofascore às vezes bloqueia IPs de servidores. Se o workflow falhar com HTTP 403, rode `npm run dados` no seu computador e faça o commit do JSON.
+O script só grava se vierem os 380 jogos e se algo tiver mudado. Se a coleta falhar, o arquivo anterior fica intacto. Escudos que já existem não são baixados de novo (use `--escudos` para forçar), e um escudo que falhar é trocado pelas cores do time.
 
 O repositório vem com **dados de exemplo** (resultados fictícios, `"fonte": "exemplo"`), e o site mostra um aviso enquanto eles estiverem ativos. Para regerar o exemplo: `npm run exemplo`.
 
@@ -70,28 +94,40 @@ Abra o site com `?emulador=1` (por exemplo, http://localhost:3000/?emulador=1) e
 
 ## Publicar no GitHub Pages
 
-*Settings* → *Pages* → *Deploy from a branch* → `main`, pasta `/ (root)`. O site fica em `https://seu-usuario.github.io/simulador-brasileiao/`. Lembre de autorizar esse domínio no Firebase (passo 3).
+*Settings* → *Pages* → *Deploy from a branch* → a branch padrão do repositório, pasta `/ (root)`. O site fica em `https://seu-usuario.github.io/simulador-brasileiao/`. Lembre de autorizar esse domínio no Firebase (passo 3).
 
 ## Regras da classificação
 
 - **Desempate:** pontos → vitórias → saldo de gols → gols pró → confronto direto (quando só dois times estão empatados) → ordem alfabética, no lugar de cartões e sorteio.
 - **Zonas:** ficam em `ZONAS`, em [`js/tabela.js`](js/tabela.js), e o padrão é 1–4 Libertadores, 5–6 pré-Libertadores, 7–12 Sul-Americana e 17–20 rebaixamento. As vagas reais mudam conforme os campeões das copas; ajuste ali se precisar.
 
+## Identidade visual
+
+O visual é inspirado nas transmissões do Brasileirão:
+- azul-marinho, verde e amarelo;
+- fontes **Barlow** e **Barlow Condensed**, hospedadas em `fonts/` (licença SIL OFL, em `fonts/OFL.txt`);
+- ícone de troféu próprio.
+
+O site **não usa o logotipo oficial**, que é marca registrada da CBF e do patrocinador. As cores ficam como variáveis no topo de `css/style.css`. As cores das séries do gráfico seguem uma paleta validada para daltonismo; se mudar a ordem, valide de novo.
+
 ## Estrutura
 
 ```
-index.html, css/style.css
+index.html, css/style.css, fonts/
 js/tabela.js          classificação, desempate, zonas, trava (funções puras)
 js/projecao.js        rodada atual, snapshot da projeção, mesclagem de palpites
 js/armazenamento.js   LocalStore (navegador) e FirebaseStore (Firestore)
 js/firebase.js        carrega o SDK do Firebase pelo CDN
 js/evolucao.js        gráfico e tabela da aba Evolução
 js/app.js             interface
-scripts/              coleta no Sofascore e gerador do exemplo
+scripts/              coleta de dados e gerador do exemplo
+scripts/fontes/       Sofascore e football-data.org
+img/escudos/          escudos baixados pelo workflow
 tests/                testes com node:test
 ```
 
 ## Limitações e próximos passos
 
 - A trava dos palpites é aplicada no site. Como ainda não há pontuação nem ranking, as regras do Firestore não conferem o horário dos jogos. Para validar no servidor, seria preciso espelhar os horários em uma coleção `jogos` (gravada pelo workflow com uma conta de serviço) e comparar com `request.time` nas regras.
-- A API do Sofascore não é oficial: os campos ou o acesso podem mudar sem aviso.
+- A API do Sofascore não é oficial: os campos ou o acesso podem mudar sem aviso. O football-data.org é a alternativa estável.
+- Escudos são marcas dos respectivos clubes.

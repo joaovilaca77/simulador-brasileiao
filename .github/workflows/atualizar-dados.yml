@@ -5,9 +5,18 @@ on:
     - cron: '17 */3 * * *'   # a cada 3 horas
   workflow_dispatch:
     inputs:
+      fonte:
+        description: 'Fonte dos dados (auto = a atual; no exemplo, Sofascore e depois football-data)'
+        type: choice
+        options: [auto, sofascore, football-data]
+        default: auto
       temporada:
         description: 'Ano da temporada (vazio = ano atual)'
         required: false
+      escudos:
+        description: 'Baixar de novo todos os escudos'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -26,24 +35,27 @@ jobs:
         with:
           node-version: 22
 
-      - name: Baixar jogos do Sofascore
+      - name: Baixar jogos e escudos
         env:
+          # Variável do repositório FONTE_DADOS (opcional) define a fonte padrão.
+          FONTE_DADOS: ${{ (inputs.fonte != '' && inputs.fonte != 'auto') && inputs.fonte || vars.FONTE_DADOS }}
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
           TEMPORADA: ${{ inputs.temporada }}
+          ESCUDOS: ${{ inputs.escudos }}
         run: |
-          if [ -n "$TEMPORADA" ]; then
-            node scripts/atualizar-dados.mjs --temporada "$TEMPORADA"
-          else
-            node scripts/atualizar-dados.mjs
-          fi
+          args=()
+          if [ -n "$TEMPORADA" ]; then args+=(--temporada "$TEMPORADA"); fi
+          if [ "$ESCUDOS" = "true" ]; then args+=(--escudos); fi
+          node scripts/atualizar-dados.mjs "${args[@]}"
 
       - name: Commitar se mudou
         run: |
-          if git diff --quiet -- data/brasileirao.json; then
+          if [ -z "$(git status --porcelain -- data img)" ]; then
             echo "Sem mudanças nos dados."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/brasileirao.json
+          git add -A data img
           git commit -m "Atualiza dados do Brasileirão"
           git push

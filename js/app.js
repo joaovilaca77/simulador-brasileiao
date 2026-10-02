@@ -36,12 +36,24 @@ function el(tag, props = {}, ...filhos) {
   return n;
 }
 
+// Escudo do clube quando baixado; senão (ou se a imagem falhar), as cores.
 function escudo(time) {
-  const e = el('span', { class: 'escudo', 'aria-hidden': 'true' });
-  e.style.setProperty('--c1', time?.cores?.primaria ?? '#888');
-  e.style.setProperty('--c2', time?.cores?.secundaria ?? '#fff');
-  return e;
+  const cores = el('span', { class: 'escudo', 'aria-hidden': 'true' });
+  cores.style.setProperty('--c1', time?.cores?.primaria ?? '#888');
+  cores.style.setProperty('--c2', time?.cores?.secundaria ?? '#fff');
+  if (!time?.escudo) return cores;
+  const img = el('img', {
+    class: 'escudo', src: time.escudo, alt: '', loading: 'lazy', decoding: 'async', width: 20, height: 20,
+  });
+  img.addEventListener('error', () => img.replaceWith(cores), { once: true });
+  return img;
 }
+
+const NOMES_FONTE = {
+  sofascore: 'Sofascore (API não oficial)',
+  'football-data': 'football-data.org',
+  exemplo: 'exemplo com resultados fictícios',
+};
 
 // Horários sempre no fuso de Brasília, como na tabela da CBF.
 const FUSO = 'America/Sao_Paulo';
@@ -196,7 +208,7 @@ function renderTabela() {
 
     corpo.append(el('tr', { class: l.zona ? `zona-${l.zona}` : '' },
       el('td', { class: 'num pos' }, `${l.pos}`, delta),
-      el('td', { class: 'esq' }, el('span', { class: 'time' }, escudo(l), el('span', { class: 'nome', text: l.nome }))),
+      el('td', { class: 'esq' }, el('span', { class: 'time' }, escudo(estado.times.get(l.timeId)), el('span', { class: 'nome', text: l.nome }))),
       el('td', { class: 'num pts', text: l.pts }),
       el('td', { class: 'num', text: l.j }),
       el('td', { class: 'num', text: l.v }),
@@ -446,8 +458,9 @@ async function iniciar() {
   estado.times = new Map(dados.times.map((t) => [t.id, t]));
   $('#temporada').textContent = dados.temporada;
   $('#atualizado').textContent = `Dados atualizados em ${fmtAtualizado.format(new Date(dados.atualizadoEm))}`;
+  $('#fonte-dados').textContent = NOMES_FONTE[dados.fonte] ?? dados.fonte;
   if (dados.fonte === 'exemplo') {
-    mostrarAviso('Dados de exemplo, com resultados fictícios. Rode o workflow "Atualizar dados" (ou npm run dados) para carregar o Brasileirão real do Sofascore.');
+    mostrarAviso('Dados de exemplo, com resultados fictícios. Os jogos reais chegam quando o workflow "Atualizar dados" rodar no GitHub (veja o README).');
   }
 
   estado.rodadaVisivel = rodadaAtual(dados.jogos) ?? totalRodadas();
