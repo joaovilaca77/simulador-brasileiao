@@ -1,8 +1,28 @@
 {
   "fonte": "football-data",
   "temporada": "2026",
-  "atualizadoEm": "2026-10-02T19:19:22.233Z",
+  "atualizadoEm": "2026-10-02T19:21:56.325Z",
   "times": [
+    {
+      "id": 1768,
+      "nome": "Athletico-PR",
+      "sigla": "CAP",
+      "cores": {
+        "primaria": "#000000",
+        "secundaria": "#ffffff"
+      },
+      "escudo": "img/escudos/1768.png"
+    },
+    {
+      "id": 1766,
+      "nome": "Atlético-MG",
+      "sigla": "CAM",
+      "cores": {
+        "primaria": "#000000",
+        "secundaria": "#ffffff"
+      },
+      "escudo": "img/escudos/1766.png"
+    },
     {
       "id": 1777,
       "nome": "Bahia",
@@ -44,16 +64,6 @@
       "escudo": "img/escudos/1772.png"
     },
     {
-      "id": 4287,
-      "nome": "Clube do Remo",
-      "sigla": "CRE",
-      "cores": {
-        "primaria": "#0a1f5c",
-        "secundaria": "#ffffff"
-      },
-      "escudo": "img/escudos/4287.png"
-    },
-    {
       "id": 1779,
       "nome": "Corinthians",
       "sigla": "COR",
@@ -66,7 +76,7 @@
     {
       "id": 4241,
       "nome": "Coritiba",
-      "sigla": "COR",
+      "sigla": "CFC",
       "cores": {
         "primaria": "#00843d",
         "secundaria": "#ffffff"
@@ -106,7 +116,7 @@
     {
       "id": 1767,
       "nome": "Grêmio",
-      "sigla": "FBP",
+      "sigla": "GRE",
       "cores": {
         "primaria": "#0057a8",
         "secundaria": "#000000"
@@ -116,22 +126,12 @@
     {
       "id": 6684,
       "nome": "Internacional",
-      "sigla": "SCI",
+      "sigla": "INT",
       "cores": {
         "primaria": "#d0021b",
         "secundaria": "#ffffff"
       },
       "escudo": "img/escudos/6684.png"
-    },
-    {
-      "id": 1766,
-      "nome": "Mineiro",
-      "sigla": "CAM",
-      "cores": {
-        "primaria": "#000000",
-        "secundaria": "#ffffff"
-      },
-      "escudo": "img/escudos/1766.png"
     },
     {
       "id": 4364,
@@ -154,14 +154,14 @@
       "escudo": "img/escudos/1769.png"
     },
     {
-      "id": 1768,
-      "nome": "Paranaense",
-      "sigla": "CAP",
+      "id": 4287,
+      "nome": "Remo",
+      "sigla": "REM",
       "cores": {
-        "primaria": "#000000",
+        "primaria": "#0a1f5c",
         "secundaria": "#ffffff"
       },
-      "escudo": "img/escudos/1768.png"
+      "escudo": "img/escudos/4287.png"
     },
     {
       "id": 6685,
@@ -176,7 +176,7 @@
     {
       "id": 1776,
       "nome": "São Paulo",
-      "sigla": "PAU",
+      "sigla": "SAO",
       "cores": {
         "primaria": "#ffffff",
         "secundaria": "#d0021b"
@@ -185,7 +185,7 @@
     },
     {
       "id": 1780,
-      "nome": "Vasco da Gama",
+      "nome": "Vasco",
       "sigla": "VAS",
       "cores": {
         "primaria": "#000000",
