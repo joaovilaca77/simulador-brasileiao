@@ -9,38 +9,42 @@
 :root {
   color-scheme: light;
 
-  /* Identidade: azul-marinho, verde e amarelo */
-  --marinho: #0b1f4b;
-  --marinho-2: #14306e;
-  --verde: #00a651;
-  --amarelo: #ffd23f;
-  --azul: #1e5bd7;
+  /* Identidade do Brasileirão: verde-limão e grafite do logo oficial */
+  --escuro: #131428;
+  --escuro-2: #262949;
+  --lima: #c7ff00;
+  --lima-claro: #ddff66;
   --na-faixa: #ffffff;
   --na-faixa-2: rgba(255, 255, 255, 0.72);
+  /* Destaque sobre os cartões: grafite no claro, lima no escuro (lima sobre
+     branco não tem contraste) */
+  --acento: #131428;
 
-  --plano: #eef1f6;
+  --plano: #f2f3f7;
   --superficie: #ffffff;
-  --superficie-2: #f3f5fa;
-  --zebra: #f7f9fc;
-  --tinta: #0b1f4b;
-  --tinta-2: #3d4b6b;
-  --mudo: #66728f;
-  --linha: #e3e8f1;
-  --eixo: #c3cbdb;
-  --borda: rgba(11, 31, 75, 0.12);
+  --superficie-2: #f4f5f9;
+  --zebra: #f8f8fb;
+  --tinta: #131428;
+  --tinta-2: #44475f;
+  --mudo: #6b6e85;
+  --linha: #e6e7ee;
+  --eixo: #c9cbd8;
+  --borda: rgba(19, 20, 40, 0.12);
   --destaque: #1e5bd7;
   --erro: #d32f2f;
   --ok: #00813f;
-  --placar-fundo: #0b1f4b;
-  --cabecalho-tabela: #0b1f4b;
-  --botao-icone: #0b1f4b;
-  --botao-icone-hover: #14306e;
-  --chip-ativo: #0b1f4b;
-  --sombra: 0 1px 2px rgba(11, 31, 75, 0.06), 0 4px 16px rgba(11, 31, 75, 0.06);
+  --placar-fundo: #131428;
+  --placar-tinta: #c7ff00;
+  --cabecalho-tabela: #131428;
+  --botao-icone: #131428;
+  --botao-icone-tinta: #ffffff;
+  --botao-icone-hover: #262949;
+  --chip-ativo: #131428;
+  --sombra: 0 1px 2px rgba(19, 20, 40, 0.06), 0 4px 16px rgba(19, 20, 40, 0.06);
 
   --zona-libertadores: #1e5bd7;
   --zona-pre-libertadores: #7fb2ff;
-  --zona-sul-americana: #00a651;
+  --zona-sul-americana: #1baf7a;
   --zona-rebaixamento: #e03131;
 
   /* Séries do gráfico: paleta categórica validada (não mudar a ordem) */
@@ -48,7 +52,7 @@
   --serie-2: #eb6834;
   --serie-3: #1baf7a;
   --serie-4: #eda100;
-  --contexto: #d5dbe7;
+  --contexto: #d9dae4;
 
   --raio: 12px;
   --fonte: "Barlow", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -58,24 +62,26 @@
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --plano: #060f26;
-    --superficie: #0e1b3d;
-    --superficie-2: #16264f;
-    --zebra: #112148;
+    --acento: #c7ff00;
+    --plano: #0a0b17;
+    --superficie: #171934;
+    --superficie-2: #20233f;
+    --zebra: #1b1d3a;
     --tinta: #ffffff;
-    --tinta-2: #c5cde0;
-    --mudo: #8e9ab8;
-    --linha: #1f2f5a;
-    --eixo: #2d3f70;
+    --tinta-2: #c9cbdc;
+    --mudo: #9496b0;
+    --linha: #262949;
+    --eixo: #34375c;
     --borda: rgba(255, 255, 255, 0.1);
     --destaque: #4a83ff;
     --erro: #ff6b6b;
-    --ok: #2fd47f;
-    --placar-fundo: #1e5bd7;
-    --cabecalho-tabela: #16264f;
-    --botao-icone: #1e5bd7;
-    --botao-icone-hover: #3a72e6;
-    --chip-ativo: #263c78;
+    --ok: #c7ff00;
+    --placar-fundo: #262949;
+    --cabecalho-tabela: #262949;
+    --botao-icone: #262949;
+    --botao-icone-tinta: #c7ff00;
+    --botao-icone-hover: #34375c;
+    --chip-ativo: #34375c;
     --sombra: none;
 
     --zona-libertadores: #4a83ff;
@@ -87,7 +93,7 @@
     --serie-2: #d95926;
     --serie-3: #199e70;
     --serie-4: #c98500;
-    --contexto: #263866;
+    --contexto: #2c2f52;
   }
 }
 
@@ -105,7 +111,8 @@ body {
 h1, h2 { margin: 0; }
 .mudo { color: var(--mudo); }
 [hidden] { display: none !important; }
-:focus-visible { outline: 2px solid var(--amarelo); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+.faixa :focus-visible { outline-color: var(--lima); }
 
 .topo, .abas, main, .aviso, .rodape > div {
   max-width: 1200px;
@@ -117,9 +124,9 @@ h1, h2 { margin: 0; }
 .faixa {
   position: relative;
   overflow: hidden;
-  background: var(--marinho);
+  background: var(--escuro);
   color: var(--na-faixa);
-  border-bottom: 4px solid var(--amarelo);
+  border-bottom: 4px solid var(--lima);
 }
 .faixa-padrao {
   position: absolute;
@@ -141,7 +148,7 @@ h1, h2 { margin: 0; }
   padding-block: 22px 14px;
 }
 .marca { display: flex; align-items: center; gap: 12px; }
-.trofeu { width: 52px; height: 52px; flex: none; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3)); }
+.emblema { width: auto; height: 64px; flex: none; }
 .sobretitulo {
   margin: 0;
   font-family: var(--fonte-titulo);
@@ -149,7 +156,7 @@ h1, h2 { margin: 0; }
   font-size: 0.9rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--amarelo);
+  color: var(--lima);
 }
 .faixa h1 {
   font-family: var(--fonte-titulo);
@@ -168,12 +175,12 @@ h1, h2 { margin: 0; }
   font-size: 0.9rem;
   border-radius: 999px;
 }
-.conta:has(> :not([hidden]):not(:empty)) { background: rgba(11, 31, 75, 0.85); padding: 4px 4px 4px 12px; }
+.conta:has(> :not([hidden]):not(:empty)) { background: rgba(19, 20, 40, 0.88); padding: 4px 4px 4px 12px; }
 .status { color: var(--na-faixa-2); }
 .status:empty { display: none; }
 .status.erro { color: #ff9a9a; }
 .usuario { display: flex; align-items: center; gap: 8px; color: var(--na-faixa); }
-.usuario img { border-radius: 50%; background: var(--marinho-2); border: 2px solid var(--amarelo); }
+.usuario img { border-radius: 50%; background: var(--escuro-2); border: 2px solid var(--lima); }
 .usuario .botao.link { color: var(--na-faixa-2); }
 
 .abas { display: flex; gap: 4px; }
@@ -193,7 +200,7 @@ h1, h2 { margin: 0; }
   cursor: pointer;
 }
 .abas button:hover { color: var(--na-faixa); }
-.abas button[aria-selected="true"] { color: var(--na-faixa); border-bottom-color: var(--verde); }
+.abas button[aria-selected="true"] { color: var(--na-faixa); border-bottom-color: var(--lima); }
 
 /* ---------- Botões ---------- */
 .botao {
@@ -210,13 +217,13 @@ h1, h2 { margin: 0; }
 .botao:hover:not(:disabled) { background: var(--superficie-2); }
 .botao:disabled { opacity: 0.35; cursor: default; }
 .botao.primario {
-  background: var(--amarelo);
-  color: var(--marinho);
+  background: var(--lima);
+  color: var(--escuro);
   border-color: transparent;
   border-radius: 999px;
   font-weight: 700;
 }
-.botao.primario:hover { background: #ffe07a; }
+.botao.primario:hover { background: var(--lima-claro); }
 .botao.link { border: 0; background: none; padding: 4px 8px; color: var(--tinta-2); text-decoration: underline; }
 .botao.link:hover { background: none; }
 .botao.icone {
@@ -227,7 +234,7 @@ h1, h2 { margin: 0; }
   line-height: 1;
   border-radius: 50%;
   background: var(--botao-icone);
-  color: #ffffff;
+  color: var(--botao-icone-tinta);
   border: 0;
 }
 .botao.icone:hover:not(:disabled) { background: var(--botao-icone-hover); }
@@ -237,7 +244,7 @@ h1, h2 { margin: 0; }
 .aviso > div {
   background: var(--superficie);
   border: 1px solid var(--borda);
-  border-left: 6px solid var(--amarelo);
+  border-left: 6px solid var(--lima);
   border-radius: 8px;
   padding: 10px 14px;
   font-size: 0.9rem;
@@ -279,7 +286,8 @@ main { padding-block: 16px; }
   width: 6px;
   height: 22px;
   border-radius: 2px;
-  background: linear-gradient(var(--amarelo) 50%, var(--verde) 50%);
+  background: var(--lima);
+  box-shadow: 0 0 0 2px var(--escuro);
 }
 
 /* ---------- Rodadas e jogos ---------- */
@@ -293,7 +301,7 @@ main { padding-block: 16px; }
   color: var(--tinta);
   background: transparent;
   border: 0;
-  border-bottom: 3px solid var(--amarelo);
+  border-bottom: 3px solid var(--acento);
   border-radius: 0;
   padding: 2px 6px;
   cursor: pointer;
@@ -356,8 +364,8 @@ img.escudo { background: none; box-shadow: none; border-radius: 0; object-fit: c
   -moz-appearance: textfield;
   appearance: textfield;
 }
-.placar input:hover:not(:disabled) { border-color: var(--marinho-2); }
-.placar input:focus { outline: none; border-color: var(--amarelo); box-shadow: 0 0 0 3px rgba(255, 210, 63, 0.35); }
+.placar input:hover:not(:disabled) { border-color: var(--tinta-2); }
+.placar input:focus { outline: none; border-color: var(--acento); box-shadow: 0 0 0 4px rgba(199, 255, 0, 0.55); }
 .placar input::-webkit-outer-spin-button,
 .placar input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .placar input:disabled { opacity: 0.55; background: var(--superficie-2); }
@@ -370,7 +378,7 @@ img.escudo { background: none; box-shadow: none; border-radius: 0; object-fit: c
   height: 44px;
   border-radius: 8px;
   background: var(--placar-fundo);
-  color: #ffffff;
+  color: var(--placar-tinta);
   font-family: var(--fonte-titulo);
   font-weight: 800;
   font-size: 1.6rem;
@@ -440,7 +448,7 @@ img.escudo { background: none; box-shadow: none; border-radius: 0; object-fit: c
   color: var(--tinta-2);
   cursor: pointer;
 }
-.seletor button:hover:not(:disabled) { border-color: var(--marinho-2); }
+.seletor button:hover:not(:disabled) { border-color: var(--tinta-2); }
 .seletor button:disabled { opacity: 0.45; cursor: default; }
 .seletor button[aria-pressed="true"] { color: #ffffff; background: var(--chip-ativo); border-color: var(--chip-ativo); font-weight: 600; }
 .seletor button .chave { width: 14px; height: 3px; border-radius: 2px; background: var(--chave, transparent); }
@@ -470,7 +478,7 @@ img.escudo { background: none; box-shadow: none; border-radius: 0; object-fit: c
   background: var(--superficie);
   border: 1px solid var(--borda);
   border-radius: 8px;
-  box-shadow: 0 6px 20px rgba(11, 31, 75, 0.16);
+  box-shadow: 0 6px 20px rgba(19, 20, 40, 0.16);
   padding: 8px 10px;
   font-size: 0.85rem;
   min-width: 160px;
@@ -486,9 +494,9 @@ img.escudo { background: none; box-shadow: none; border-radius: 0; object-fit: c
 
 /* ---------- Rodapé ---------- */
 .rodape {
-  background: var(--marinho);
+  background: var(--escuro);
   color: var(--na-faixa-2);
-  border-top: 4px solid var(--verde);
+  border-top: 4px solid var(--lima);
   font-size: 0.82rem;
   margin-top: 16px;
 }
@@ -501,7 +509,7 @@ img.escudo { background: none; box-shadow: none; border-radius: 0; object-fit: c
 @media (max-width: 520px) {
   .faixa-padrao { width: 60%; opacity: 0.35; }
   .faixa h1 { font-size: 1.7rem; }
-  .trofeu { width: 44px; height: 44px; }
+  .emblema { height: 48px; }
   .topo { padding-block: 16px 10px; }
   .cartao { padding: 12px; }
   .tabela .opc { display: none; }

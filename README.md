@@ -103,6 +103,46 @@ Abra o site com `?emulador=1` (por exemplo, http://localhost:3000/?emulador=1) e
 
 ## Identidade visual
 
+O site usa o logotipo e as cores do Brasileirão:
+- **logo:** o arquivo completo está em `img/brasileirao.png`; o cabeçalho usa só o emblema (`img/brasileirao-emblema.png`), e o favicon e o ícone do celular saem dele (`img/favicon.png`, `img/apple-touch-icon.png`);
+- **cores:** verde-limão `#c7ff00` e grafite `#131428`, definidas como variáveis no topo de `css/style.css`;
+- **fontes:** Barlow e Barlow Condensed, hospedadas em `fonts/` (licença SIL OFL, em `fonts/OFL.txt`).
+
+O verde-limão só aparece sobre o grafite ou como fundo de botões com texto grafite: sobre branco ele não tem contraste. As cores das séries do gráfico seguem uma paleta validada para daltonismo; se mudar a ordem, valide de novo.
+
+Para trocar o logo, substitua os arquivos em `img/` mantendo os nomes.
+
+> "Brasileirão" e o seu logotipo são marcas da CBF. Este é um projeto de torcedores, sem vínculo oficial, e o rodapé do site diz isso.
+
+## Estrutura no Firestore
+
+```
+usuarios/{uid}                                            { nome, foto, atualizadoEm }
+usuarios/{uid}/temporadas/{ano}                           { palpites: { [jogoId]: { m, v, salvoEm } }, atualizadoEm }
+usuarios/{uid}/temporadas/{ano}/projecoes/{rodada}        { rodada, salvoEm, jogosPendentes, jogosPalpitados, classificacao }
+```
+
+A "rodada atual" é a primeira com jogos pendentes. A projeção dela é regravada a cada palpite. Quando a rodada vira, a anterior congela e passa a fazer parte do histórico.
+
+### Testar com os emuladores
+
+```bash
+npx firebase-tools emulators:start --project demo-simulador --only auth,firestore
+```
+
+Abra o site com `?emulador=1` (por exemplo, http://localhost:3000/?emulador=1) e preencha `js/firebase-config.js` com qualquer `projectId` começando por `demo-`.
+
+## Publicar no GitHub Pages
+
+*Settings* → *Pages* → *Deploy from a branch* → a branch padrão do repositório, pasta `/ (root)`. O site fica em `https://seu-usuario.github.io/simulador-brasileiao/`. Lembre de autorizar esse domínio no Firebase (passo 3).
+
+## Regras da classificação
+
+- **Desempate:** pontos → vitórias → saldo de gols → gols pró → confronto direto (quando só dois times estão empatados) → ordem alfabética, no lugar de cartões e sorteio.
+- **Zonas:** ficam em `ZONAS`, em [`js/tabela.js`](js/tabela.js), e o padrão é 1–4 Libertadores, 5–6 pré-Libertadores, 7–12 Sul-Americana e 17–20 rebaixamento. As vagas reais mudam conforme os campeões das copas; ajuste ali se precisar.
+
+## Identidade visual
+
 O visual é inspirado nas transmissões do Brasileirão:
 - azul-marinho, verde e amarelo;
 - fontes **Barlow** e **Barlow Condensed**, hospedadas em `fonts/` (licença SIL OFL, em `fonts/OFL.txt`);
@@ -113,7 +153,7 @@ O site **não usa o logotipo oficial**, que é marca registrada da CBF e do patr
 ## Estrutura
 
 ```
-index.html, css/style.css, fonts/
+index.html, css/style.css, fonts/, img/ (logo)
 js/tabela.js          classificação, desempate, zonas, trava (funções puras)
 js/projecao.js        rodada atual, snapshot da projeção, mesclagem de palpites
 js/armazenamento.js   LocalStore (navegador) e FirebaseStore (Firestore)
