@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulador do Brasileirão</title>
+  <meta name="description" content="Palpite os jogos restantes do Brasileirão Série A e veja a classificação se recalcular na hora.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <header class="topo">
+    <div class="marca">
+      <h1>Simulador do Brasileirão <span id="temporada"></span></h1>
+      <p id="atualizado" class="mudo"></p>
+    </div>
+    <div class="conta">
+      <span id="status-salvamento" class="mudo" aria-live="polite"></span>
+      <button id="btn-entrar" class="botao primario" type="button" hidden>Entrar com Google</button>
+      <div id="usuario" class="usuario" hidden>
+        <img id="usuario-foto" alt="" referrerpolicy="no-referrer" width="28" height="28">
+        <span id="usuario-nome"></span>
+        <button id="btn-sair" class="botao link" type="button">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <div id="aviso" class="aviso" role="status" hidden></div>
+
+  <nav class="abas" role="tablist" aria-label="Seções">
+    <button id="tab-palpites" role="tab" type="button" aria-selected="true" aria-controls="aba-palpites" data-aba="palpites">Palpites</button>
+    <button id="tab-evolucao" role="tab" type="button" aria-selected="false" aria-controls="aba-evolucao" data-aba="evolucao">Evolução</button>
+  </nav>
+
+  <main>
+    <section id="aba-palpites" class="painel grade" role="tabpanel" aria-labelledby="tab-palpites">
+      <div class="cartao">
+        <div class="rodada-nav">
+          <button id="rodada-ant" class="botao icone" type="button" aria-label="Rodada anterior">‹</button>
+          <select id="rodada-select" aria-label="Escolher rodada"></select>
+          <button id="rodada-prox" class="botao icone" type="button" aria-label="Próxima rodada">›</button>
+        </div>
+        <ul id="lista-jogos" class="jogos"></ul>
+        <p id="resumo-palpites" class="mudo resumo"></p>
+        <div class="acoes">
+          <button id="limpar-rodada" class="botao" type="button">Limpar palpites da rodada</button>
+          <button id="limpar-todos" class="botao" type="button">Limpar todos</button>
+        </div>
+      </div>
+
+      <div class="cartao">
+        <h2>Classificação com seus palpites</h2>
+        <div class="tabela-wrap">
+          <table id="tabela" class="tabela">
+            <thead>
+              <tr>
+                <th scope="col" class="num">#</th>
+                <th scope="col" class="esq">Time</th>
+                <th scope="col" class="num" title="Pontos">P</th>
+                <th scope="col" class="num" title="Jogos">J</th>
+                <th scope="col" class="num" title="Vitórias">V</th>
+                <th scope="col" class="num opc" title="Empates">E</th>
+                <th scope="col" class="num opc" title="Derrotas">D</th>
+                <th scope="col" class="num" title="Saldo de gols">SG</th>
+                <th scope="col" class="num opc" title="Gols pró">GP</th>
+                <th scope="col" class="num opc" title="Aproveitamento">%</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <ul id="legenda-zonas" class="legenda-zonas"></ul>
+        <p class="mudo nota">▲▼ mostra quantas posições o time ganha ou perde em relação à tabela real.</p>
+      </div>
+    </section>
+
+    <section id="aba-evolucao" class="painel" role="tabpanel" aria-labelledby="tab-evolucao" hidden>
+      <div class="cartao">
+        <h2>Evolução da sua projeção</h2>
+        <p class="mudo">Posição final que seus palpites previam para cada time, guardada a cada rodada.</p>
+        <div id="evolucao"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape mudo">
+    Dados dos jogos: Sofascore (API não oficial). Projeto sem vínculo com a CBF ou o Sofascore.
+  </footer>
+</body>
+</html>

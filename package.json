@@ -1,0 +1,16 @@
+{
+  "name": "simulador-brasileirao",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Simulador do Brasileirão Série A: palpite os jogos restantes e veja a tabela.",
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes serve -l 3000 .",
+    "dados": "node scripts/atualizar-dados.mjs",
+    "exemplo": "node scripts/gerar-exemplo.mjs",
+    "test": "node --test \"tests/**/*.test.mjs\""
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

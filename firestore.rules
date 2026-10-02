@@ -1,0 +1,42 @@
+rules_version = '2';
+
+// Cada usuário só lê e grava os próprios dados em usuarios/{uid}/**.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function dono(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    function soCampos(campos) {
+      return request.resource.data.keys().hasOnly(campos);
+    }
+
+    match /usuarios/{uid} {
+      allow read, delete: if dono(uid);
+      allow create, update: if dono(uid)
+        && soCampos(['nome', 'foto', 'atualizadoEm'])
+        && request.resource.data.nome is string && request.resource.data.nome.size() <= 200
+        && request.resource.data.foto is string && request.resource.data.foto.size() <= 2000;
+
+      match /temporadas/{temporada} {
+        allow read, delete: if dono(uid);
+        allow create, update: if dono(uid)
+          && soCampos(['palpites', 'atualizadoEm'])
+          && request.resource.data.palpites is map
+          && request.resource.data.palpites.size() <= 400
+          && request.resource.data.atualizadoEm is int;
+
+        match /projecoes/{rodada} {
+          allow read, delete: if dono(uid);
+          allow create, update: if dono(uid)
+            && soCampos(['rodada', 'salvoEm', 'jogosPendentes', 'jogosPalpitados', 'classificacao'])
+            && request.resource.data.rodada is int
+            && string(request.resource.data.rodada) == rodada
+            && request.resource.data.rodada >= 1 && request.resource.data.rodada <= 38
+            && request.resource.data.classificacao is list
+            && request.resource.data.classificacao.size() <= 20;
+        }
+      }
+    }
+  }
+}

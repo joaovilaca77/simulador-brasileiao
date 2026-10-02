@@ -1,0 +1,3989 @@
+{
+  "fonte": "exemplo",
+  "temporada": "2026",
+  "atualizadoEm": "2026-10-02T19:00:00.000Z",
+  "times": [
+    {
+      "id": 1,
+      "nome": "Athletico-PR",
+      "sigla": "CAP",
+      "cores": {
+        "primaria": "#c8102e",
+        "secundaria": "#000000"
+      }
+    },
+    {
+      "id": 2,
+      "nome": "Atlético-MG",
+      "sigla": "CAM",
+      "cores": {
+        "primaria": "#000000",
+        "secundaria": "#ffffff"
+      }
+    },
+    {
+      "id": 3,
+      "nome": "Bahia",
+      "sigla": "BAH",
+      "cores": {
+        "primaria": "#0057a8",
+        "secundaria": "#e30613"
+      }
+    },
+    {
+      "id": 4,
+      "nome": "Botafogo",
+      "sigla": "BOT",
+      "cores": {
+        "primaria": "#000000",
+        "secundaria": "#ffffff"
+      }
+    },
+    {
+      "id": 5,
+      "nome": "Chapecoense",
+      "sigla": "CHA",
+      "cores": {
+        "primaria": "#00843d",
+        "secundaria": "#ffffff"
+      }
+    },
+    {
+      "id": 6,
+      "nome": "Corinthians",
+      "sigla": "COR",
+      "cores": {
+        "primaria": "#ffffff",
+        "secundaria": "#000000"
+      }
+    },
+    {
+      "id": 7,
+      "nome": "Coritiba",
+      "sigla": "CFC",
+      "cores": {
+        "primaria": "#00544e",
+        "secundaria": "#ffffff"
+      }
+    },
+    {
+      "id": 8,
+      "nome": "Cruzeiro",
+      "sigla": "CRU",
+      "cores": {
+        "primaria": "#003da5",
+        "secundaria": "#ffffff"
+      }
+    },
+    {
+      "id": 9,
+      "nome": "Flamengo",
+      "sigla": "FLA",
+      "cores": {
+        "primaria": "#c8102e",
+        "secundaria": "#000000"
+      }
+    },
+    {
+      "id": 10,
+      "nome": "Fluminense",
+      "sigla": "FLU",
+      "cores": {
+        "primaria": "#7a1631",
+        "secundaria": "#00613c"
+      }
+    },
+    {
+      "id": 11,
+      "nome": "Grêmio",
+      "sigla": "GRE",
+      "cores": {
+        "primaria": "#0d80bf",
+        "secundaria": "#000000"
+      }
+    },
+    {
+      "id": 12,
+      "nome": "Internacional",
+      "sigla": "INT",
+      "cores": {
+        "primaria": "#e30613",
+        "secundaria": "#ffffff"
+      }
+    },
+    {
+      "id": 13,
+      "nome": "Mirassol",
+      "sigla": "MIR",
+      "cores": {
+        "primaria": "#ffd200",
+        "secundaria": "#00843d"
+      }
+    },
+    {
+      "id": 14,
+      "nome": "Palmeiras",
+      "sigla": "PAL",
+      "cores": {
+        "primaria": "#006437",
+        "secundaria": "#ffffff"
+      }
+    },
+    {
+      "id": 15,
+      "nome": "Red Bull Bragantino",
+      "sigla": "RBB",
+      "cores": {
+        "primaria": "#ffffff",
+        "secundaria": "#d50032"
+      }
+    },
+    {
+      "id": 16,
+      "nome": "Remo",
+      "sigla": "REM",
+      "cores": {
+        "primaria": "#0a1f5c",
+        "secundaria": "#ffffff"
+      }
+    },
+    {
+      "id": 17,
+      "nome": "Santos",
+      "sigla": "SAN",
+      "cores": {
+        "primaria": "#ffffff",
+        "secundaria": "#000000"
+      }
+    },
+    {
+      "id": 18,
+      "nome": "São Paulo",
+      "sigla": "SAO",
+      "cores": {
+        "primaria": "#e30613",
+        "secundaria": "#000000"
+      }
+    },
+    {
+      "id": 19,
+      "nome": "Vasco",
+      "sigla": "VAS",
+      "cores": {
+        "primaria": "#000000",
+        "secundaria": "#ffffff"
+      }
+    },
+    {
+      "id": 20,
+      "nome": "Vitória",
+      "sigla": "VIT",
+      "cores": {
+        "primaria": "#e30613",
+        "secundaria": "#000000"
+      }
+    }
+  ],
+  "jogos": [
+    {
+      "id": 100,
+      "rodada": 1,
+      "inicio": "2026-04-04T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 20,
+      "golsMandante": 1,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 101,
+      "rodada": 1,
+      "inicio": "2026-04-04T21:30:00.000Z",
+      "mandante": 2,
+      "visitante": 19,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 102,
+      "rodada": 1,
+      "inicio": "2026-04-04T21:30:00.000Z",
+      "mandante": 3,
+      "visitante": 18,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 103,
+      "rodada": 1,
+      "inicio": "2026-04-05T00:00:00.000Z",
+      "mandante": 4,
+      "visitante": 17,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 104,
+      "rodada": 1,
+      "inicio": "2026-04-05T00:00:00.000Z",
+      "mandante": 5,
+      "visitante": 16,
+      "golsMandante": 1,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 105,
+      "rodada": 1,
+      "inicio": "2026-04-05T19:00:00.000Z",
+      "mandante": 6,
+      "visitante": 15,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 106,
+      "rodada": 1,
+      "inicio": "2026-04-05T21:30:00.000Z",
+      "mandante": 7,
+      "visitante": 14,
+      "golsMandante": 4,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 107,
+      "rodada": 1,
+      "inicio": "2026-04-05T21:30:00.000Z",
+      "mandante": 8,
+      "visitante": 13,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 108,
+      "rodada": 1,
+      "inicio": "2026-04-06T00:00:00.000Z",
+      "mandante": 9,
+      "visitante": 12,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 109,
+      "rodada": 1,
+      "inicio": "2026-04-06T00:00:00.000Z",
+      "mandante": 10,
+      "visitante": 11,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 200,
+      "rodada": 2,
+      "inicio": "2026-04-11T19:00:00.000Z",
+      "mandante": 19,
+      "visitante": 1,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 201,
+      "rodada": 2,
+      "inicio": "2026-04-11T21:30:00.000Z",
+      "mandante": 18,
+      "visitante": 20,
+      "golsMandante": 1,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 202,
+      "rodada": 2,
+      "inicio": "2026-04-11T21:30:00.000Z",
+      "mandante": 17,
+      "visitante": 2,
+      "golsMandante": 1,
+      "golsVisitante": 4,
+      "status": "encerrado"
+    },
+    {
+      "id": 203,
+      "rodada": 2,
+      "inicio": "2026-04-12T00:00:00.000Z",
+      "mandante": 16,
+      "visitante": 3,
+      "golsMandante": 1,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 204,
+      "rodada": 2,
+      "inicio": "2026-04-12T00:00:00.000Z",
+      "mandante": 15,
+      "visitante": 4,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 205,
+      "rodada": 2,
+      "inicio": "2026-04-12T19:00:00.000Z",
+      "mandante": 14,
+      "visitante": 5,
+      "golsMandante": 0,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 206,
+      "rodada": 2,
+      "inicio": "2026-04-12T21:30:00.000Z",
+      "mandante": 13,
+      "visitante": 6,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 207,
+      "rodada": 2,
+      "inicio": "2026-04-12T21:30:00.000Z",
+      "mandante": 12,
+      "visitante": 7,
+      "golsMandante": 3,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 208,
+      "rodada": 2,
+      "inicio": "2026-04-13T00:00:00.000Z",
+      "mandante": 11,
+      "visitante": 8,
+      "golsMandante": 2,
+      "golsVisitante": 4,
+      "status": "encerrado"
+    },
+    {
+      "id": 209,
+      "rodada": 2,
+      "inicio": "2026-04-13T00:00:00.000Z",
+      "mandante": 10,
+      "visitante": 9,
+      "golsMandante": 3,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 300,
+      "rodada": 3,
+      "inicio": "2026-04-18T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 18,
+      "golsMandante": 0,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 301,
+      "rodada": 3,
+      "inicio": "2026-04-18T21:30:00.000Z",
+      "mandante": 19,
+      "visitante": 17,
+      "golsMandante": 0,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 302,
+      "rodada": 3,
+      "inicio": "2026-04-18T21:30:00.000Z",
+      "mandante": 20,
+      "visitante": 16,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 303,
+      "rodada": 3,
+      "inicio": "2026-04-19T00:00:00.000Z",
+      "mandante": 2,
+      "visitante": 15,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 304,
+      "rodada": 3,
+      "inicio": "2026-04-19T00:00:00.000Z",
+      "mandante": 3,
+      "visitante": 14,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 305,
+      "rodada": 3,
+      "inicio": "2026-04-19T19:00:00.000Z",
+      "mandante": 4,
+      "visitante": 13,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 306,
+      "rodada": 3,
+      "inicio": "2026-04-19T21:30:00.000Z",
+      "mandante": 5,
+      "visitante": 12,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 307,
+      "rodada": 3,
+      "inicio": "2026-04-19T21:30:00.000Z",
+      "mandante": 6,
+      "visitante": 11,
+      "golsMandante": 4,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 308,
+      "rodada": 3,
+      "inicio": "2026-04-20T00:00:00.000Z",
+      "mandante": 7,
+      "visitante": 10,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 309,
+      "rodada": 3,
+      "inicio": "2026-04-20T00:00:00.000Z",
+      "mandante": 8,
+      "visitante": 9,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 400,
+      "rodada": 4,
+      "inicio": "2026-04-25T19:00:00.000Z",
+      "mandante": 17,
+      "visitante": 1,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 401,
+      "rodada": 4,
+      "inicio": "2026-04-25T21:30:00.000Z",
+      "mandante": 16,
+      "visitante": 18,
+      "golsMandante": 0,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 402,
+      "rodada": 4,
+      "inicio": "2026-04-25T21:30:00.000Z",
+      "mandante": 15,
+      "visitante": 19,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 403,
+      "rodada": 4,
+      "inicio": "2026-04-26T00:00:00.000Z",
+      "mandante": 14,
+      "visitante": 20,
+      "golsMandante": 3,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 404,
+      "rodada": 4,
+      "inicio": "2026-04-26T00:00:00.000Z",
+      "mandante": 13,
+      "visitante": 2,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 405,
+      "rodada": 4,
+      "inicio": "2026-04-26T19:00:00.000Z",
+      "mandante": 12,
+      "visitante": 3,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 406,
+      "rodada": 4,
+      "inicio": "2026-04-26T21:30:00.000Z",
+      "mandante": 11,
+      "visitante": 4,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 407,
+      "rodada": 4,
+      "inicio": "2026-04-26T21:30:00.000Z",
+      "mandante": 10,
+      "visitante": 5,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 408,
+      "rodada": 4,
+      "inicio": "2026-04-27T00:00:00.000Z",
+      "mandante": 9,
+      "visitante": 6,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 409,
+      "rodada": 4,
+      "inicio": "2026-04-27T00:00:00.000Z",
+      "mandante": 8,
+      "visitante": 7,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 500,
+      "rodada": 5,
+      "inicio": "2026-05-02T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 16,
+      "golsMandante": 4,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 501,
+      "rodada": 5,
+      "inicio": "2026-05-02T21:30:00.000Z",
+      "mandante": 17,
+      "visitante": 15,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 502,
+      "rodada": 5,
+      "inicio": "2026-05-02T21:30:00.000Z",
+      "mandante": 18,
+      "visitante": 14,
+      "golsMandante": 2,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 503,
+      "rodada": 5,
+      "inicio": "2026-05-03T00:00:00.000Z",
+      "mandante": 19,
+      "visitante": 13,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 504,
+      "rodada": 5,
+      "inicio": "2026-05-03T00:00:00.000Z",
+      "mandante": 20,
+      "visitante": 12,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 505,
+      "rodada": 5,
+      "inicio": "2026-05-03T19:00:00.000Z",
+      "mandante": 2,
+      "visitante": 11,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 506,
+      "rodada": 5,
+      "inicio": "2026-05-03T21:30:00.000Z",
+      "mandante": 3,
+      "visitante": 10,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 507,
+      "rodada": 5,
+      "inicio": "2026-05-03T21:30:00.000Z",
+      "mandante": 4,
+      "visitante": 9,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 508,
+      "rodada": 5,
+      "inicio": "2026-05-04T00:00:00.000Z",
+      "mandante": 5,
+      "visitante": 8,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 509,
+      "rodada": 5,
+      "inicio": "2026-05-04T00:00:00.000Z",
+      "mandante": 6,
+      "visitante": 7,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 600,
+      "rodada": 6,
+      "inicio": "2026-05-09T19:00:00.000Z",
+      "mandante": 15,
+      "visitante": 1,
+      "golsMandante": 1,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 601,
+      "rodada": 6,
+      "inicio": "2026-05-09T21:30:00.000Z",
+      "mandante": 14,
+      "visitante": 16,
+      "golsMandante": 3,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 602,
+      "rodada": 6,
+      "inicio": "2026-05-09T21:30:00.000Z",
+      "mandante": 13,
+      "visitante": 17,
+      "golsMandante": 1,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 603,
+      "rodada": 6,
+      "inicio": "2026-05-10T00:00:00.000Z",
+      "mandante": 12,
+      "visitante": 18,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 604,
+      "rodada": 6,
+      "inicio": "2026-05-10T00:00:00.000Z",
+      "mandante": 11,
+      "visitante": 19,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 605,
+      "rodada": 6,
+      "inicio": "2026-05-10T19:00:00.000Z",
+      "mandante": 10,
+      "visitante": 20,
+      "golsMandante": 3,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 606,
+      "rodada": 6,
+      "inicio": "2026-05-10T21:30:00.000Z",
+      "mandante": 9,
+      "visitante": 2,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 607,
+      "rodada": 6,
+      "inicio": "2026-05-10T21:30:00.000Z",
+      "mandante": 8,
+      "visitante": 3,
+      "golsMandante": 3,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 608,
+      "rodada": 6,
+      "inicio": "2026-05-11T00:00:00.000Z",
+      "mandante": 7,
+      "visitante": 4,
+      "golsMandante": 3,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 609,
+      "rodada": 6,
+      "inicio": "2026-05-11T00:00:00.000Z",
+      "mandante": 6,
+      "visitante": 5,
+      "golsMandante": 1,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 700,
+      "rodada": 7,
+      "inicio": "2026-05-16T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 14,
+      "golsMandante": 2,
+      "golsVisitante": 4,
+      "status": "encerrado"
+    },
+    {
+      "id": 701,
+      "rodada": 7,
+      "inicio": "2026-05-16T21:30:00.000Z",
+      "mandante": 15,
+      "visitante": 13,
+      "golsMandante": 3,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 702,
+      "rodada": 7,
+      "inicio": "2026-05-16T21:30:00.000Z",
+      "mandante": 16,
+      "visitante": 12,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 703,
+      "rodada": 7,
+      "inicio": "2026-05-17T00:00:00.000Z",
+      "mandante": 17,
+      "visitante": 11,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 704,
+      "rodada": 7,
+      "inicio": "2026-05-17T00:00:00.000Z",
+      "mandante": 18,
+      "visitante": 10,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 705,
+      "rodada": 7,
+      "inicio": "2026-05-17T19:00:00.000Z",
+      "mandante": 19,
+      "visitante": 9,
+      "golsMandante": 0,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 706,
+      "rodada": 7,
+      "inicio": "2026-05-17T21:30:00.000Z",
+      "mandante": 20,
+      "visitante": 8,
+      "golsMandante": 1,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 707,
+      "rodada": 7,
+      "inicio": "2026-05-17T21:30:00.000Z",
+      "mandante": 2,
+      "visitante": 7,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 708,
+      "rodada": 7,
+      "inicio": "2026-05-18T00:00:00.000Z",
+      "mandante": 3,
+      "visitante": 6,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 709,
+      "rodada": 7,
+      "inicio": "2026-05-18T00:00:00.000Z",
+      "mandante": 4,
+      "visitante": 5,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 800,
+      "rodada": 8,
+      "inicio": "2026-05-23T19:00:00.000Z",
+      "mandante": 13,
+      "visitante": 1,
+      "golsMandante": 3,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 801,
+      "rodada": 8,
+      "inicio": "2026-05-23T21:30:00.000Z",
+      "mandante": 12,
+      "visitante": 14,
+      "golsMandante": 0,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 802,
+      "rodada": 8,
+      "inicio": "2026-05-23T21:30:00.000Z",
+      "mandante": 11,
+      "visitante": 15,
+      "golsMandante": 0,
+      "golsVisitante": 4,
+      "status": "encerrado"
+    },
+    {
+      "id": 803,
+      "rodada": 8,
+      "inicio": "2026-05-24T00:00:00.000Z",
+      "mandante": 10,
+      "visitante": 16,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 804,
+      "rodada": 8,
+      "inicio": "2026-05-24T00:00:00.000Z",
+      "mandante": 9,
+      "visitante": 17,
+      "golsMandante": 1,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 805,
+      "rodada": 8,
+      "inicio": "2026-05-24T19:00:00.000Z",
+      "mandante": 8,
+      "visitante": 18,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 806,
+      "rodada": 8,
+      "inicio": "2026-05-24T21:30:00.000Z",
+      "mandante": 7,
+      "visitante": 19,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 807,
+      "rodada": 8,
+      "inicio": "2026-05-24T21:30:00.000Z",
+      "mandante": 6,
+      "visitante": 20,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 808,
+      "rodada": 8,
+      "inicio": "2026-05-25T00:00:00.000Z",
+      "mandante": 5,
+      "visitante": 2,
+      "golsMandante": 0,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 809,
+      "rodada": 8,
+      "inicio": "2026-05-25T00:00:00.000Z",
+      "mandante": 4,
+      "visitante": 3,
+      "golsMandante": 0,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 900,
+      "rodada": 9,
+      "inicio": "2026-05-30T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 12,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 901,
+      "rodada": 9,
+      "inicio": "2026-05-30T21:30:00.000Z",
+      "mandante": 13,
+      "visitante": 11,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 902,
+      "rodada": 9,
+      "inicio": "2026-05-30T21:30:00.000Z",
+      "mandante": 14,
+      "visitante": 10,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 903,
+      "rodada": 9,
+      "inicio": "2026-05-31T00:00:00.000Z",
+      "mandante": 15,
+      "visitante": 9,
+      "golsMandante": 3,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 904,
+      "rodada": 9,
+      "inicio": "2026-05-31T00:00:00.000Z",
+      "mandante": 16,
+      "visitante": 8,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 905,
+      "rodada": 9,
+      "inicio": "2026-05-31T19:00:00.000Z",
+      "mandante": 17,
+      "visitante": 7,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 906,
+      "rodada": 9,
+      "inicio": "2026-05-31T21:30:00.000Z",
+      "mandante": 18,
+      "visitante": 6,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 907,
+      "rodada": 9,
+      "inicio": "2026-05-31T21:30:00.000Z",
+      "mandante": 19,
+      "visitante": 5,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 908,
+      "rodada": 9,
+      "inicio": "2026-06-01T00:00:00.000Z",
+      "mandante": 20,
+      "visitante": 4,
+      "golsMandante": 0,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 909,
+      "rodada": 9,
+      "inicio": "2026-06-01T00:00:00.000Z",
+      "mandante": 2,
+      "visitante": 3,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1000,
+      "rodada": 10,
+      "inicio": "2026-06-06T19:00:00.000Z",
+      "mandante": 11,
+      "visitante": 1,
+      "golsMandante": 0,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 1001,
+      "rodada": 10,
+      "inicio": "2026-06-06T21:30:00.000Z",
+      "mandante": 10,
+      "visitante": 12,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1002,
+      "rodada": 10,
+      "inicio": "2026-06-06T21:30:00.000Z",
+      "mandante": 9,
+      "visitante": 13,
+      "golsMandante": 4,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1003,
+      "rodada": 10,
+      "inicio": "2026-06-07T00:00:00.000Z",
+      "mandante": 8,
+      "visitante": 14,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1004,
+      "rodada": 10,
+      "inicio": "2026-06-07T00:00:00.000Z",
+      "mandante": 7,
+      "visitante": 15,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1005,
+      "rodada": 10,
+      "inicio": "2026-06-07T19:00:00.000Z",
+      "mandante": 6,
+      "visitante": 16,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1006,
+      "rodada": 10,
+      "inicio": "2026-06-07T21:30:00.000Z",
+      "mandante": 5,
+      "visitante": 17,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1007,
+      "rodada": 10,
+      "inicio": "2026-06-07T21:30:00.000Z",
+      "mandante": 4,
+      "visitante": 18,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1008,
+      "rodada": 10,
+      "inicio": "2026-06-08T00:00:00.000Z",
+      "mandante": 3,
+      "visitante": 19,
+      "golsMandante": 4,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1009,
+      "rodada": 10,
+      "inicio": "2026-06-08T00:00:00.000Z",
+      "mandante": 2,
+      "visitante": 20,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1100,
+      "rodada": 11,
+      "inicio": "2026-06-13T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 10,
+      "golsMandante": 1,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1101,
+      "rodada": 11,
+      "inicio": "2026-06-13T21:30:00.000Z",
+      "mandante": 11,
+      "visitante": 9,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1102,
+      "rodada": 11,
+      "inicio": "2026-06-13T21:30:00.000Z",
+      "mandante": 12,
+      "visitante": 8,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1103,
+      "rodada": 11,
+      "inicio": "2026-06-14T00:00:00.000Z",
+      "mandante": 13,
+      "visitante": 7,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1104,
+      "rodada": 11,
+      "inicio": "2026-06-14T00:00:00.000Z",
+      "mandante": 14,
+      "visitante": 6,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1105,
+      "rodada": 11,
+      "inicio": "2026-06-14T19:00:00.000Z",
+      "mandante": 15,
+      "visitante": 5,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1106,
+      "rodada": 11,
+      "inicio": "2026-06-14T21:30:00.000Z",
+      "mandante": 16,
+      "visitante": 4,
+      "golsMandante": 2,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 1107,
+      "rodada": 11,
+      "inicio": "2026-06-14T21:30:00.000Z",
+      "mandante": 17,
+      "visitante": 3,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1108,
+      "rodada": 11,
+      "inicio": "2026-06-15T00:00:00.000Z",
+      "mandante": 18,
+      "visitante": 2,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1109,
+      "rodada": 11,
+      "inicio": "2026-06-15T00:00:00.000Z",
+      "mandante": 19,
+      "visitante": 20,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1200,
+      "rodada": 12,
+      "inicio": "2026-06-20T19:00:00.000Z",
+      "mandante": 9,
+      "visitante": 1,
+      "golsMandante": 3,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1201,
+      "rodada": 12,
+      "inicio": "2026-06-20T21:30:00.000Z",
+      "mandante": 8,
+      "visitante": 10,
+      "golsMandante": 3,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1202,
+      "rodada": 12,
+      "inicio": "2026-06-20T21:30:00.000Z",
+      "mandante": 7,
+      "visitante": 11,
+      "golsMandante": 2,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 1203,
+      "rodada": 12,
+      "inicio": "2026-06-21T00:00:00.000Z",
+      "mandante": 6,
+      "visitante": 12,
+      "golsMandante": 3,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1204,
+      "rodada": 12,
+      "inicio": "2026-06-21T00:00:00.000Z",
+      "mandante": 5,
+      "visitante": 13,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1205,
+      "rodada": 12,
+      "inicio": "2026-06-21T19:00:00.000Z",
+      "mandante": 4,
+      "visitante": 14,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1206,
+      "rodada": 12,
+      "inicio": "2026-06-21T21:30:00.000Z",
+      "mandante": 3,
+      "visitante": 15,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1207,
+      "rodada": 12,
+      "inicio": "2026-06-21T21:30:00.000Z",
+      "mandante": 2,
+      "visitante": 16,
+      "golsMandante": 3,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1208,
+      "rodada": 12,
+      "inicio": "2026-06-22T00:00:00.000Z",
+      "mandante": 20,
+      "visitante": 17,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1209,
+      "rodada": 12,
+      "inicio": "2026-06-22T00:00:00.000Z",
+      "mandante": 19,
+      "visitante": 18,
+      "golsMandante": 4,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1300,
+      "rodada": 13,
+      "inicio": "2026-06-27T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 8,
+      "golsMandante": 3,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1301,
+      "rodada": 13,
+      "inicio": "2026-06-27T21:30:00.000Z",
+      "mandante": 9,
+      "visitante": 7,
+      "golsMandante": 4,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1302,
+      "rodada": 13,
+      "inicio": "2026-06-27T21:30:00.000Z",
+      "mandante": 10,
+      "visitante": 6,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1303,
+      "rodada": 13,
+      "inicio": "2026-06-28T00:00:00.000Z",
+      "mandante": 11,
+      "visitante": 5,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1304,
+      "rodada": 13,
+      "inicio": "2026-06-28T00:00:00.000Z",
+      "mandante": 12,
+      "visitante": 4,
+      "golsMandante": 0,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1305,
+      "rodada": 13,
+      "inicio": "2026-06-28T19:00:00.000Z",
+      "mandante": 13,
+      "visitante": 3,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1306,
+      "rodada": 13,
+      "inicio": "2026-06-28T21:30:00.000Z",
+      "mandante": 14,
+      "visitante": 2,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1307,
+      "rodada": 13,
+      "inicio": "2026-06-28T21:30:00.000Z",
+      "mandante": 15,
+      "visitante": 20,
+      "golsMandante": 2,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 1308,
+      "rodada": 13,
+      "inicio": "2026-06-29T00:00:00.000Z",
+      "mandante": 16,
+      "visitante": 19,
+      "golsMandante": 3,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1309,
+      "rodada": 13,
+      "inicio": "2026-06-29T00:00:00.000Z",
+      "mandante": 17,
+      "visitante": 18,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1400,
+      "rodada": 14,
+      "inicio": "2026-07-04T19:00:00.000Z",
+      "mandante": 7,
+      "visitante": 1,
+      "golsMandante": 0,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1401,
+      "rodada": 14,
+      "inicio": "2026-07-04T21:30:00.000Z",
+      "mandante": 6,
+      "visitante": 8,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1402,
+      "rodada": 14,
+      "inicio": "2026-07-04T21:30:00.000Z",
+      "mandante": 5,
+      "visitante": 9,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1403,
+      "rodada": 14,
+      "inicio": "2026-07-05T00:00:00.000Z",
+      "mandante": 4,
+      "visitante": 10,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1404,
+      "rodada": 14,
+      "inicio": "2026-07-05T00:00:00.000Z",
+      "mandante": 3,
+      "visitante": 11,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1405,
+      "rodada": 14,
+      "inicio": "2026-07-05T19:00:00.000Z",
+      "mandante": 2,
+      "visitante": 12,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1406,
+      "rodada": 14,
+      "inicio": "2026-07-05T21:30:00.000Z",
+      "mandante": 20,
+      "visitante": 13,
+      "golsMandante": 3,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 1407,
+      "rodada": 14,
+      "inicio": "2026-07-05T21:30:00.000Z",
+      "mandante": 19,
+      "visitante": 14,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1408,
+      "rodada": 14,
+      "inicio": "2026-07-06T00:00:00.000Z",
+      "mandante": 18,
+      "visitante": 15,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1409,
+      "rodada": 14,
+      "inicio": "2026-07-06T00:00:00.000Z",
+      "mandante": 17,
+      "visitante": 16,
+      "golsMandante": 2,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 1500,
+      "rodada": 15,
+      "inicio": "2026-07-11T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 6,
+      "golsMandante": 3,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1501,
+      "rodada": 15,
+      "inicio": "2026-07-11T21:30:00.000Z",
+      "mandante": 7,
+      "visitante": 5,
+      "golsMandante": 2,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 1502,
+      "rodada": 15,
+      "inicio": "2026-07-11T21:30:00.000Z",
+      "mandante": 8,
+      "visitante": 4,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1503,
+      "rodada": 15,
+      "inicio": "2026-07-12T00:00:00.000Z",
+      "mandante": 9,
+      "visitante": 3,
+      "golsMandante": 5,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1504,
+      "rodada": 15,
+      "inicio": "2026-07-12T00:00:00.000Z",
+      "mandante": 10,
+      "visitante": 2,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1505,
+      "rodada": 15,
+      "inicio": "2026-07-12T19:00:00.000Z",
+      "mandante": 11,
+      "visitante": 20,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1506,
+      "rodada": 15,
+      "inicio": "2026-07-12T21:30:00.000Z",
+      "mandante": 12,
+      "visitante": 19,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1507,
+      "rodada": 15,
+      "inicio": "2026-07-12T21:30:00.000Z",
+      "mandante": 13,
+      "visitante": 18,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1508,
+      "rodada": 15,
+      "inicio": "2026-07-13T00:00:00.000Z",
+      "mandante": 14,
+      "visitante": 17,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1509,
+      "rodada": 15,
+      "inicio": "2026-07-13T00:00:00.000Z",
+      "mandante": 15,
+      "visitante": 16,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1600,
+      "rodada": 16,
+      "inicio": "2026-07-18T19:00:00.000Z",
+      "mandante": 5,
+      "visitante": 1,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1601,
+      "rodada": 16,
+      "inicio": "2026-07-18T21:30:00.000Z",
+      "mandante": 4,
+      "visitante": 6,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1602,
+      "rodada": 16,
+      "inicio": "2026-07-18T21:30:00.000Z",
+      "mandante": 3,
+      "visitante": 7,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1603,
+      "rodada": 16,
+      "inicio": "2026-07-19T00:00:00.000Z",
+      "mandante": 2,
+      "visitante": 8,
+      "golsMandante": 2,
+      "golsVisitante": 4,
+      "status": "encerrado"
+    },
+    {
+      "id": 1604,
+      "rodada": 16,
+      "inicio": "2026-07-19T00:00:00.000Z",
+      "mandante": 20,
+      "visitante": 9,
+      "golsMandante": 0,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 1605,
+      "rodada": 16,
+      "inicio": "2026-07-19T19:00:00.000Z",
+      "mandante": 19,
+      "visitante": 10,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1606,
+      "rodada": 16,
+      "inicio": "2026-07-19T21:30:00.000Z",
+      "mandante": 18,
+      "visitante": 11,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1607,
+      "rodada": 16,
+      "inicio": "2026-07-19T21:30:00.000Z",
+      "mandante": 17,
+      "visitante": 12,
+      "golsMandante": 4,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1608,
+      "rodada": 16,
+      "inicio": "2026-07-20T00:00:00.000Z",
+      "mandante": 16,
+      "visitante": 13,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1609,
+      "rodada": 16,
+      "inicio": "2026-07-20T00:00:00.000Z",
+      "mandante": 15,
+      "visitante": 14,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1700,
+      "rodada": 17,
+      "inicio": "2026-07-25T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 4,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1701,
+      "rodada": 17,
+      "inicio": "2026-07-25T21:30:00.000Z",
+      "mandante": 5,
+      "visitante": 3,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1702,
+      "rodada": 17,
+      "inicio": "2026-07-25T21:30:00.000Z",
+      "mandante": 6,
+      "visitante": 2,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1703,
+      "rodada": 17,
+      "inicio": "2026-07-26T00:00:00.000Z",
+      "mandante": 7,
+      "visitante": 20,
+      "golsMandante": 3,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1704,
+      "rodada": 17,
+      "inicio": "2026-07-26T00:00:00.000Z",
+      "mandante": 8,
+      "visitante": 19,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1705,
+      "rodada": 17,
+      "inicio": "2026-07-26T19:00:00.000Z",
+      "mandante": 9,
+      "visitante": 18,
+      "golsMandante": 0,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 1706,
+      "rodada": 17,
+      "inicio": "2026-07-26T21:30:00.000Z",
+      "mandante": 10,
+      "visitante": 17,
+      "golsMandante": 4,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1707,
+      "rodada": 17,
+      "inicio": "2026-07-26T21:30:00.000Z",
+      "mandante": 11,
+      "visitante": 16,
+      "golsMandante": 1,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1708,
+      "rodada": 17,
+      "inicio": "2026-07-27T00:00:00.000Z",
+      "mandante": 12,
+      "visitante": 15,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1709,
+      "rodada": 17,
+      "inicio": "2026-07-27T00:00:00.000Z",
+      "mandante": 13,
+      "visitante": 14,
+      "golsMandante": 0,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1800,
+      "rodada": 18,
+      "inicio": "2026-08-01T19:00:00.000Z",
+      "mandante": 3,
+      "visitante": 1,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1801,
+      "rodada": 18,
+      "inicio": "2026-08-01T21:30:00.000Z",
+      "mandante": 2,
+      "visitante": 4,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1802,
+      "rodada": 18,
+      "inicio": "2026-08-01T21:30:00.000Z",
+      "mandante": 20,
+      "visitante": 5,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1803,
+      "rodada": 18,
+      "inicio": "2026-08-02T00:00:00.000Z",
+      "mandante": 19,
+      "visitante": 6,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1804,
+      "rodada": 18,
+      "inicio": "2026-08-02T00:00:00.000Z",
+      "mandante": 18,
+      "visitante": 7,
+      "golsMandante": 3,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1805,
+      "rodada": 18,
+      "inicio": "2026-08-02T19:00:00.000Z",
+      "mandante": 17,
+      "visitante": 8,
+      "golsMandante": 3,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1806,
+      "rodada": 18,
+      "inicio": "2026-08-02T21:30:00.000Z",
+      "mandante": 16,
+      "visitante": 9,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 1807,
+      "rodada": 18,
+      "inicio": "2026-08-02T21:30:00.000Z",
+      "mandante": 15,
+      "visitante": 10,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1808,
+      "rodada": 18,
+      "inicio": "2026-08-03T00:00:00.000Z",
+      "mandante": 14,
+      "visitante": 11,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1809,
+      "rodada": 18,
+      "inicio": "2026-08-03T00:00:00.000Z",
+      "mandante": 13,
+      "visitante": 12,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1900,
+      "rodada": 19,
+      "inicio": "2026-08-08T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 2,
+      "golsMandante": 1,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 1901,
+      "rodada": 19,
+      "inicio": "2026-08-08T21:30:00.000Z",
+      "mandante": 3,
+      "visitante": 20,
+      "golsMandante": 2,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 1902,
+      "rodada": 19,
+      "inicio": "2026-08-08T21:30:00.000Z",
+      "mandante": 4,
+      "visitante": 19,
+      "golsMandante": 1,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 1903,
+      "rodada": 19,
+      "inicio": "2026-08-09T00:00:00.000Z",
+      "mandante": 5,
+      "visitante": 18,
+      "golsMandante": 4,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1904,
+      "rodada": 19,
+      "inicio": "2026-08-09T00:00:00.000Z",
+      "mandante": 6,
+      "visitante": 17,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1905,
+      "rodada": 19,
+      "inicio": "2026-08-09T19:00:00.000Z",
+      "mandante": 7,
+      "visitante": 16,
+      "golsMandante": 0,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 1906,
+      "rodada": 19,
+      "inicio": "2026-08-09T21:30:00.000Z",
+      "mandante": 8,
+      "visitante": 15,
+      "golsMandante": 3,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1907,
+      "rodada": 19,
+      "inicio": "2026-08-09T21:30:00.000Z",
+      "mandante": 9,
+      "visitante": 14,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1908,
+      "rodada": 19,
+      "inicio": "2026-08-10T00:00:00.000Z",
+      "mandante": 10,
+      "visitante": 13,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 1909,
+      "rodada": 19,
+      "inicio": "2026-08-10T00:00:00.000Z",
+      "mandante": 11,
+      "visitante": 12,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2000,
+      "rodada": 20,
+      "inicio": "2026-08-15T19:00:00.000Z",
+      "mandante": 20,
+      "visitante": 1,
+      "golsMandante": 3,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2001,
+      "rodada": 20,
+      "inicio": "2026-08-15T21:30:00.000Z",
+      "mandante": 19,
+      "visitante": 2,
+      "golsMandante": 2,
+      "golsVisitante": 5,
+      "status": "encerrado"
+    },
+    {
+      "id": 2002,
+      "rodada": 20,
+      "inicio": "2026-08-15T21:30:00.000Z",
+      "mandante": 18,
+      "visitante": 3,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2003,
+      "rodada": 20,
+      "inicio": "2026-08-16T00:00:00.000Z",
+      "mandante": 17,
+      "visitante": 4,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2004,
+      "rodada": 20,
+      "inicio": "2026-08-16T00:00:00.000Z",
+      "mandante": 16,
+      "visitante": 5,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2005,
+      "rodada": 20,
+      "inicio": "2026-08-16T19:00:00.000Z",
+      "mandante": 15,
+      "visitante": 6,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2006,
+      "rodada": 20,
+      "inicio": "2026-08-16T21:30:00.000Z",
+      "mandante": 14,
+      "visitante": 7,
+      "golsMandante": 2,
+      "golsVisitante": 5,
+      "status": "encerrado"
+    },
+    {
+      "id": 2007,
+      "rodada": 20,
+      "inicio": "2026-08-16T21:30:00.000Z",
+      "mandante": 13,
+      "visitante": 8,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2008,
+      "rodada": 20,
+      "inicio": "2026-08-17T00:00:00.000Z",
+      "mandante": 12,
+      "visitante": 9,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2009,
+      "rodada": 20,
+      "inicio": "2026-08-17T00:00:00.000Z",
+      "mandante": 11,
+      "visitante": 10,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2100,
+      "rodada": 21,
+      "inicio": "2026-08-22T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 19,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2101,
+      "rodada": 21,
+      "inicio": "2026-08-22T21:30:00.000Z",
+      "mandante": 20,
+      "visitante": 18,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2102,
+      "rodada": 21,
+      "inicio": "2026-08-22T21:30:00.000Z",
+      "mandante": 2,
+      "visitante": 17,
+      "golsMandante": 3,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2103,
+      "rodada": 21,
+      "inicio": "2026-08-23T00:00:00.000Z",
+      "mandante": 3,
+      "visitante": 16,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2104,
+      "rodada": 21,
+      "inicio": "2026-08-23T00:00:00.000Z",
+      "mandante": 4,
+      "visitante": 15,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2105,
+      "rodada": 21,
+      "inicio": "2026-08-23T19:00:00.000Z",
+      "mandante": 5,
+      "visitante": 14,
+      "golsMandante": 0,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2106,
+      "rodada": 21,
+      "inicio": "2026-08-23T21:30:00.000Z",
+      "mandante": 6,
+      "visitante": 13,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2107,
+      "rodada": 21,
+      "inicio": "2026-08-23T21:30:00.000Z",
+      "mandante": 7,
+      "visitante": 12,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2108,
+      "rodada": 21,
+      "inicio": "2026-08-24T00:00:00.000Z",
+      "mandante": 8,
+      "visitante": 11,
+      "golsMandante": 4,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2109,
+      "rodada": 21,
+      "inicio": "2026-08-24T00:00:00.000Z",
+      "mandante": 9,
+      "visitante": 10,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2200,
+      "rodada": 22,
+      "inicio": "2026-08-29T19:00:00.000Z",
+      "mandante": 18,
+      "visitante": 1,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2201,
+      "rodada": 22,
+      "inicio": "2026-08-29T21:30:00.000Z",
+      "mandante": 17,
+      "visitante": 19,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2202,
+      "rodada": 22,
+      "inicio": "2026-08-29T21:30:00.000Z",
+      "mandante": 16,
+      "visitante": 20,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2203,
+      "rodada": 22,
+      "inicio": "2026-08-30T00:00:00.000Z",
+      "mandante": 15,
+      "visitante": 2,
+      "golsMandante": 4,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2204,
+      "rodada": 22,
+      "inicio": "2026-08-30T00:00:00.000Z",
+      "mandante": 14,
+      "visitante": 3,
+      "golsMandante": 4,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2205,
+      "rodada": 22,
+      "inicio": "2026-08-30T19:00:00.000Z",
+      "mandante": 13,
+      "visitante": 4,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2206,
+      "rodada": 22,
+      "inicio": "2026-08-30T21:30:00.000Z",
+      "mandante": 12,
+      "visitante": 5,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2207,
+      "rodada": 22,
+      "inicio": "2026-08-30T21:30:00.000Z",
+      "mandante": 11,
+      "visitante": 6,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2208,
+      "rodada": 22,
+      "inicio": "2026-08-31T00:00:00.000Z",
+      "mandante": 10,
+      "visitante": 7,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2209,
+      "rodada": 22,
+      "inicio": "2026-08-31T00:00:00.000Z",
+      "mandante": 9,
+      "visitante": 8,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2300,
+      "rodada": 23,
+      "inicio": "2026-09-05T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 17,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2301,
+      "rodada": 23,
+      "inicio": "2026-09-05T21:30:00.000Z",
+      "mandante": 18,
+      "visitante": 16,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2302,
+      "rodada": 23,
+      "inicio": "2026-09-05T21:30:00.000Z",
+      "mandante": 19,
+      "visitante": 15,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2303,
+      "rodada": 23,
+      "inicio": "2026-09-06T00:00:00.000Z",
+      "mandante": 20,
+      "visitante": 14,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2304,
+      "rodada": 23,
+      "inicio": "2026-09-06T00:00:00.000Z",
+      "mandante": 2,
+      "visitante": 13,
+      "golsMandante": 0,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2305,
+      "rodada": 23,
+      "inicio": "2026-09-06T19:00:00.000Z",
+      "mandante": 3,
+      "visitante": 12,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2306,
+      "rodada": 23,
+      "inicio": "2026-09-06T21:30:00.000Z",
+      "mandante": 4,
+      "visitante": 11,
+      "golsMandante": 2,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 2307,
+      "rodada": 23,
+      "inicio": "2026-09-06T21:30:00.000Z",
+      "mandante": 5,
+      "visitante": 10,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2308,
+      "rodada": 23,
+      "inicio": "2026-09-07T00:00:00.000Z",
+      "mandante": 6,
+      "visitante": 9,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2309,
+      "rodada": 23,
+      "inicio": "2026-09-07T00:00:00.000Z",
+      "mandante": 7,
+      "visitante": 8,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2400,
+      "rodada": 24,
+      "inicio": "2026-09-12T19:00:00.000Z",
+      "mandante": 16,
+      "visitante": 1,
+      "golsMandante": 0,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2401,
+      "rodada": 24,
+      "inicio": "2026-09-12T21:30:00.000Z",
+      "mandante": 15,
+      "visitante": 17,
+      "golsMandante": 0,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 2402,
+      "rodada": 24,
+      "inicio": "2026-09-12T21:30:00.000Z",
+      "mandante": 14,
+      "visitante": 18,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2403,
+      "rodada": 24,
+      "inicio": "2026-09-13T00:00:00.000Z",
+      "mandante": 13,
+      "visitante": 19,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2404,
+      "rodada": 24,
+      "inicio": "2026-09-13T00:00:00.000Z",
+      "mandante": 12,
+      "visitante": 20,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2405,
+      "rodada": 24,
+      "inicio": "2026-09-13T19:00:00.000Z",
+      "mandante": 11,
+      "visitante": 2,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2406,
+      "rodada": 24,
+      "inicio": "2026-09-13T21:30:00.000Z",
+      "mandante": 10,
+      "visitante": 3,
+      "golsMandante": 0,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 2407,
+      "rodada": 24,
+      "inicio": "2026-09-13T21:30:00.000Z",
+      "mandante": 9,
+      "visitante": 4,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2408,
+      "rodada": 24,
+      "inicio": "2026-09-14T00:00:00.000Z",
+      "mandante": 8,
+      "visitante": 5,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2409,
+      "rodada": 24,
+      "inicio": "2026-09-14T00:00:00.000Z",
+      "mandante": 7,
+      "visitante": 6,
+      "golsMandante": 1,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 2500,
+      "rodada": 25,
+      "inicio": "2026-09-19T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 15,
+      "golsMandante": 2,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2501,
+      "rodada": 25,
+      "inicio": "2026-09-19T21:30:00.000Z",
+      "mandante": 16,
+      "visitante": 14,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2502,
+      "rodada": 25,
+      "inicio": "2026-09-19T21:30:00.000Z",
+      "mandante": 17,
+      "visitante": 13,
+      "golsMandante": 0,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2503,
+      "rodada": 25,
+      "inicio": "2026-09-20T00:00:00.000Z",
+      "mandante": 18,
+      "visitante": 12,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2504,
+      "rodada": 25,
+      "inicio": "2026-09-20T00:00:00.000Z",
+      "mandante": 19,
+      "visitante": 11,
+      "golsMandante": 2,
+      "golsVisitante": 4,
+      "status": "encerrado"
+    },
+    {
+      "id": 2505,
+      "rodada": 25,
+      "inicio": "2026-09-20T19:00:00.000Z",
+      "mandante": 20,
+      "visitante": 10,
+      "golsMandante": 2,
+      "golsVisitante": 3,
+      "status": "encerrado"
+    },
+    {
+      "id": 2506,
+      "rodada": 25,
+      "inicio": "2026-09-20T21:30:00.000Z",
+      "mandante": 2,
+      "visitante": 9,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2507,
+      "rodada": 25,
+      "inicio": "2026-09-20T21:30:00.000Z",
+      "mandante": 3,
+      "visitante": 8,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2508,
+      "rodada": 25,
+      "inicio": "2026-09-21T00:00:00.000Z",
+      "mandante": 4,
+      "visitante": 7,
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2509,
+      "rodada": 25,
+      "inicio": "2026-09-21T00:00:00.000Z",
+      "mandante": 5,
+      "visitante": 6,
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2600,
+      "rodada": 26,
+      "inicio": "2026-09-26T19:00:00.000Z",
+      "mandante": 14,
+      "visitante": 1,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2601,
+      "rodada": 26,
+      "inicio": "2026-09-26T21:30:00.000Z",
+      "mandante": 13,
+      "visitante": 15,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2602,
+      "rodada": 26,
+      "inicio": "2026-09-26T21:30:00.000Z",
+      "mandante": 12,
+      "visitante": 16,
+      "golsMandante": 3,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2603,
+      "rodada": 26,
+      "inicio": "2026-09-27T00:00:00.000Z",
+      "mandante": 11,
+      "visitante": 17,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2604,
+      "rodada": 26,
+      "inicio": "2026-09-27T00:00:00.000Z",
+      "mandante": 10,
+      "visitante": 18,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2605,
+      "rodada": 26,
+      "inicio": "2026-09-27T19:00:00.000Z",
+      "mandante": 9,
+      "visitante": 19,
+      "golsMandante": 0,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2606,
+      "rodada": 26,
+      "inicio": "2026-09-27T21:30:00.000Z",
+      "mandante": 8,
+      "visitante": 20,
+      "golsMandante": 0,
+      "golsVisitante": 0,
+      "status": "encerrado"
+    },
+    {
+      "id": 2607,
+      "rodada": 26,
+      "inicio": "2026-09-27T21:30:00.000Z",
+      "mandante": 7,
+      "visitante": 2,
+      "golsMandante": 0,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2608,
+      "rodada": 26,
+      "inicio": "2026-09-28T00:00:00.000Z",
+      "mandante": 6,
+      "visitante": 3,
+      "golsMandante": 2,
+      "golsVisitante": 2,
+      "status": "encerrado"
+    },
+    {
+      "id": 2609,
+      "rodada": 26,
+      "inicio": "2026-09-28T00:00:00.000Z",
+      "mandante": 5,
+      "visitante": 4,
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
+    },
+    {
+      "id": 2700,
+      "rodada": 27,
+      "inicio": "2026-10-03T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 13,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2701,
+      "rodada": 27,
+      "inicio": "2026-10-03T21:30:00.000Z",
+      "mandante": 14,
+      "visitante": 12,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2702,
+      "rodada": 27,
+      "inicio": "2026-10-03T21:30:00.000Z",
+      "mandante": 15,
+      "visitante": 11,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2703,
+      "rodada": 27,
+      "inicio": "2026-10-04T00:00:00.000Z",
+      "mandante": 16,
+      "visitante": 10,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2704,
+      "rodada": 27,
+      "inicio": "2026-10-04T00:00:00.000Z",
+      "mandante": 17,
+      "visitante": 9,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2705,
+      "rodada": 27,
+      "inicio": "2026-10-04T19:00:00.000Z",
+      "mandante": 18,
+      "visitante": 8,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2706,
+      "rodada": 27,
+      "inicio": "2026-10-04T21:30:00.000Z",
+      "mandante": 19,
+      "visitante": 7,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2707,
+      "rodada": 27,
+      "inicio": "2026-10-04T21:30:00.000Z",
+      "mandante": 20,
+      "visitante": 6,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2708,
+      "rodada": 27,
+      "inicio": "2026-10-05T00:00:00.000Z",
+      "mandante": 2,
+      "visitante": 5,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2709,
+      "rodada": 27,
+      "inicio": "2026-10-05T00:00:00.000Z",
+      "mandante": 3,
+      "visitante": 4,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2800,
+      "rodada": 28,
+      "inicio": "2026-10-10T19:00:00.000Z",
+      "mandante": 12,
+      "visitante": 1,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2801,
+      "rodada": 28,
+      "inicio": "2026-10-10T21:30:00.000Z",
+      "mandante": 11,
+      "visitante": 13,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2802,
+      "rodada": 28,
+      "inicio": "2026-10-10T21:30:00.000Z",
+      "mandante": 10,
+      "visitante": 14,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2803,
+      "rodada": 28,
+      "inicio": "2026-10-11T00:00:00.000Z",
+      "mandante": 9,
+      "visitante": 15,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2804,
+      "rodada": 28,
+      "inicio": "2026-10-11T00:00:00.000Z",
+      "mandante": 8,
+      "visitante": 16,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2805,
+      "rodada": 28,
+      "inicio": "2026-10-11T19:00:00.000Z",
+      "mandante": 7,
+      "visitante": 17,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2806,
+      "rodada": 28,
+      "inicio": "2026-10-11T21:30:00.000Z",
+      "mandante": 6,
+      "visitante": 18,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2807,
+      "rodada": 28,
+      "inicio": "2026-10-11T21:30:00.000Z",
+      "mandante": 5,
+      "visitante": 19,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2808,
+      "rodada": 28,
+      "inicio": "2026-10-12T00:00:00.000Z",
+      "mandante": 4,
+      "visitante": 20,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2809,
+      "rodada": 28,
+      "inicio": "2026-10-12T00:00:00.000Z",
+      "mandante": 3,
+      "visitante": 2,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2900,
+      "rodada": 29,
+      "inicio": "2026-10-17T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 11,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2901,
+      "rodada": 29,
+      "inicio": "2026-10-17T21:30:00.000Z",
+      "mandante": 12,
+      "visitante": 10,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2902,
+      "rodada": 29,
+      "inicio": "2026-10-17T21:30:00.000Z",
+      "mandante": 13,
+      "visitante": 9,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2903,
+      "rodada": 29,
+      "inicio": "2026-10-18T00:00:00.000Z",
+      "mandante": 14,
+      "visitante": 8,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2904,
+      "rodada": 29,
+      "inicio": "2026-10-18T00:00:00.000Z",
+      "mandante": 15,
+      "visitante": 7,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2905,
+      "rodada": 29,
+      "inicio": "2026-10-18T19:00:00.000Z",
+      "mandante": 16,
+      "visitante": 6,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2906,
+      "rodada": 29,
+      "inicio": "2026-10-18T21:30:00.000Z",
+      "mandante": 17,
+      "visitante": 5,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2907,
+      "rodada": 29,
+      "inicio": "2026-10-18T21:30:00.000Z",
+      "mandante": 18,
+      "visitante": 4,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2908,
+      "rodada": 29,
+      "inicio": "2026-10-19T00:00:00.000Z",
+      "mandante": 19,
+      "visitante": 3,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 2909,
+      "rodada": 29,
+      "inicio": "2026-10-19T00:00:00.000Z",
+      "mandante": 20,
+      "visitante": 2,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3000,
+      "rodada": 30,
+      "inicio": "2026-10-24T19:00:00.000Z",
+      "mandante": 10,
+      "visitante": 1,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3001,
+      "rodada": 30,
+      "inicio": "2026-10-24T21:30:00.000Z",
+      "mandante": 9,
+      "visitante": 11,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3002,
+      "rodada": 30,
+      "inicio": "2026-10-24T21:30:00.000Z",
+      "mandante": 8,
+      "visitante": 12,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3003,
+      "rodada": 30,
+      "inicio": "2026-10-25T00:00:00.000Z",
+      "mandante": 7,
+      "visitante": 13,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3004,
+      "rodada": 30,
+      "inicio": "2026-10-25T00:00:00.000Z",
+      "mandante": 6,
+      "visitante": 14,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3005,
+      "rodada": 30,
+      "inicio": "2026-10-25T19:00:00.000Z",
+      "mandante": 5,
+      "visitante": 15,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3006,
+      "rodada": 30,
+      "inicio": "2026-10-25T21:30:00.000Z",
+      "mandante": 4,
+      "visitante": 16,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3007,
+      "rodada": 30,
+      "inicio": "2026-10-25T21:30:00.000Z",
+      "mandante": 3,
+      "visitante": 17,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3008,
+      "rodada": 30,
+      "inicio": "2026-10-26T00:00:00.000Z",
+      "mandante": 2,
+      "visitante": 18,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3009,
+      "rodada": 30,
+      "inicio": "2026-10-26T00:00:00.000Z",
+      "mandante": 20,
+      "visitante": 19,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3100,
+      "rodada": 31,
+      "inicio": "2026-10-31T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 9,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3101,
+      "rodada": 31,
+      "inicio": "2026-10-31T21:30:00.000Z",
+      "mandante": 10,
+      "visitante": 8,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3102,
+      "rodada": 31,
+      "inicio": "2026-10-31T21:30:00.000Z",
+      "mandante": 11,
+      "visitante": 7,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3103,
+      "rodada": 31,
+      "inicio": "2026-11-01T00:00:00.000Z",
+      "mandante": 12,
+      "visitante": 6,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3104,
+      "rodada": 31,
+      "inicio": "2026-11-01T00:00:00.000Z",
+      "mandante": 13,
+      "visitante": 5,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3105,
+      "rodada": 31,
+      "inicio": "2026-11-01T19:00:00.000Z",
+      "mandante": 14,
+      "visitante": 4,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3106,
+      "rodada": 31,
+      "inicio": "2026-11-01T21:30:00.000Z",
+      "mandante": 15,
+      "visitante": 3,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3107,
+      "rodada": 31,
+      "inicio": "2026-11-01T21:30:00.000Z",
+      "mandante": 16,
+      "visitante": 2,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3108,
+      "rodada": 31,
+      "inicio": "2026-11-02T00:00:00.000Z",
+      "mandante": 17,
+      "visitante": 20,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3109,
+      "rodada": 31,
+      "inicio": "2026-11-02T00:00:00.000Z",
+      "mandante": 18,
+      "visitante": 19,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3200,
+      "rodada": 32,
+      "inicio": "2026-11-07T19:00:00.000Z",
+      "mandante": 8,
+      "visitante": 1,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3201,
+      "rodada": 32,
+      "inicio": "2026-11-07T21:30:00.000Z",
+      "mandante": 7,
+      "visitante": 9,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3202,
+      "rodada": 32,
+      "inicio": "2026-11-07T21:30:00.000Z",
+      "mandante": 6,
+      "visitante": 10,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3203,
+      "rodada": 32,
+      "inicio": "2026-11-08T00:00:00.000Z",
+      "mandante": 5,
+      "visitante": 11,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3204,
+      "rodada": 32,
+      "inicio": "2026-11-08T00:00:00.000Z",
+      "mandante": 4,
+      "visitante": 12,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3205,
+      "rodada": 32,
+      "inicio": "2026-11-08T19:00:00.000Z",
+      "mandante": 3,
+      "visitante": 13,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3206,
+      "rodada": 32,
+      "inicio": "2026-11-08T21:30:00.000Z",
+      "mandante": 2,
+      "visitante": 14,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3207,
+      "rodada": 32,
+      "inicio": "2026-11-08T21:30:00.000Z",
+      "mandante": 20,
+      "visitante": 15,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3208,
+      "rodada": 32,
+      "inicio": "2026-11-09T00:00:00.000Z",
+      "mandante": 19,
+      "visitante": 16,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3209,
+      "rodada": 32,
+      "inicio": "2026-11-09T00:00:00.000Z",
+      "mandante": 18,
+      "visitante": 17,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3300,
+      "rodada": 33,
+      "inicio": "2026-11-14T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 7,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3301,
+      "rodada": 33,
+      "inicio": "2026-11-14T21:30:00.000Z",
+      "mandante": 8,
+      "visitante": 6,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3302,
+      "rodada": 33,
+      "inicio": "2026-11-14T21:30:00.000Z",
+      "mandante": 9,
+      "visitante": 5,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3303,
+      "rodada": 33,
+      "inicio": "2026-11-15T00:00:00.000Z",
+      "mandante": 10,
+      "visitante": 4,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3304,
+      "rodada": 33,
+      "inicio": "2026-11-15T00:00:00.000Z",
+      "mandante": 11,
+      "visitante": 3,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3305,
+      "rodada": 33,
+      "inicio": "2026-11-15T19:00:00.000Z",
+      "mandante": 12,
+      "visitante": 2,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3306,
+      "rodada": 33,
+      "inicio": "2026-11-15T21:30:00.000Z",
+      "mandante": 13,
+      "visitante": 20,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3307,
+      "rodada": 33,
+      "inicio": "2026-11-15T21:30:00.000Z",
+      "mandante": 14,
+      "visitante": 19,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3308,
+      "rodada": 33,
+      "inicio": "2026-11-16T00:00:00.000Z",
+      "mandante": 15,
+      "visitante": 18,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3309,
+      "rodada": 33,
+      "inicio": "2026-11-16T00:00:00.000Z",
+      "mandante": 16,
+      "visitante": 17,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3400,
+      "rodada": 34,
+      "inicio": "2026-11-21T19:00:00.000Z",
+      "mandante": 6,
+      "visitante": 1,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3401,
+      "rodada": 34,
+      "inicio": "2026-11-21T21:30:00.000Z",
+      "mandante": 5,
+      "visitante": 7,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3402,
+      "rodada": 34,
+      "inicio": "2026-11-21T21:30:00.000Z",
+      "mandante": 4,
+      "visitante": 8,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3403,
+      "rodada": 34,
+      "inicio": "2026-11-22T00:00:00.000Z",
+      "mandante": 3,
+      "visitante": 9,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3404,
+      "rodada": 34,
+      "inicio": "2026-11-22T00:00:00.000Z",
+      "mandante": 2,
+      "visitante": 10,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3405,
+      "rodada": 34,
+      "inicio": "2026-11-22T19:00:00.000Z",
+      "mandante": 20,
+      "visitante": 11,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3406,
+      "rodada": 34,
+      "inicio": "2026-11-22T21:30:00.000Z",
+      "mandante": 19,
+      "visitante": 12,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3407,
+      "rodada": 34,
+      "inicio": "2026-11-22T21:30:00.000Z",
+      "mandante": 18,
+      "visitante": 13,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3408,
+      "rodada": 34,
+      "inicio": "2026-11-23T00:00:00.000Z",
+      "mandante": 17,
+      "visitante": 14,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3409,
+      "rodada": 34,
+      "inicio": "2026-11-23T00:00:00.000Z",
+      "mandante": 16,
+      "visitante": 15,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3500,
+      "rodada": 35,
+      "inicio": "2026-11-28T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 5,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3501,
+      "rodada": 35,
+      "inicio": "2026-11-28T21:30:00.000Z",
+      "mandante": 6,
+      "visitante": 4,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3502,
+      "rodada": 35,
+      "inicio": "2026-11-28T21:30:00.000Z",
+      "mandante": 7,
+      "visitante": 3,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3503,
+      "rodada": 35,
+      "inicio": "2026-11-29T00:00:00.000Z",
+      "mandante": 8,
+      "visitante": 2,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3504,
+      "rodada": 35,
+      "inicio": "2026-11-29T00:00:00.000Z",
+      "mandante": 9,
+      "visitante": 20,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3505,
+      "rodada": 35,
+      "inicio": "2026-11-29T19:00:00.000Z",
+      "mandante": 10,
+      "visitante": 19,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3506,
+      "rodada": 35,
+      "inicio": "2026-11-29T21:30:00.000Z",
+      "mandante": 11,
+      "visitante": 18,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3507,
+      "rodada": 35,
+      "inicio": "2026-11-29T21:30:00.000Z",
+      "mandante": 12,
+      "visitante": 17,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3508,
+      "rodada": 35,
+      "inicio": "2026-11-30T00:00:00.000Z",
+      "mandante": 13,
+      "visitante": 16,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3509,
+      "rodada": 35,
+      "inicio": "2026-11-30T00:00:00.000Z",
+      "mandante": 14,
+      "visitante": 15,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3600,
+      "rodada": 36,
+      "inicio": "2026-12-05T19:00:00.000Z",
+      "mandante": 4,
+      "visitante": 1,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3601,
+      "rodada": 36,
+      "inicio": "2026-12-05T21:30:00.000Z",
+      "mandante": 3,
+      "visitante": 5,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3602,
+      "rodada": 36,
+      "inicio": "2026-12-05T21:30:00.000Z",
+      "mandante": 2,
+      "visitante": 6,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3603,
+      "rodada": 36,
+      "inicio": "2026-12-06T00:00:00.000Z",
+      "mandante": 20,
+      "visitante": 7,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3604,
+      "rodada": 36,
+      "inicio": "2026-12-06T00:00:00.000Z",
+      "mandante": 19,
+      "visitante": 8,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3605,
+      "rodada": 36,
+      "inicio": "2026-12-06T19:00:00.000Z",
+      "mandante": 18,
+      "visitante": 9,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3606,
+      "rodada": 36,
+      "inicio": "2026-12-06T21:30:00.000Z",
+      "mandante": 17,
+      "visitante": 10,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3607,
+      "rodada": 36,
+      "inicio": "2026-12-06T21:30:00.000Z",
+      "mandante": 16,
+      "visitante": 11,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3608,
+      "rodada": 36,
+      "inicio": "2026-12-07T00:00:00.000Z",
+      "mandante": 15,
+      "visitante": 12,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3609,
+      "rodada": 36,
+      "inicio": "2026-12-07T00:00:00.000Z",
+      "mandante": 14,
+      "visitante": 13,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3700,
+      "rodada": 37,
+      "inicio": "2026-12-12T19:00:00.000Z",
+      "mandante": 1,
+      "visitante": 3,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3701,
+      "rodada": 37,
+      "inicio": "2026-12-12T21:30:00.000Z",
+      "mandante": 4,
+      "visitante": 2,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3702,
+      "rodada": 37,
+      "inicio": "2026-12-12T21:30:00.000Z",
+      "mandante": 5,
+      "visitante": 20,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3703,
+      "rodada": 37,
+      "inicio": "2026-12-13T00:00:00.000Z",
+      "mandante": 6,
+      "visitante": 19,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3704,
+      "rodada": 37,
+      "inicio": "2026-12-13T00:00:00.000Z",
+      "mandante": 7,
+      "visitante": 18,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3705,
+      "rodada": 37,
+      "inicio": "2026-12-13T19:00:00.000Z",
+      "mandante": 8,
+      "visitante": 17,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3706,
+      "rodada": 37,
+      "inicio": "2026-12-13T21:30:00.000Z",
+      "mandante": 9,
+      "visitante": 16,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3707,
+      "rodada": 37,
+      "inicio": "2026-12-13T21:30:00.000Z",
+      "mandante": 10,
+      "visitante": 15,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3708,
+      "rodada": 37,
+      "inicio": "2026-12-14T00:00:00.000Z",
+      "mandante": 11,
+      "visitante": 14,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3709,
+      "rodada": 37,
+      "inicio": "2026-12-14T00:00:00.000Z",
+      "mandante": 12,
+      "visitante": 13,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3800,
+      "rodada": 38,
+      "inicio": "2026-12-19T19:00:00.000Z",
+      "mandante": 2,
+      "visitante": 1,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3801,
+      "rodada": 38,
+      "inicio": "2026-12-19T21:30:00.000Z",
+      "mandante": 20,
+      "visitante": 3,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3802,
+      "rodada": 38,
+      "inicio": "2026-12-19T21:30:00.000Z",
+      "mandante": 19,
+      "visitante": 4,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3803,
+      "rodada": 38,
+      "inicio": "2026-12-20T00:00:00.000Z",
+      "mandante": 18,
+      "visitante": 5,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3804,
+      "rodada": 38,
+      "inicio": "2026-12-20T00:00:00.000Z",
+      "mandante": 17,
+      "visitante": 6,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3805,
+      "rodada": 38,
+      "inicio": "2026-12-20T19:00:00.000Z",
+      "mandante": 16,
+      "visitante": 7,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3806,
+      "rodada": 38,
+      "inicio": "2026-12-20T21:30:00.000Z",
+      "mandante": 15,
+      "visitante": 8,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3807,
+      "rodada": 38,
+      "inicio": "2026-12-20T21:30:00.000Z",
+      "mandante": 14,
+      "visitante": 9,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3808,
+      "rodada": 38,
+      "inicio": "2026-12-21T00:00:00.000Z",
+      "mandante": 13,
+      "visitante": 10,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    },
+    {
+      "id": 3809,
+      "rodada": 38,
+      "inicio": "2026-12-21T00:00:00.000Z",
+      "mandante": 12,
+      "visitante": 11,
+      "golsMandante": null,
+      "golsVisitante": null,
+      "status": "agendado"
+    }
+  ]
+}
