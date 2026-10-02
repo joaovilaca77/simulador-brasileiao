@@ -1,9 +1,9 @@
-import { calcularClassificacao, jogoTravado, palpiteCompleto, ZONAS, GOLS_MAX } from './tabela.js?v=0925a1f091';
-import { rodadaAtual, montarSnapshot, mesclarPalpites, filtrarPalpites, definirPalpite } from './projecao.js?v=0925a1f091';
-import { LocalStore, FirebaseStore } from './armazenamento.js?v=0925a1f091';
-import { firebaseConfig } from './firebase-config.js?v=0925a1f091';
-import { iniciarFirebase } from './firebase.js?v=0925a1f091';
-import { desenharEvolucao } from './evolucao.js?v=0925a1f091';
+import { calcularClassificacao, jogoTravado, palpiteCompleto, ZONAS, GOLS_MAX } from './tabela.js?v=151682fd38';
+import { rodadaAtual, montarSnapshot, mesclarPalpites, filtrarPalpites, definirPalpite } from './projecao.js?v=151682fd38';
+import { LocalStore, FirebaseStore } from './armazenamento.js?v=151682fd38';
+import { firebaseConfig } from './firebase-config.js?v=151682fd38';
+import { iniciarFirebase } from './firebase.js?v=151682fd38';
+import { desenharEvolucao } from './evolucao.js?v=151682fd38';
 
 const $ = (sel) => document.querySelector(sel);
 const ESPERA_SALVAR = 800;

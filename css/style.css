@@ -480,18 +480,21 @@ img.escudo { background: none; box-shadow: none; border-radius: 0; object-fit: c
 }
 .tabela td { padding: 10px 8px; border-bottom: 1px solid var(--linha); white-space: nowrap; }
 .tabela tbody tr:nth-child(even) { background: var(--zebra); }
-.tabela .num { text-align: right; }
+.tabela .num { text-align: center; }
+/* O espaçamento entre letras deixa uma sobra à direita; compensa para centralizar. */
+.tabela thead th.num { text-indent: 0.06em; }
 .tabela .esq { text-align: left; }
 .tabela td.num { font-family: var(--fonte-titulo); font-weight: 600; font-size: 1.12rem; }
 .tabela .time { gap: 10px; font-size: 1.02rem; }
 .tabela .escudo { width: 24px; height: 24px; }
 .tabela td.pts { font-weight: 800; font-size: 1.25rem; }
-.tabela td.pos { border-left: 5px solid transparent; font-weight: 800; }
+.tabela td.pos { position: relative; width: 68px; border-left: 5px solid transparent; font-weight: 800; }
 .tabela tr.zona-libertadores td.pos { border-left-color: var(--zona-libertadores); }
 .tabela tr.zona-pre-libertadores td.pos { border-left-color: var(--zona-pre-libertadores); }
 .tabela tr.zona-sul-americana td.pos { border-left-color: var(--zona-sul-americana); }
 .tabela tr.zona-rebaixamento td.pos { border-left-color: var(--zona-rebaixamento); }
-.tabela .delta { display: inline-block; min-width: 26px; font-size: 0.75rem; color: var(--mudo); text-align: left; margin-left: 4px; }
+/* A seta fica ao lado do número sem tirá-lo do centro da coluna. */
+.tabela .delta { position: absolute; top: 50%; left: calc(50% + 1.05em); transform: translateY(-50%); font-size: 0.75rem; color: var(--mudo); white-space: nowrap; }
 .tabela .delta.sobe { color: var(--ok); }
 .tabela .delta.desce { color: var(--erro); }
 .tabela tbody th {
