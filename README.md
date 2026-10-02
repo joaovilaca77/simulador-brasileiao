@@ -22,6 +22,8 @@ Depois, abra http://localhost:3000.
 
 Testes (Node 20+): `npm test`.
 
+Depois de mudar o CSS ou algum arquivo em `js/`, rode `npm run versionar` antes do commit. O script carimba os endereços com `?v=<código>`, para o navegador não misturar arquivos novos com antigos do cache. O `npm test` avisa se faltar o carimbo.
+
 ## Como atualizar os dados
 
 Os jogos ficam em `data/brasileirao.json` e os escudos em `img/escudos/`. Quem gera esses arquivos é `scripts/atualizar-dados.mjs`. O site nunca chama as APIs direto, porque elas não liberam acesso de outros domínios (CORS).
