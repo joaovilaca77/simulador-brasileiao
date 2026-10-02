@@ -14,6 +14,7 @@ import path from 'node:path';
 import * as sofascore from './fontes/sofascore.mjs';
 import * as footballData from './fontes/football-data.mjs';
 import { esperar } from './fontes/comum.mjs';
+import { padronizarTime } from './fontes/nomes.mjs';
 
 const TOTAL_JOGOS = 380;
 const TOTAL_TIMES = 20;
@@ -67,7 +68,7 @@ export async function coletarDados({ fontes, temporada, token, fetch = globalThi
     try {
       const coleta = await coletores[nome]({ temporada, fetch, token, log });
       validar(coleta);
-      return coleta;
+      return { ...coleta, times: coleta.times.map(padronizarTime) };
     } catch (erro) {
       erros.push(`${nome}: ${erro.message}`);
       log(`Falha em ${nome}: ${erro.message}`);

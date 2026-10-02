@@ -6,6 +6,7 @@ import path from 'node:path';
 import * as sofascore from '../scripts/fontes/sofascore.mjs';
 import * as footballData from '../scripts/fontes/football-data.mjs';
 import { buscarJSON } from '../scripts/fontes/comum.mjs';
+import { padronizarTime } from '../scripts/fontes/nomes.mjs';
 import { montarDados, escolherFontes, coletarDados, baixarEscudos, mudou } from '../scripts/atualizar-dados.mjs';
 
 const silencio = () => {};
@@ -215,4 +216,23 @@ test('mudou ignora a data de atualização', () => {
   assert.equal(mudou(a, { ...a, atualizadoEm: '2' }), false);
   assert.equal(mudou(a, { ...a, jogos: [2] }), true);
   assert.equal(mudou(null, a), true);
+});
+
+test('padronizarTime corrige nomes e siglas das APIs', () => {
+  const base = { id: 1, cores: {}, escudoUrl: 'u' };
+  assert.deepEqual(padronizarTime({ ...base, nome: 'Mineiro', sigla: 'CAM' }), { ...base, nome: 'Atlético-MG', sigla: 'CAM' });
+  assert.equal(padronizarTime({ ...base, nome: 'Paranaense', sigla: 'CAP' }).nome, 'Athletico-PR');
+  assert.equal(padronizarTime({ ...base, nome: 'Clube do Remo', sigla: 'CRE' }).sigla, 'REM');
+  assert.equal(padronizarTime({ ...base, nome: 'Coritiba', sigla: 'COR' }).sigla, 'CFC');
+  assert.equal(padronizarTime({ ...base, nome: 'São Paulo', sigla: 'PAU' }).sigla, 'SAO');
+  assert.equal(padronizarTime({ ...base, nome: 'Grêmio', sigla: 'FBP' }).sigla, 'GRE');
+  assert.deepEqual(padronizarTime({ ...base, nome: 'Time Novo', sigla: 'TNV' }), { ...base, nome: 'Time Novo', sigla: 'TNV' });
+});
+
+test('coletarDados aplica os nomes padronizados', async () => {
+  const { fetch } = fetchSofascore(temporadaSofascore());
+  const valida = await sofascore.coletar({ temporada: 2026, fetch, pausa: 0, log: silencio });
+  valida.times[0] = { ...valida.times[0], nome: 'Vasco da Gama', sigla: 'VAS' };
+  const coleta = await coletarDados({ fontes: ['sofascore'], coletores: { sofascore: async () => valida }, log: silencio });
+  assert.equal(coleta.times[0].nome, 'Vasco');
 });
