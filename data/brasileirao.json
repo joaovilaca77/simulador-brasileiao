@@ -1,7 +1,7 @@
 {
   "fonte": "football-data",
   "temporada": "2026",
-  "atualizadoEm": "2026-10-12T10:57:57.920Z",
+  "atualizadoEm": "2026-10-12T21:18:08.707Z",
   "times": [
     {
       "id": 1768,
@@ -3181,9 +3181,9 @@
       "inicio": "2026-10-12T19:00:00.000Z",
       "mandante": 4241,
       "visitante": 1770,
-      "golsMandante": null,
-      "golsVisitante": null,
-      "status": "agendado"
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
     },
     {
       "id": 555033,
