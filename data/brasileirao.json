@@ -1,7 +1,7 @@
 {
   "fonte": "football-data",
   "temporada": "2026",
-  "atualizadoEm": "2026-10-13T06:50:47.274Z",
+  "atualizadoEm": "2026-10-13T16:58:56.830Z",
   "times": [
     {
       "id": 1768,
@@ -3121,9 +3121,9 @@
       "inicio": "2026-10-11T00:00:00.000Z",
       "mandante": 1776,
       "visitante": 1782,
-      "golsMandante": null,
-      "golsVisitante": null,
-      "status": "ao_vivo"
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
     },
     {
       "id": 555030,
@@ -3131,9 +3131,9 @@
       "inicio": "2026-10-11T19:00:00.000Z",
       "mandante": 1766,
       "visitante": 6685,
-      "golsMandante": null,
-      "golsVisitante": null,
-      "status": "agendado"
+      "golsMandante": 2,
+      "golsVisitante": 1,
+      "status": "encerrado"
     },
     {
       "id": 555035,
@@ -3141,9 +3141,9 @@
       "inicio": "2026-10-11T20:30:00.000Z",
       "mandante": 1783,
       "visitante": 1765,
-      "golsMandante": null,
-      "golsVisitante": null,
-      "status": "agendado"
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
     },
     {
       "id": 555036,
@@ -3151,9 +3151,9 @@
       "inicio": "2026-10-11T20:30:00.000Z",
       "mandante": 1767,
       "visitante": 6684,
-      "golsMandante": null,
-      "golsVisitante": null,
-      "status": "agendado"
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
     },
     {
       "id": 555037,
@@ -3161,9 +3161,9 @@
       "inicio": "2026-10-11T20:30:00.000Z",
       "mandante": 1769,
       "visitante": 1779,
-      "golsMandante": null,
-      "golsVisitante": null,
-      "status": "agendado"
+      "golsMandante": 4,
+      "golsVisitante": 1,
+      "status": "encerrado"
     },
     {
       "id": 555031,
@@ -3171,9 +3171,9 @@
       "inicio": "2026-10-11T22:30:00.000Z",
       "mandante": 1777,
       "visitante": 4364,
-      "golsMandante": null,
-      "golsVisitante": null,
-      "status": "agendado"
+      "golsMandante": 1,
+      "golsVisitante": 0,
+      "status": "encerrado"
     },
     {
       "id": 555034,
@@ -3181,9 +3181,9 @@
       "inicio": "2026-10-12T19:00:00.000Z",
       "mandante": 4241,
       "visitante": 1770,
-      "golsMandante": null,
-      "golsVisitante": null,
-      "status": "agendado"
+      "golsMandante": 1,
+      "golsVisitante": 1,
+      "status": "encerrado"
     },
     {
       "id": 555033,
@@ -3191,8 +3191,8 @@
       "inicio": "2026-10-12T22:30:00.000Z",
       "mandante": 1772,
       "visitante": 1768,
-      "golsMandante": null,
-      "golsVisitante": null,
+      "golsMandante": 1,
+      "golsVisitante": 3,
       "status": "encerrado"
     },
     {
