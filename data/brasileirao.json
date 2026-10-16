@@ -1,7 +1,7 @@
 {
   "fonte": "football-data",
   "temporada": "2026",
-  "atualizadoEm": "2026-10-14T04:59:34.573Z",
+  "atualizadoEm": "2026-10-16T23:41:36.727Z",
   "times": [
     {
       "id": 1768,
@@ -3213,7 +3213,7 @@
       "visitante": 6684,
       "golsMandante": null,
       "golsVisitante": null,
-      "status": "agendado"
+      "status": "ao_vivo"
     },
     {
       "id": 555043,
