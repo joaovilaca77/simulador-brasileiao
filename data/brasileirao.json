@@ -1,7 +1,7 @@
 {
   "fonte": "football-data",
   "temporada": "2026",
-  "atualizadoEm": "2026-11-03T23:27:05.486Z",
+  "atualizadoEm": "2026-11-04T06:32:45.965Z",
   "times": [
     {
       "id": 1768,
@@ -3521,9 +3521,9 @@
       "inicio": "2026-11-03T22:30:00.000Z",
       "mandante": 1772,
       "visitante": 4364,
-      "golsMandante": null,
-      "golsVisitante": null,
-      "status": "ao_vivo"
+      "golsMandante": 1,
+      "golsVisitante": 2,
+      "status": "encerrado"
     },
     {
       "id": 555076,
@@ -3533,7 +3533,7 @@
       "visitante": 4241,
       "golsMandante": null,
       "golsVisitante": null,
-      "status": "agendado"
+      "status": "ao_vivo"
     },
     {
       "id": 555070,
