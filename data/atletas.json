@@ -2,125 +2,125 @@
  "fonte": "cartola",
  "temporada": "2026",
  "rodadaAtual": 34,
- "atualizadoEm": "2026-11-05T12:10:27.245Z",
+ "atualizadoEm": "2026-11-05T12:14:17.850Z",
  "clubes": [
   {
-   "id": 265,
-   "nome": "BAH",
-   "sigla": "BAH",
-   "escudo": "img/escudos/265.png"
-  },
-  {
-   "id": 263,
-   "nome": "BOT",
-   "sigla": "BOT",
-   "escudo": "img/escudos/263.png"
-  },
-  {
-   "id": 282,
-   "nome": "CAM",
-   "sigla": "CAM",
-   "escudo": "img/escudos/282.png"
-  },
-  {
-   "id": 293,
-   "nome": "CAP",
-   "sigla": "CAP",
-   "escudo": "img/escudos/293.png"
-  },
-  {
-   "id": 294,
-   "nome": "CFC",
-   "sigla": "CFC",
-   "escudo": "img/escudos/294.png"
-  },
-  {
-   "id": 315,
-   "nome": "CHA",
-   "sigla": "CHA",
-   "escudo": "img/escudos/315.png"
-  },
-  {
-   "id": 264,
-   "nome": "COR",
-   "sigla": "COR",
-   "escudo": "img/escudos/264.png"
-  },
-  {
-   "id": 283,
-   "nome": "CRU",
-   "sigla": "CRU",
-   "escudo": "img/escudos/283.png"
-  },
-  {
-   "id": 262,
-   "nome": "FLA",
-   "sigla": "FLA",
-   "escudo": "img/escudos/262.png"
-  },
-  {
-   "id": 266,
-   "nome": "FLU",
-   "sigla": "FLU",
-   "escudo": "img/escudos/266.png"
-  },
-  {
-   "id": 284,
-   "nome": "GRE",
-   "sigla": "GRE",
-   "escudo": "img/escudos/284.png"
-  },
-  {
    "id": 285,
-   "nome": "INT",
+   "nome": "Colorado",
    "sigla": "INT",
    "escudo": "img/escudos/285.png"
   },
   {
-   "id": 2305,
-   "nome": "MIR",
-   "sigla": "MIR",
-   "escudo": "img/escudos/2305.png"
+   "id": 294,
+   "nome": "Coxa",
+   "sigla": "CFC",
+   "escudo": "img/escudos/294.png"
   },
   {
-   "id": 275,
-   "nome": "PAL",
-   "sigla": "PAL",
-   "escudo": "img/escudos/275.png"
+   "id": 293,
+   "nome": "Furacão",
+   "sigla": "CAP",
+   "escudo": "img/escudos/293.png"
   },
   {
-   "id": 280,
-   "nome": "RBB",
-   "sigla": "RBB",
-   "escudo": "img/escudos/280.png"
-  },
-  {
-   "id": 364,
-   "nome": "REM",
-   "sigla": "REM",
-   "escudo": "img/escudos/364.png"
-  },
-  {
-   "id": 277,
-   "nome": "SAN",
-   "sigla": "SAN",
-   "escudo": "img/escudos/277.png"
-  },
-  {
-   "id": 276,
-   "nome": "SAO",
-   "sigla": "SAO",
-   "escudo": "img/escudos/276.png"
+   "id": 282,
+   "nome": "Galo",
+   "sigla": "CAM",
+   "escudo": "img/escudos/282.png"
   },
   {
    "id": 267,
-   "nome": "VAS",
+   "nome": "Gigante da Colina",
    "sigla": "VAS",
    "escudo": "img/escudos/267.png"
   },
   {
+   "id": 263,
+   "nome": "Glorioso",
+   "sigla": "BOT",
+   "escudo": "img/escudos/263.png"
+  },
+  {
+   "id": 284,
+   "nome": "Imortal",
+   "sigla": "GRE",
+   "escudo": "img/escudos/284.png"
+  },
+  {
+   "id": 280,
+   "nome": "Massa Bruta",
+   "sigla": "RBB",
+   "escudo": "img/escudos/280.png"
+  },
+  {
+   "id": 262,
+   "nome": "Mengão",
+   "sigla": "FLA",
+   "escudo": "img/escudos/262.png"
+  },
+  {
+   "id": 2305,
+   "nome": "Mirassol",
+   "sigla": "MIR",
+   "escudo": "img/escudos/2305.png"
+  },
+  {
+   "id": 277,
+   "nome": "Peixe",
+   "sigla": "SAN",
+   "escudo": "img/escudos/277.png"
+  },
+  {
+   "id": 283,
+   "nome": "Raposa",
+   "sigla": "CRU",
+   "escudo": "img/escudos/283.png"
+  },
+  {
+   "id": 364,
+   "nome": "Remo",
+   "sigla": "REM",
+   "escudo": "img/escudos/364.png"
+  },
+  {
+   "id": 264,
+   "nome": "Timão",
+   "sigla": "COR",
+   "escudo": "img/escudos/264.png"
+  },
+  {
+   "id": 266,
+   "nome": "Tricolor",
+   "sigla": "FLU",
+   "escudo": "img/escudos/266.png"
+  },
+  {
+   "id": 276,
+   "nome": "Tricolor",
+   "sigla": "SAO",
+   "escudo": "img/escudos/276.png"
+  },
+  {
+   "id": 265,
+   "nome": "Tricolor de Aço",
+   "sigla": "BAH",
+   "escudo": "img/escudos/265.png"
+  },
+  {
+   "id": 275,
+   "nome": "Verdão",
+   "sigla": "PAL",
+   "escudo": "img/escudos/275.png"
+  },
+  {
+   "id": 315,
+   "nome": "Verdão do Oeste",
+   "sigla": "CHA",
+   "escudo": "img/escudos/315.png"
+  },
+  {
    "id": 287,
-   "nome": "VIT",
+   "nome": "Vitória",
    "sigla": "VIT",
    "escudo": "img/escudos/287.png"
   }
