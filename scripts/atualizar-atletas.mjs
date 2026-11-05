@@ -5,7 +5,7 @@
 //
 // Uso: node scripts/atualizar-atletas.mjs [--escudos]
 
-import { readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 import { buscarJSON, baixarEscudos, mudou } from './comum.mjs';
@@ -106,6 +106,7 @@ async function principal() {
     console.log('Nenhuma mudança nos jogadores.');
     return;
   }
+  await mkdir(path.dirname(ARQUIVO), { recursive: true });
   await writeFile(ARQUIVO, `${JSON.stringify(dados, null, 1)}\n`);
   console.log(`Gravado ${path.relative(RAIZ, ARQUIVO)}.`);
 }
