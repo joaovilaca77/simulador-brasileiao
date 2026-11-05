@@ -1,653 +1,398 @@
-import { calcularClassificacao, jogoTravado, palpiteCompleto, ZONAS, GOLS_MAX } from './tabela.js?v=151682fd38';
-import { rodadaAtual, montarSnapshot, mesclarPalpites, filtrarPalpites, definirPalpite } from './projecao.js?v=151682fd38';
-import { LocalStore, FirebaseStore } from './armazenamento.js?v=151682fd38';
-import { firebaseConfig } from './firebase-config.js?v=151682fd38';
-import { iniciarFirebase } from './firebase.js?v=151682fd38';
-import { desenharEvolucao } from './evolucao.js?v=151682fd38';
+import { $, el, toast, aviso, ligarTema, copiar } from './ui.js?v=daefe94a8f';
+import { CONFIG_PADRAO, POSICOES, sortearOrdem } from './draft.js?v=daefe94a8f';
+import { criarApi } from './liga.js?v=daefe94a8f';
+import { montarSala } from './sala.js?v=daefe94a8f';
+import { firebaseConfig } from './firebase-config.js?v=daefe94a8f';
+import { iniciarFirebase } from './firebase.js?v=daefe94a8f';
 
-const $ = (sel) => document.querySelector(sel);
-const ESPERA_SALVAR = 800;
+const app = $('#app');
+const MODO_TESTE = new URLSearchParams(location.search).has('emulador');
 
 const estado = {
+  fb: null,
+  api: null,
+  usuario: undefined,
   dados: null,
-  times: new Map(),
-  palpites: {},
-  projecoes: [],
-  rodadaVisivel: 1,
-  local: null,
-  store: null,
-  firebase: null,
-  usuario: null,
-  timerSalvar: null,
-  pendente: false,
-  salvando: Promise.resolve(),
+  clubes: new Map(),
+  pararLiga: null,
+  sala: null,
+  ordemVista: '',
 };
 
-function el(tag, props = {}, ...filhos) {
-  const n = document.createElement(tag);
-  for (const [k, v] of Object.entries(props)) {
-    if (k === 'class') n.className = v;
-    else if (k === 'text') n.textContent = v;
-    else if (k === 'style') Object.assign(n.style, v);
-    else if (k in n) n[k] = v;
-    else n.setAttribute(k, v);
-  }
-  for (const f of filhos) if (f != null) n.append(f);
-  return n;
+const fmtData = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short', timeZone: 'America/Sao_Paulo' });
+
+function cabecalho(titulo, subtitulo = '') {
+  $('#titulo-pagina').textContent = titulo;
+  $('#subtitulo-pagina').textContent = subtitulo;
 }
 
-// Escudo do clube quando baixado; senão (ou se a imagem falhar), as cores.
-function escudo(time) {
-  const cores = el('span', { class: 'escudo', 'aria-hidden': 'true' });
-  cores.style.setProperty('--c1', time?.cores?.primaria ?? '#888');
-  cores.style.setProperty('--c2', time?.cores?.secundaria ?? '#fff');
-  if (!time?.escudo) return cores;
-  const img = el('img', {
-    class: 'escudo', src: time.escudo, alt: '', loading: 'lazy', decoding: 'async', width: 20, height: 20,
-  });
-  img.addEventListener('error', () => img.replaceWith(cores), { once: true });
-  return img;
+function tela(...filhos) {
+  app.replaceChildren(...filhos);
 }
 
-const NOMES_FONTE = {
-  sofascore: 'Sofascore (API não oficial)',
-  'football-data': 'football-data.org',
-  exemplo: 'exemplo com resultados fictícios',
-};
-
-// Horários sempre no fuso de Brasília, como na tabela da CBF.
-const FUSO = 'America/Sao_Paulo';
-const fmtData = new Intl.DateTimeFormat('pt-BR', {
-  weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: FUSO,
-});
-const fmtAtualizado = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short', timeZone: FUSO });
-
-function mostrarAviso(texto) {
-  const aviso = $('#aviso');
-  aviso.replaceChildren();
-  if (!texto) { aviso.hidden = true; return; }
-  aviso.append(el('div', { text: texto }));
-  aviso.hidden = false;
+function cartao(titulo, ...filhos) {
+  return el('section', { class: 'cartao' }, titulo ? el('h2', { class: 'titulo-cartao', text: titulo }) : null, ...filhos);
 }
 
-function statusSalvamento(texto, erro = false) {
-  const s = $('#status-salvamento');
-  s.textContent = texto;
-  s.classList.toggle('erro', erro);
+function erro(e) {
+  console.error(e);
+  toast(e?.message?.includes('permission') ? 'Sem permissão para isso.' : (e?.message || 'Algo deu errado.'), 'erro');
 }
 
-// ---------- Jogos da rodada ----------
+// ---------- Rotas ----------
 
-function lerGol(input) {
-  const bruto = input.value.trim();
-  if (bruto === '') return { valor: null, ok: true };
-  const n = Number(bruto);
-  const ok = Number.isInteger(n) && n >= 0 && n <= GOLS_MAX;
-  return { valor: ok ? n : null, ok };
+function lerRota() {
+  const [caminho, qs] = location.hash.replace(/^#/, '').split('?');
+  const partes = caminho.split('/').filter(Boolean);
+  return { partes, params: new URLSearchParams(qs ?? '') };
 }
 
-function aoDigitar(jogo, inM, inV) {
-  const m = lerGol(inM);
-  const v = lerGol(inV);
-  inM.classList.toggle('invalido', !m.ok);
-  inV.classList.toggle('invalido', !v.ok);
-  if (!m.ok || !v.ok) return;
-  const novos = definirPalpite(estado.palpites, jogo, m.valor, v.valor);
-  if (!novos) {
-    renderJogos();
+function limparLiga() {
+  estado.pararLiga?.();
+  estado.pararLiga = null;
+  estado.sala?.destruir();
+  estado.sala = null;
+  estado.ordemVista = '';
+}
+
+function rotear() {
+  limparLiga();
+  aviso('');
+  if (!estado.api) return;
+  if (estado.usuario === undefined) {
+    tela(el('p', { class: 'carregando', text: 'Carregando…' }));
     return;
   }
-  estado.palpites = novos;
-  renderTabela();
-  renderResumo();
-  agendarSalvamento();
-}
-
-function textoStatus(jogo, travado) {
-  if (jogo.status === 'encerrado') return 'Encerrado';
-  if (jogo.status === 'ao_vivo') return '🔒 Em andamento';
-  if (jogo.status === 'adiado') return 'Adiado — data a definir';
-  if (travado) return '🔒 Palpites encerrados';
-  return '';
-}
-
-function renderJogos() {
-  const lista = $('#lista-jogos');
-  const jogos = estado.dados.jogos.filter((j) => j.rodada === estado.rodadaVisivel);
-  const agora = Date.now();
-  lista.replaceChildren();
-  // Com a tabela escondida, os jogos se dividem em duas colunas.
-  lista.style.setProperty('--linhas', Math.max(1, Math.ceil(jogos.length / 2)));
-
-  for (const jogo of jogos) {
-    const mandante = estado.times.get(jogo.mandante);
-    const visitante = estado.times.get(jogo.visitante);
-    const travado = jogoTravado(jogo, agora);
-    const palpite = estado.palpites[jogo.id];
-    const placar = el('div', { class: 'placar' });
-    let nota = textoStatus(jogo, travado);
-
-    if (jogo.status === 'encerrado') {
-      placar.append(
-        el('span', { class: 'real', text: jogo.golsMandante ?? '–' }),
-        el('span', { class: 'x', text: '×' }),
-        el('span', { class: 'real', text: jogo.golsVisitante ?? '–' }),
-      );
-      if (palpiteCompleto(palpite)) nota += ` · seu palpite: ${palpite.m} × ${palpite.v}`;
-    } else {
-      const campo = (time, valor) => el('input', {
-        type: 'number', min: 0, max: GOLS_MAX, step: 1, inputMode: 'numeric',
-        value: valor ?? '', disabled: travado,
-        'aria-label': `Gols do ${time?.nome ?? 'time'}`,
-      });
-      const inM = campo(mandante, palpite?.m);
-      const inV = campo(visitante, palpite?.v);
-      if (!travado) {
-        inM.addEventListener('input', () => aoDigitar(jogo, inM, inV));
-        inV.addEventListener('input', () => aoDigitar(jogo, inM, inV));
-      }
-      placar.append(inM, el('span', { class: 'x', text: '×' }), inV);
-    }
-
-    lista.append(el('li', { class: `jogo${travado ? ' travado' : ''}` },
-      el('span', { class: 'quando', text: fmtData.format(new Date(jogo.inicio)) }),
-      el('span', { class: 'time mandante' }, el('span', { class: 'nome', text: mandante?.nome ?? '?' }), escudo(mandante)),
-      placar,
-      el('span', { class: 'time visitante' }, escudo(visitante), el('span', { class: 'nome', text: visitante?.nome ?? '?' })),
-      el('span', { class: 'nota', text: nota }),
-    ));
+  const { partes, params } = lerRota();
+  if (!estado.usuario) {
+    telaBoasVindas(partes[0] === 'liga');
+    return;
   }
-
-  atualizarSeletorRodada();
-  $('#rodada-ant').disabled = estado.rodadaVisivel <= 1;
-  $('#rodada-prox').disabled = estado.rodadaVisivel >= totalRodadas();
-  renderResumo();
+  if (partes[0] === 'liga' && partes[1]) abrirLiga(partes[1], params.get('convite'));
+  else telaInicio();
 }
 
-// ---------- Seletor de rodada ----------
+// ---------- Telas ----------
 
-const COLUNAS_GRADE = 7;
-
-function abrirSeletorRodada(abrir) {
-  const painel = $('#rodada-painel');
-  if (abrir === !painel.hidden) return;
-  painel.hidden = !abrir;
-  $('#rodada-botao').setAttribute('aria-expanded', String(abrir));
-  if (abrir) $('#rodada-grade [aria-current="true"]')?.focus();
+function resumoRegras(config = CONFIG_PADRAO) {
+  const minimos = POSICOES.map((p) => `${config.minimos[p]} ${p}`).join(', ');
+  const fixas = POSICOES.reduce((s, p) => s + config.minimos[p], 0);
+  return el('ul', { class: 'regras' },
+    el('li', { text: `${config.times} times, ${config.jogadores} jogadores cada (sem técnico).` }),
+    el('li', { text: `Mínimo por posição: ${minimos}; as outras ${config.jogadores - fixas} vagas são livres.` }),
+    el('li', { text: `No máximo ${config.maxPorClube} jogadores do mesmo clube.` }),
+    el('li', { text: 'Ordem em serpentina: 1→último na 1ª rodada, último→1 na 2ª, e assim por diante.' }),
+    el('li', { text: `Relógio de ${config.segundos} s por escolha. Se acabar, sai o primeiro da sua fila que couber; sem fila, o de maior média.` }));
 }
 
-function irParaRodada(n) {
-  estado.rodadaVisivel = n;
-  renderJogos();
+function telaBoasVindas(temConvite) {
+  cabecalho('Cartola');
+  tela(el('div', { class: 'boas-vindas' },
+    cartao('Draft ao vivo da liga',
+      el('p', { text: temConvite ? 'Você recebeu um convite para uma liga. Entre com sua conta Google para montar seu time.' : 'Cada técnico escolhe, na sua vez, os jogadores do Cartola que vão formar o seu elenco para a temporada.' }),
+      resumoRegras(),
+      el('button', { class: 'botao primario grande', type: 'button', text: 'Entrar com Google', on: { click: entrar } }))));
 }
 
-function atualizarSeletorRodada() {
-  $('#rodada-titulo').textContent = `Rodada ${estado.rodadaVisivel}`;
-  const atual = rodadaAtual(estado.dados.jogos);
-  for (const b of $('#rodada-grade').children) {
-    const n = Number(b.dataset.rodada);
-    const jogos = estado.dados.jogos.filter((j) => j.rodada === n);
-    const encerrada = jogos.length > 0 && jogos.every((j) => j.status === 'encerrado');
-    b.classList.toggle('encerrada', encerrada);
-    b.classList.toggle('atual', n === atual);
-    b.setAttribute('aria-current', String(n === estado.rodadaVisivel));
-    b.setAttribute('aria-label', `Rodada ${n}${n === atual ? ', rodada atual' : encerrada ? ', encerrada' : ''}`);
-  }
+function telaSemFirebase() {
+  cabecalho('Cartola');
+  tela(cartao('Falta configurar o Firebase',
+    el('p', { text: 'O draft ao vivo usa o Firebase para o login e para sincronizar as escolhas entre todos.' }),
+    el('p', { text: 'Siga o passo a passo do README (seção "Configurar o Firebase") e cole a configuração em js/firebase-config.js.' }),
+    resumoRegras()));
 }
 
-function ligarSeletorRodada() {
-  const grade = $('#rodada-grade');
-  for (let r = 1; r <= totalRodadas(); r += 1) {
-    grade.append(el('button', { type: 'button', text: r, 'data-rodada': r }));
-  }
-  $('#rodada-botao').addEventListener('click', () => abrirSeletorRodada($('#rodada-painel').hidden));
-  grade.addEventListener('click', (ev) => {
-    const b = ev.target.closest('button[data-rodada]');
-    if (!b) return;
-    irParaRodada(Number(b.dataset.rodada));
-    abrirSeletorRodada(false);
-    $('#rodada-botao').focus();
-  });
-  // Setas do teclado andam pela grade; Esc fecha.
-  grade.addEventListener('keydown', (ev) => {
-    const passos = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -COLUNAS_GRADE, ArrowDown: COLUNAS_GRADE };
-    if (!(ev.key in passos)) return;
-    const botoes = [...grade.children];
-    const i = botoes.indexOf(document.activeElement);
-    botoes[Math.min(botoes.length - 1, Math.max(0, i + passos[ev.key]))]?.focus();
+async function telaInicio() {
+  cabecalho('Cartola', 'Minhas ligas');
+  const lista = el('ul', { class: 'lista-ligas' }, el('li', { class: 'mudo', text: 'Carregando…' }));
+  const anoPadrao = new Date().getMonth() >= 9 ? new Date().getFullYear() + 1 : new Date().getFullYear();
+
+  const nome = el('input', { id: 'nome-liga', required: true, maxLength: 60, value: 'Liga dos amigos' });
+  const temporada = el('input', { id: 'temporada-liga', type: 'number', min: 2025, max: 2100, value: anoPadrao, required: true });
+  const vouJogar = el('input', { id: 'vou-jogar', type: 'checkbox', checked: true });
+  const meuTime = el('input', { id: 'meu-time', maxLength: 40, value: estado.usuario.displayName ? `Time do ${estado.usuario.displayName.split(' ')[0]}` : 'Meu time' });
+  vouJogar.addEventListener('change', () => { meuTime.disabled = !vouJogar.checked; });
+
+  const form = el('form', { class: 'formulario', on: { submit: criar } },
+    el('label', { for: 'nome-liga', text: 'Nome da liga' }), nome,
+    el('label', { for: 'temporada-liga', text: 'Temporada' }), temporada,
+    el('label', { class: 'check' }, vouJogar, ' Também vou ter um time'),
+    el('label', { for: 'meu-time', text: 'Nome do meu time' }), meuTime,
+    el('button', { class: 'botao primario', type: 'submit', text: 'Criar liga' }));
+
+  async function criar(ev) {
     ev.preventDefault();
-  });
-  document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape' && !$('#rodada-painel').hidden) {
-      abrirSeletorRodada(false);
-      $('#rodada-botao').focus();
+    form.querySelector('button').disabled = true;
+    try {
+      const id = await estado.api.criarLiga({
+        nome: nome.value.trim(), temporada: String(temporada.value), usuario: estado.usuario,
+        meuTime: vouJogar.checked ? meuTime.value.trim() || 'Meu time' : null,
+      });
+      location.hash = `#/liga/${id}`;
+    } catch (e) {
+      erro(e);
+      form.querySelector('button').disabled = false;
     }
+  }
+
+  tela(el('div', { class: 'grade-inicio' }, cartao('Minhas ligas', lista), cartao('Criar uma liga', form)));
+
+  try {
+    const ligas = await estado.api.minhasLigas(estado.usuario.uid);
+    lista.replaceChildren(...(ligas.length
+      ? ligas.map((l) => el('li', {}, el('a', { href: `#/liga/${l.id}`, text: l.nome }), el('span', { class: 'mudo', text: ` · ${l.temporada} · ${l.papel === 'organizador' ? 'organizador' : 'participante'}` })))
+      : [el('li', { class: 'mudo', text: 'Você ainda não está em nenhuma liga. Crie uma ou abra o link de convite que recebeu.' })]));
+  } catch (e) {
+    erro(e);
+  }
+}
+
+function abrirLiga(ligaId, convite) {
+  tela(el('p', { class: 'carregando', text: 'Abrindo a liga…' }));
+  estado.pararLiga = estado.api.ouvir(ligaId, (st) => renderLiga(ligaId, st, convite), () => {
+    tela(cartao('Liga não encontrada', el('p', { text: 'Confira o link ou peça um novo convite ao organizador.' }), el('a', { href: '#/', text: '← Minhas ligas' })));
   });
-  document.addEventListener('pointerdown', (ev) => {
-    if (!ev.target.closest('.seletor-rodada')) abrirSeletorRodada(false);
-  });
 }
 
-function totalRodadas() {
-  return Math.max(...estado.dados.jogos.map((j) => j.rodada));
-}
+const STATUS_TEXTO = { preparando: 'preparando o draft', andamento: 'draft ao vivo', pausado: 'draft pausado', encerrado: 'draft encerrado' };
 
-function renderResumo() {
-  const pendentes = estado.dados.jogos.filter((j) => j.status !== 'encerrado');
-  const comPalpite = pendentes.filter((j) => palpiteCompleto(estado.palpites[j.id])).length;
-  $('#resumo-palpites').textContent = pendentes.length
-    ? `${comPalpite} de ${pendentes.length} jogos restantes com palpite.`
-    : 'Campeonato encerrado.';
-}
-
-function limpar(jogos) {
-  const agora = Date.now();
-  let palpites = estado.palpites;
-  for (const jogo of jogos) {
-    const p = palpites[jogo.id];
-    if (!p || (p.m == null && p.v == null)) continue;
-    palpites = definirPalpite(palpites, jogo, null, null, agora) ?? palpites;
+function renderLiga(ligaId, st, convite) {
+  if (!st.liga || !st.draft) {
+    tela(cartao('Liga não encontrada', el('a', { href: '#/', text: '← Minhas ligas' })));
+    return;
   }
-  if (palpites === estado.palpites) return;
-  estado.palpites = palpites;
-  renderJogos();
-  renderTabela();
-  agendarSalvamento();
+  cabecalho(st.liga.nome, `Temporada ${st.liga.temporada} · ${STATUS_TEXTO[st.draft.status] ?? ''}`);
+  avisoTemporada(st.liga);
+  const uid = estado.usuario.uid;
+  const membro = st.times.some((t) => t.id === uid);
+  const organizador = st.liga.organizadorUid === uid;
+
+  if (st.draft.status === 'preparando') {
+    estado.sala?.destruir();
+    estado.sala = null;
+    if (!membro && !organizador) telaEntrarNaLiga(ligaId, st, convite);
+    else telaSaguao(ligaId, st, { organizador, membro });
+    return;
+  }
+  if (!estado.dados) {
+    tela(cartao('Lista de jogadores indisponível', el('p', { text: 'Não foi possível carregar data/atletas.json.' })));
+    return;
+  }
+  if (!estado.sala) {
+    estado.sala = montarSala(app, { api: estado.api, ligaId, usuario: estado.usuario, atletas: estado.dados.atletas, clubes: estado.clubes });
+  }
+  estado.sala.atualizar(st);
 }
 
-// ---------- Tabela ----------
-
-// Como a tabela aparece: completa (reais + palpites) ou só com os palpites;
-// e se está escondida. Fica guardado no navegador.
-const CHAVE_VISAO = 'simulador:visao';
-const visao = { modo: 'completa', oculta: false };
-
-function lerVisao() {
-  try {
-    const v = JSON.parse(localStorage.getItem(CHAVE_VISAO));
-    if (v?.modo === 'simulados') visao.modo = 'simulados';
-    visao.oculta = v?.oculta === true;
-  } catch {
-    // sem storage: usa o padrão
+function avisoTemporada(liga) {
+  if (estado.dados && String(estado.dados.temporada) !== String(liga.temporada)) {
+    aviso(`A lista de jogadores ainda é do Cartola ${estado.dados.temporada}. Para a temporada ${liga.temporada}, espere o Cartola abrir o mercado da nova temporada antes de iniciar o draft (a lista se atualiza sozinha todo dia).`);
+  } else {
+    aviso('');
   }
 }
 
-function gravarVisao() {
-  try {
-    localStorage.setItem(CHAVE_VISAO, JSON.stringify(visao));
-  } catch {
-    // ignora
+function telaEntrarNaLiga(ligaId, st, convite) {
+  const cheia = st.times.length >= st.draft.config.times;
+  if (!convite) {
+    tela(cartao(`Liga ${st.liga.nome}`, el('p', { text: 'Para entrar, abra o link de convite que o organizador enviou.' }), el('a', { href: '#/', text: '← Minhas ligas' })));
+    return;
   }
-}
-
-function aplicarVisao() {
-  const simulados = visao.modo === 'simulados';
-  for (const b of document.querySelectorAll('.segmentado [data-modo]')) {
-    b.setAttribute('aria-checked', String(b.dataset.modo === visao.modo));
-  }
-  $('#titulo-tabela').textContent = simulados ? 'Classificação só dos seus palpites' : 'Classificação com seus palpites';
-  $('#tabela').classList.toggle('so-simulados', simulados);
-  $('#legenda-zonas').hidden = simulados;
-
-  $('#aba-palpites').classList.toggle('tabela-oculta', visao.oculta);
-  $('#cartao-tabela').hidden = visao.oculta;
-  $('#mostrar-tabela').hidden = !visao.oculta;
-  $('#esconder-tabela').setAttribute('aria-expanded', String(!visao.oculta));
-  $('#mostrar-tabela').setAttribute('aria-expanded', String(!visao.oculta));
-}
-
-function renderTabela() {
-  const { jogos } = estado.dados;
-  const listaTimes = [...estado.times.values()];
-  const simulados = visao.modo === 'simulados';
-  // Só simulados: sem os jogos encerrados, a classificação soma apenas os palpites.
-  const pendentes = jogos.filter((j) => j.status !== 'encerrado');
-  const palpitados = pendentes.filter((j) => palpiteCompleto(estado.palpites[j.id])).length;
-  const real = new Map(calcularClassificacao(listaTimes, jogos).map((l) => [l.timeId, l.pos]));
-  const linhas = calcularClassificacao(listaTimes, simulados ? pendentes : jogos, estado.palpites);
-  const corpo = $('#tabela tbody');
-  corpo.replaceChildren();
-
-  const vazia = simulados && palpitados === 0;
-  $('#tabela-vazia').hidden = !vazia;
-  $('#tabela').closest('.tabela-wrap').hidden = vazia;
-  $('#nota-tabela').textContent = simulados
-    ? `Pontos apenas dos ${palpitados} ${palpitados === 1 ? 'jogo que você palpitou' : 'jogos que você palpitou'}, sem os resultados reais.`
-    : '▲▼ mostra quantas posições o time ganha ou perde em relação à tabela real.';
-
-  for (const l of linhas) {
-    const delta = el('span', { class: 'delta' });
-    const diferenca = simulados ? 0 : real.get(l.timeId) - l.pos;
-    if (diferenca > 0) { delta.textContent = `▲${diferenca}`; delta.classList.add('sobe'); }
-    else if (diferenca < 0) { delta.textContent = `▼${-diferenca}`; delta.classList.add('desce'); }
-    if (diferenca) delta.title = `Na tabela real: ${real.get(l.timeId)}º`;
-
-    corpo.append(el('tr', { class: !simulados && l.zona ? `zona-${l.zona}` : '' },
-      el('td', { class: 'num pos' }, `${l.pos}`, delta),
-      el('td', { class: 'esq' }, el('span', { class: 'time' }, escudo(estado.times.get(l.timeId)), el('span', { class: 'nome', text: l.nome }))),
-      el('td', { class: 'num pts', text: l.pts }),
-      el('td', { class: 'num', text: l.j }),
-      el('td', { class: 'num', text: l.v }),
-      el('td', { class: 'num opc', text: l.e }),
-      el('td', { class: 'num opc', text: l.d }),
-      el('td', { class: 'num', text: l.sg > 0 ? `+${l.sg}` : l.sg }),
-      el('td', { class: 'num opc', text: l.gp }),
-      el('td', { class: 'num opc', text: l.gc }),
-      el('td', { class: 'num opc', text: l.aproveitamento.toLocaleString('pt-BR') }),
-    ));
-  }
-}
-
-function renderLegendaZonas() {
-  $('#legenda-zonas').replaceChildren(...ZONAS.map((z) => {
-    const cor = el('i');
-    cor.style.setProperty('--cor', `var(--zona-${z.id})`);
-    return el('li', {}, cor, `${z.nome} (${z.de}º–${z.ate}º)`);
-  }));
-}
-
-// ---------- Evolução ----------
-
-const CHAVE_SELECAO = 'simulador:evolucao:selecao';
-
-function lerSelecao() {
-  try {
-    const s = JSON.parse(localStorage.getItem(CHAVE_SELECAO));
-    return Array.isArray(s) ? s : null;
-  } catch {
-    return null;
-  }
-}
-
-function gravarSelecao(selecao) {
-  try {
-    localStorage.setItem(CHAVE_SELECAO, JSON.stringify(selecao));
-  } catch {
-    // ignora
-  }
-}
-
-let selecao = null;
-
-function renderEvolucao() {
-  const container = $('#evolucao');
-  if (selecao == null) {
-    const ultima = estado.projecoes.at(-1);
-    selecao = lerSelecao()
-      ?? (ultima ? ultima.classificacao.slice(0, 4).map((c, slot) => ({ timeId: c.timeId, slot })) : []);
-  }
-  selecao = selecao.filter((s) => estado.times.has(s.timeId));
-  desenharEvolucao(container, {
-    projecoes: estado.projecoes,
-    times: estado.times,
-    selecao,
-    logado: Boolean(estado.usuario),
-    firebaseDisponivel: Boolean(estado.firebase),
-    aoAlterarSelecao: (nova) => {
-      selecao = nova;
-      gravarSelecao(nova);
-      renderEvolucao();
+  const nomeTime = el('input', { id: 'nome-time', required: true, maxLength: 40, value: estado.usuario.displayName ? `Time do ${estado.usuario.displayName.split(' ')[0]}` : '' });
+  const form = el('form', {
+    class: 'formulario',
+    on: {
+      async submit(ev) {
+        ev.preventDefault();
+        form.querySelector('button').disabled = true;
+        try {
+          await estado.api.entrar({ ligaId, convite, usuario: estado.usuario, nomeTime: nomeTime.value.trim(), liga: st.liga });
+          history.replaceState(null, '', `#/liga/${ligaId}`);
+        } catch (e) {
+          erro(new Error('Não foi possível entrar. Confira se o link de convite está completo e se o draft ainda não começou.'));
+          form.querySelector('button').disabled = false;
+        }
+      },
     },
-  });
+  },
+  el('label', { for: 'nome-time', text: 'Nome do seu time' }), nomeTime,
+  el('button', { class: 'botao primario', type: 'submit', text: 'Entrar na liga', disabled: cheia }));
+
+  tela(el('div', { class: 'grade-inicio' },
+    cartao(`Entrar na ${st.liga.nome}`,
+      el('p', { text: `${st.times.length} de ${st.draft.config.times} times inscritos.` }),
+      cheia ? el('p', { class: 'erro-texto', text: 'A liga já está cheia. Fale com o organizador.' }) : form),
+    cartao('Regras do draft', resumoRegras(st.draft.config))));
 }
 
-// ---------- Salvamento ----------
+function telaSaguao(ligaId, st, { organizador }) {
+  const { liga, times, draft } = st;
+  const config = draft.config;
+  const uid = estado.usuario.uid;
+  const idsTimes = new Set(times.map((t) => t.id));
+  const ordemValida = draft.ordem.length === times.length && draft.ordem.every((id) => idsTimes.has(id));
+  const completos = times.length === config.times;
+  const api = estado.api;
 
-function agendarSalvamento() {
-  statusSalvamento('Alterações não salvas…');
-  estado.pendente = true;
-  clearTimeout(estado.timerSalvar);
-  estado.timerSalvar = setTimeout(salvarAgora, ESPERA_SALVAR);
-}
-
-async function salvarAgora() {
-  clearTimeout(estado.timerSalvar);
-  estado.pendente = false;
-  const store = estado.store;
-  const palpites = estado.palpites;
-  estado.salvando = estado.salvando.then(async () => {
-    statusSalvamento('Salvando…');
-    try {
-      await store.salvarPalpites(palpites);
-      await salvarProjecao(store);
-      if (store === estado.store) statusSalvamento(estado.usuario ? 'Salvo na nuvem ✓' : 'Salvo neste navegador ✓');
-    } catch (erro) {
-      console.error(erro);
-      statusSalvamento('Erro ao salvar', true);
-    }
-  });
-  return estado.salvando;
-}
-
-async function salvarProjecao(store) {
-  const rodada = rodadaAtual(estado.dados.jogos);
-  if (rodada == null) return;
-  const listaTimes = [...estado.times.values()];
-  const snapshot = montarSnapshot(listaTimes, estado.dados.jogos, estado.palpites, rodada);
-  await store.salvarProjecao(snapshot);
-  estado.projecoes = [...estado.projecoes.filter((p) => p.rodada !== rodada), snapshot]
-    .sort((a, b) => a.rodada - b.rodada);
-  if (!$('#aba-evolucao').hidden) renderEvolucao();
-}
-
-// Na primeira visita de uma rodada nova, guarda a projeção mesmo sem edições.
-async function garantirProjecaoDaRodada() {
-  const rodada = rodadaAtual(estado.dados.jogos);
-  const temPalpite = Object.values(estado.palpites).some(palpiteCompleto);
-  if (rodada == null || !temPalpite || estado.projecoes.some((p) => p.rodada === rodada)) return;
-  try {
-    await salvarProjecao(estado.store);
-  } catch (erro) {
-    console.error(erro);
-  }
-}
-
-async function carregarDoStore(store) {
-  const [palpites, projecoes] = await Promise.all([store.carregarPalpites(), store.carregarProjecoes()]);
-  return { palpites: filtrarPalpites(palpites, estado.dados.jogos), projecoes };
-}
-
-function renderTudo() {
-  renderJogos();
-  renderTabela();
-  selecao = null;
-  if (!$('#aba-evolucao').hidden) renderEvolucao();
-}
-
-// ---------- Login ----------
-
-async function aoMudarUsuario(usuario) {
-  await estado.salvando;
-  clearTimeout(estado.timerSalvar);
-  estado.usuario = usuario;
-  $('#btn-entrar').hidden = Boolean(usuario);
-  $('#usuario').hidden = !usuario;
-
-  if (!usuario) {
-    estado.store = estado.local;
-    Object.assign(estado, await carregarDoStore(estado.local));
-    statusSalvamento('');
-    renderTudo();
-    return;
-  }
-
-  $('#usuario-nome').textContent = usuario.displayName ?? usuario.email ?? '';
-  $('#usuario-foto').src = usuario.photoURL ?? '';
-  $('#usuario-foto').hidden = !usuario.photoURL;
-
-  const remoto = new FirebaseStore({
-    db: estado.firebase.db, fs: estado.firebase.fs, uid: usuario.uid, temporada: estado.dados.temporada,
-  });
-  try {
-    statusSalvamento('Carregando seus palpites…');
-    const [nuvem, local] = await Promise.all([carregarDoStore(remoto), carregarDoStore(estado.local)]);
-    const mesclados = filtrarPalpites(mesclarPalpites(nuvem.palpites, local.palpites), estado.dados.jogos);
-    estado.store = remoto;
-    estado.palpites = mesclados;
-    estado.projecoes = nuvem.projecoes;
-    renderTudo();
-    remoto.salvarPerfil({ nome: usuario.displayName, foto: usuario.photoURL }).catch(console.error);
-    if (JSON.stringify(mesclados) !== JSON.stringify(nuvem.palpites)) await salvarAgora();
-    else statusSalvamento('Sincronizado ✓');
-    await garantirProjecaoDaRodada();
-  } catch (erro) {
-    console.error(erro);
-    statusSalvamento('Erro ao carregar da nuvem', true);
-  }
-}
-
-async function prepararLogin() {
-  if (!firebaseConfig) return;
-  try {
-    estado.firebase = await iniciarFirebase(firebaseConfig);
-  } catch (erro) {
-    console.error(erro);
-    mostrarAviso('Não foi possível carregar o login. Seus palpites ficam salvos só neste navegador.');
-    return;
-  }
-  $('#btn-entrar').hidden = false;
-  $('#btn-entrar').addEventListener('click', async () => {
-    try {
-      await estado.firebase.entrar();
-    } catch (erro) {
-      if (erro?.code !== 'auth/popup-closed-by-user') {
-        console.error(erro);
-        statusSalvamento('Não foi possível entrar', true);
+  // --- Times ---
+  const ordenados = [...times].sort((a, b) => (a.entrouEm?.toMillis?.() ?? 0) - (b.entrouEm?.toMillis?.() ?? 0));
+  const listaTimes = el('ul', { class: 'lista-times' }, ordenados
+    .map((t) => {
+      const meu = t.id === uid;
+      const acoes = [];
+      if (organizador || meu) {
+        acoes.push(el('button', {
+          class: 'botao link', type: 'button', text: 'Renomear',
+          on: { click: () => { const n = prompt('Novo nome do time:', t.nome); if (n?.trim()) api.renomearTime(ligaId, t.id, n.trim().slice(0, 40)).catch(erro); } },
+        }));
       }
-    }
-  });
-  $('#btn-sair').addEventListener('click', () => estado.firebase.sair());
-  estado.firebase.aoMudarUsuario((u) => { aoMudarUsuario(u); });
+      if (organizador || meu) {
+        acoes.push(el('button', {
+          class: 'botao link', type: 'button', text: meu && !organizador ? 'Sair' : 'Remover',
+          on: { click: () => { if (confirm(`Remover "${t.nome}" da liga?`)) api.removerTime(ligaId, t.id).catch(erro); } },
+        }));
+      }
+      return el('li', { class: meu ? 'meu' : '' },
+        t.donoFoto ? el('img', { class: 'avatar', src: t.donoFoto, alt: '', width: 32, height: 32, referrerPolicy: 'no-referrer' }) : el('span', { class: 'avatar vazio', text: (t.nome[0] ?? '?').toUpperCase() }),
+        el('div', { class: 'time-info' },
+          el('strong', { text: t.nome }),
+          el('span', { class: 'mudo', text: t.reserva ? 'Vago · conduzido pelo organizador' : t.donoNome || '' })),
+        meu ? el('span', { class: 'tag', text: 'você' }) : null,
+        t.id === liga.organizadorUid ? el('span', { class: 'tag', text: 'organizador' }) : null,
+        el('span', { class: 'acoes-time' }, acoes));
+    }));
+
+  const cartaoTimes = cartao(`Times (${times.length}/${config.times})`, listaTimes,
+    organizador ? el('button', {
+      class: 'botao', type: 'button', text: 'Adicionar time vago', disabled: completos,
+      title: 'Para quem não vai entrar no app: o organizador escolhe por esse time',
+      on: { click: () => { const n = prompt('Nome do time vago:'); if (n?.trim()) api.criarTimeVago(ligaId, n.trim().slice(0, 40)).catch(erro); } },
+    }) : null);
+
+  // --- Convite ---
+  const link = `${location.origin}${location.pathname}${location.search}#/liga/${ligaId}?convite=${liga.convite}`;
+  const cartaoConvite = cartao('Convite',
+    el('p', { text: 'Mande este link para os técnicos. Cada um entra com a conta Google e dá nome ao time.' }),
+    el('div', { class: 'linha-convite' },
+      el('input', { readOnly: true, value: link, 'aria-label': 'Link de convite', on: { focus: (e) => e.target.select() } }),
+      el('button', { class: 'botao', type: 'button', text: 'Copiar', on: { click: () => copiar(link) } })));
+
+  // --- Ordem ---
+  const chaveOrdem = draft.ordem.join(',');
+  const revelar = ordemValida && estado.ordemVista !== '' && estado.ordemVista !== chaveOrdem;
+  estado.ordemVista = chaveOrdem || '-';
+  const nomes = new Map(times.map((t) => [t.id, t.nome]));
+  const listaOrdem = ordemValida
+    ? el('ol', { class: `ordem${revelar ? ' revelar' : ''}` }, draft.ordem.map((id, i) => {
+      const li = el('li', { class: id === uid ? 'meu' : '' }, el('span', { class: 'ordem-n', text: String(i + 1) }), el('span', { text: nomes.get(id) }));
+      li.style.setProperty('--i', String(i));
+      return li;
+    }))
+    : el('p', { class: 'mudo', text: completos ? 'Ordem ainda não sorteada.' : `Esperando os ${config.times} times entrarem para sortear a ordem.` });
+
+  const botoesOrg = organizador ? el('div', { class: 'acoes' },
+    el('button', {
+      class: 'botao', type: 'button', text: ordemValida ? 'Sortear de novo' : 'Sortear ordem', disabled: !completos,
+      on: { click: () => api.sortear(ligaId, sortearOrdem(times.map((t) => t.id))).catch(erro) },
+    }),
+    el('button', {
+      class: 'botao primario', type: 'button', text: 'Iniciar draft', disabled: !ordemValida || !estado.dados,
+      on: { click: () => { if (confirm('Iniciar o draft agora? O relógio começa a contar para o primeiro time.')) api.iniciar(ligaId, config).catch(erro); } },
+    })) : el('p', { class: 'mudo', text: ordemValida ? 'Aguardando o organizador iniciar o draft.' : 'Aguardando o organizador sortear a ordem.' });
+
+  const cartaoOrdem = cartao('Ordem do draft', listaOrdem, botoesOrg);
+
+  // --- Regras e configuração ---
+  const cartaoRegras = cartao('Regras', resumoRegras(config), organizador ? formConfig(ligaId, config) : null, infoDados());
+
+  tela(el('div', { class: 'saguao' }, el('div', { class: 'coluna' }, cartaoOrdem, cartaoTimes), el('div', { class: 'coluna' }, cartaoConvite, cartaoRegras)));
 }
 
-// ---------- Tema ----------
+function formConfig(ligaId, config) {
+  const selTimes = el('select', { id: 'cfg-times' }, Array.from({ length: 19 }, (_, i) => i + 2).map((n) => el('option', { value: n, text: `${n} times`, selected: n === config.times })));
+  const opcoesSeg = [...(MODO_TESTE ? [10] : []), 30, 45, 60, 90, 120, 180];
+  const selSeg = el('select', { id: 'cfg-seg' }, opcoesSeg.map((s) => el('option', { value: s, text: `${s} s por escolha`, selected: s === config.segundos })));
+  const salvar = (mudanca) => estado.api.salvarConfig(ligaId, { ...config, ...mudanca }).catch(erro);
+  selTimes.addEventListener('change', () => salvar({ times: Number(selTimes.value) }));
+  selSeg.addEventListener('change', () => salvar({ segundos: Number(selSeg.value) }));
+  return el('div', { class: 'config' },
+    el('h3', { class: 'subtitulo', text: 'Configuração (organizador)' }),
+    el('div', { class: 'linha-config' },
+      el('label', { for: 'cfg-times', text: 'Times' }), selTimes,
+      el('label', { for: 'cfg-seg', text: 'Relógio' }), selSeg),
+    MODO_TESTE ? el('button', {
+      class: 'botao pequeno', type: 'button', text: 'Usar configuração de teste (4 jogadores)',
+      on: { click: () => salvar({ jogadores: 4, maxPorClube: 2, minimos: { GOL: 1, LAT: 0, ZAG: 1, MEI: 0, ATA: 0 } }) },
+    }) : null,
+    el('p', { class: 'mudo nota', text: 'Mudar a configuração apaga a ordem sorteada.' }));
+}
 
-const CHAVE_TEMA = 'simulador:tema';
+function infoDados() {
+  const d = estado.dados;
+  if (!d) return el('p', { class: 'erro-texto', text: 'A lista de jogadores (data/atletas.json) ainda não foi baixada. Rode o workflow "Atualizar jogadores" no GitHub.' });
+  return el('p', { class: 'mudo nota', text: `Jogadores: Cartola ${d.temporada} · ${d.atletas.length} jogadores de ${d.clubes.length} clubes · atualizado em ${fmtData.format(new Date(d.atualizadoEm))}.` });
+}
 
-function temaSalvo() {
+// ---------- Conta ----------
+
+async function entrar() {
   try {
-    const t = localStorage.getItem(CHAVE_TEMA);
-    return t === 'claro' || t === 'escuro' ? t : null;
-  } catch {
-    return null;
+    await estado.fb.entrar();
+  } catch (e) {
+    if (e?.code !== 'auth/popup-closed-by-user') erro(new Error('Não foi possível entrar com o Google.'));
   }
 }
 
-function aplicarTema(tema) {
-  document.documentElement.dataset.tema = tema;
-  const botao = $('#btn-tema');
-  const proximo = tema === 'escuro' ? 'claro' : 'escuro';
-  botao.setAttribute('aria-label', `Usar tema ${proximo}`);
-  botao.title = `Usar tema ${proximo}`;
-}
-
-// O <head> já aplicou o tema inicial; aqui ficam o botão e o acompanhamento
-// do sistema enquanto a pessoa não escolheu um tema.
-function ligarTema() {
-  const sistema = window.matchMedia?.('(prefers-color-scheme: dark)');
-  aplicarTema(document.documentElement.dataset.tema === 'escuro' ? 'escuro' : 'claro');
-  $('#btn-tema').addEventListener('click', () => {
-    const novo = document.documentElement.dataset.tema === 'escuro' ? 'claro' : 'escuro';
-    aplicarTema(novo);
-    try {
-      localStorage.setItem(CHAVE_TEMA, novo);
-    } catch {
-      // sem storage: vale só nesta visita
-    }
-  });
-  sistema?.addEventListener('change', (ev) => {
-    if (!temaSalvo()) aplicarTema(ev.matches ? 'escuro' : 'claro');
-  });
+function atualizarConta() {
+  const u = estado.usuario;
+  $('#btn-entrar').hidden = Boolean(u) || !estado.fb;
+  $('#usuario').hidden = !u;
+  if (u) {
+    $('#usuario-nome').textContent = u.displayName ?? u.email ?? '';
+    $('#usuario-foto').src = u.photoURL ?? '';
+    $('#usuario-foto').hidden = !u.photoURL;
+  }
 }
 
 // ---------- Início ----------
 
-function trocarAba(aba) {
-  for (const botao of document.querySelectorAll('.abas [role="tab"]')) {
-    const ativa = botao.dataset.aba === aba;
-    botao.setAttribute('aria-selected', String(ativa));
-    $(`#aba-${botao.dataset.aba}`).hidden = !ativa;
+async function carregarDados() {
+  try {
+    const resp = await fetch('data/atletas.json', { cache: 'no-cache' });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const dados = await resp.json();
+    estado.dados = dados;
+    estado.clubes = new Map(dados.clubes.map((c) => [c.id, c]));
+    $('#fonte-dados').textContent = `Cartola FC ${dados.temporada}, atualizado em ${fmtData.format(new Date(dados.atualizadoEm))}`;
+  } catch (e) {
+    console.warn('Sem lista de jogadores:', e.message);
   }
-  if (aba === 'evolucao') renderEvolucao();
-}
-
-function ligarControles() {
-  for (const b of document.querySelectorAll('.segmentado [data-modo]')) {
-    b.addEventListener('click', () => {
-      if (visao.modo === b.dataset.modo) return;
-      visao.modo = b.dataset.modo;
-      gravarVisao();
-      aplicarVisao();
-      renderTabela();
-    });
-  }
-  const alternarTabela = (oculta) => {
-    visao.oculta = oculta;
-    gravarVisao();
-    aplicarVisao();
-    (oculta ? $('#mostrar-tabela') : $('#esconder-tabela')).focus();
-  };
-  $('#esconder-tabela').addEventListener('click', () => alternarTabela(true));
-  $('#mostrar-tabela').addEventListener('click', () => alternarTabela(false));
-  ligarSeletorRodada();
-  $('#rodada-ant').addEventListener('click', () => irParaRodada(estado.rodadaVisivel - 1));
-  $('#rodada-prox').addEventListener('click', () => irParaRodada(estado.rodadaVisivel + 1));
-  $('#limpar-rodada').addEventListener('click', () => {
-    limpar(estado.dados.jogos.filter((j) => j.rodada === estado.rodadaVisivel));
-  });
-  $('#limpar-todos').addEventListener('click', () => {
-    if (confirm('Apagar todos os palpites dos jogos que ainda não começaram?')) limpar(estado.dados.jogos);
-  });
-  for (const botao of document.querySelectorAll('.abas [role="tab"]')) {
-    botao.addEventListener('click', () => trocarAba(botao.dataset.aba));
-  }
-  let largura = window.innerWidth;
-  window.addEventListener('resize', () => {
-    if (window.innerWidth === largura) return;
-    largura = window.innerWidth;
-    if (!$('#aba-evolucao').hidden) renderEvolucao();
-  });
-  window.addEventListener('beforeunload', (ev) => {
-    if (!estado.pendente) return;
-    // O LocalStore grava de forma síncrona; a nuvem pode não dar tempo.
-    estado.store.salvarPalpites(estado.palpites);
-    if (estado.usuario) ev.preventDefault();
-  });
 }
 
 async function iniciar() {
   ligarTema();
-  try {
-    const resp = await fetch('data/brasileirao.json', { cache: 'no-cache' });
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    estado.dados = await resp.json();
-  } catch (erro) {
-    console.error(erro);
-    mostrarAviso('Não foi possível carregar os dados dos jogos (data/brasileirao.json).');
+  await carregarDados();
+  if (!firebaseConfig) {
+    telaSemFirebase();
     return;
   }
-
-  const { dados } = estado;
-  estado.times = new Map(dados.times.map((t) => [t.id, t]));
-  $('#temporada').textContent = dados.temporada;
-  $('#atualizado').textContent = `Dados atualizados em ${fmtAtualizado.format(new Date(dados.atualizadoEm))}`;
-  $('#fonte-dados').textContent = NOMES_FONTE[dados.fonte] ?? dados.fonte;
-  if (dados.fonte === 'exemplo') {
-    mostrarAviso('Dados de exemplo, com resultados fictícios. Os jogos reais chegam quando o workflow "Atualizar dados" rodar no GitHub (veja o README).');
+  try {
+    estado.fb = await iniciarFirebase(firebaseConfig);
+  } catch (e) {
+    console.error(e);
+    tela(cartao('Não foi possível carregar o Firebase', el('p', { text: 'Verifique a conexão e recarregue a página.' })));
+    return;
   }
-
-  estado.rodadaVisivel = rodadaAtual(dados.jogos) ?? totalRodadas();
-  estado.local = new LocalStore(dados.temporada);
-  estado.store = estado.local;
-  Object.assign(estado, await carregarDoStore(estado.local));
-
-  ligarControles();
-  lerVisao();
-  aplicarVisao();
-  renderLegendaZonas();
-  renderTudo();
-  await garantirProjecaoDaRodada();
-  await prepararLogin();
+  estado.api = criarApi(estado.fb);
+  $('#btn-entrar').addEventListener('click', entrar);
+  $('#btn-sair').addEventListener('click', () => estado.fb.sair());
+  window.addEventListener('hashchange', rotear);
+  estado.fb.aoMudarUsuario((u) => {
+    estado.usuario = u;
+    atualizarConta();
+    rotear();
+  });
+  rotear();
 }
 
 iniciar();

@@ -1,17 +1,21 @@
 {
-  "name": "simulador-brasileirao",
+  "name": "liga-draft-cartola",
   "version": "1.0.0",
   "private": true,
-  "description": "Simulador do Brasileirão Série A: palpite os jogos restantes e veja a tabela.",
+  "description": "Draft ao vivo de uma liga baseada no Cartola FC.",
   "type": "module",
   "scripts": {
     "dev": "npx --yes serve -l 3000 .",
-    "dados": "node scripts/atualizar-dados.mjs",
-    "exemplo": "node scripts/gerar-exemplo.mjs",
+    "atletas": "node scripts/atualizar-atletas.mjs",
     "test": "node --test \"tests/**/*.test.mjs\"",
-    "versionar": "node scripts/versionar.mjs"
+    "versionar": "node scripts/versionar.mjs",
+    "test:regras": "firebase emulators:exec --only firestore --project demo-liga \"node --test tests/regras/\""
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.2",
+    "firebase": "^12.19.0"
   }
 }

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Simulador do Brasileirão</title>
-  <meta name="description" content="Palpite os jogos restantes do Brasileirão Série A e veja a classificação se recalcular na hora.">
+  <title>Liga Draft Cartola</title>
+  <meta name="description" content="Draft ao vivo da liga de Cartola: ordem em serpentina, relógio por escolha e elencos de 23 jogadores.">
   <meta name="theme-color" content="#131428">
   <link rel="icon" type="image/png" href="img/favicon.png">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -20,8 +20,8 @@
     })();
   </script>
   <link rel="preload" href="fonts/barlow-condensed-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=151682fd38">
-  <script type="module" src="js/app.js?v=151682fd38"></script>
+  <link rel="stylesheet" href="css/style.css?v=daefe94a8f">
+  <script type="module" src="js/app.js?v=daefe94a8f"></script>
 </head>
 <body>
   <header class="faixa">
@@ -34,21 +34,20 @@
     </svg>
 
     <div class="topo">
-      <div class="marca">
-        <img class="emblema" src="img/brasileirao-emblema.png" alt="Brasileirão" width="66" height="64">
+      <a class="marca" href="#/">
+        <img class="emblema" src="img/brasileirao-emblema.png" alt="" width="66" height="64">
         <div>
-          <p class="sobretitulo">Simulador</p>
-          <h1>Brasileirão <span id="temporada"></span></h1>
-          <p id="atualizado" class="atualizado"></p>
+          <p class="sobretitulo">Liga Draft</p>
+          <h1 id="titulo-pagina">Cartola</h1>
+          <p id="subtitulo-pagina" class="atualizado"></p>
         </div>
-      </div>
+      </a>
       <div class="acoes-topo">
         <button id="btn-tema" class="botao tema" type="button" aria-label="Alternar tema claro ou escuro">
           <svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
           <svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
         </button>
         <div class="conta">
-          <span id="status-salvamento" class="status" aria-live="polite"></span>
           <button id="btn-entrar" class="botao primario" type="button" hidden>Entrar com Google</button>
           <div id="usuario" class="usuario" hidden>
             <img id="usuario-foto" alt="" referrerpolicy="no-referrer" width="30" height="30">
@@ -58,98 +57,21 @@
         </div>
       </div>
     </div>
-
-    <nav class="abas" role="tablist" aria-label="Seções">
-      <button id="tab-palpites" role="tab" type="button" aria-selected="true" aria-controls="aba-palpites" data-aba="palpites">Palpites</button>
-      <button id="tab-evolucao" role="tab" type="button" aria-selected="false" aria-controls="aba-evolucao" data-aba="evolucao">Evolução</button>
-    </nav>
   </header>
 
   <div id="aviso" class="aviso" role="status" hidden></div>
 
-  <main>
-    <section id="aba-palpites" class="painel grade" role="tabpanel" aria-labelledby="tab-palpites">
-      <div id="cartao-tabela" class="cartao cartao-tabela">
-        <div class="cabecalho-cartao">
-          <h2 id="titulo-tabela" class="titulo-cartao">Classificação com seus palpites</h2>
-          <div class="controles-tabela">
-            <div class="segmentado" role="radiogroup" aria-label="Dados da tabela">
-              <button type="button" role="radio" aria-checked="true" data-modo="completa">Completa</button>
-              <button type="button" role="radio" aria-checked="false" data-modo="simulados">Só simulados</button>
-            </div>
-            <button id="esconder-tabela" class="botao pequeno" type="button" aria-controls="cartao-tabela" aria-expanded="true">Esconder tabela</button>
-          </div>
-        </div>
-        <p id="tabela-vazia" class="vazio" hidden>Você ainda não palpitou nenhum jogo. Faça palpites ao lado para ver quem soma mais pontos só com eles.</p>
-        <div class="tabela-wrap">
-          <table id="tabela" class="tabela">
-            <thead>
-              <tr>
-                <th scope="col" class="num">#</th>
-                <th scope="col" class="esq">Time</th>
-                <th scope="col" class="num" title="Pontos">P</th>
-                <th scope="col" class="num" title="Jogos">J</th>
-                <th scope="col" class="num" title="Vitórias">V</th>
-                <th scope="col" class="num opc" title="Empates">E</th>
-                <th scope="col" class="num opc" title="Derrotas">D</th>
-                <th scope="col" class="num" title="Saldo de gols">SG</th>
-                <th scope="col" class="num opc" title="Gols pró">GP</th>
-                <th scope="col" class="num opc" title="Gols contra">GC</th>
-                <th scope="col" class="num opc" title="Aproveitamento">%</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <ul id="legenda-zonas" class="legenda-zonas"></ul>
-        <p id="nota-tabela" class="mudo nota">▲▼ mostra quantas posições o time ganha ou perde em relação à tabela real.</p>
-      </div>
-      <div class="cartao cartao-jogos">
-        <button id="mostrar-tabela" class="botao pequeno mostrar-tabela" type="button" aria-controls="cartao-tabela" aria-expanded="false" hidden>Mostrar tabela</button>
-        <div class="rodada-nav">
-          <button id="rodada-ant" class="botao icone" type="button" aria-label="Rodada anterior">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6 8.5 12l6 6"/></svg>
-          </button>
-          <div class="seletor-rodada">
-            <button id="rodada-botao" class="rodada-botao" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="rodada-painel">
-              <span id="rodada-titulo">Rodada</span>
-              <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
-            </button>
-            <div id="rodada-painel" class="rodada-painel" role="dialog" aria-label="Escolher rodada" hidden>
-              <div id="rodada-grade" class="rodada-grade"></div>
-              <ul class="rodada-legenda" aria-hidden="true">
-                <li><i class="marca-encerrada"></i>Encerrada</li>
-                <li><i class="marca-atual"></i>Rodada atual</li>
-              </ul>
-            </div>
-          </div>
-          <button id="rodada-prox" class="botao icone" type="button" aria-label="Próxima rodada">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6l6 6-6 6"/></svg>
-          </button>
-        </div>
-        <ul id="lista-jogos" class="jogos"></ul>
-        <p id="resumo-palpites" class="mudo resumo"></p>
-        <div class="acoes">
-          <button id="limpar-rodada" class="botao" type="button">Limpar palpites da rodada</button>
-          <button id="limpar-todos" class="botao" type="button">Limpar todos</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="aba-evolucao" class="painel" role="tabpanel" aria-labelledby="tab-evolucao" hidden>
-      <div class="cartao">
-        <h2 class="titulo-cartao">Evolução da sua projeção</h2>
-        <p class="mudo">Posição final que seus palpites previam para cada time, guardada a cada rodada.</p>
-        <div id="evolucao"></div>
-      </div>
-    </section>
+  <main id="app">
+    <p class="carregando">Carregando…</p>
   </main>
+
+  <div id="toast" class="toast" role="status" aria-live="assertive" hidden></div>
 
   <footer class="rodape">
     <div>
-      Simulador feito por torcedores, sem vínculo com a CBF ou com os clubes.
-      Brasileirão e seu logotipo são marcas da CBF.
-      Dados dos jogos: <span id="fonte-dados">—</span>. Escudos são marcas dos respectivos clubes.
+      Liga feita por amigos, sem vínculo com a Globo, o Cartola FC, a CBF ou os clubes.
+      Cartola FC é marca da Globo; Brasileirão e seu logotipo são marcas da CBF; escudos são marcas dos respectivos clubes.
+      Jogadores: <span id="fonte-dados">Cartola FC</span>.
     </div>
   </footer>
 </body>

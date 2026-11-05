@@ -1,40 +1,148 @@
 rules_version = '2';
 
-// Cada usuário só lê e grava os próprios dados em usuarios/{uid}/**.
+// Liga de draft do Cartola.
+// - Qualquer pessoa logada lê uma liga se souber o id (vem no link de convite).
+// - Só entra num time quem tem o código de convite, e cada pessoa tem um time.
+// - Configurar, sortear, iniciar, pausar e desfazer: só o organizador.
+// - Escolher: o dono do time da vez; qualquer participante depois do prazo
+//   (+3 s de folga), para a escolha automática; ou o organizador.
+// - Cada jogador só pode sair uma vez (documento em `ocupados`, nunca alterado).
 service cloud.firestore {
   match /databases/{database}/documents {
-    function dono(uid) {
-      return request.auth != null && request.auth.uid == uid;
+    function logado() {
+      return request.auth != null;
     }
 
-    function soCampos(campos) {
-      return request.resource.data.keys().hasOnly(campos);
+    function caminhoLiga(liga) {
+      return /databases/$(database)/documents/ligas/$(liga);
     }
 
-    match /usuarios/{uid} {
-      allow read, delete: if dono(uid);
-      allow create, update: if dono(uid)
-        && soCampos(['nome', 'foto', 'atualizadoEm'])
-        && request.resource.data.nome is string && request.resource.data.nome.size() <= 200
-        && request.resource.data.foto is string && request.resource.data.foto.size() <= 2000;
+    function liga(liga) {
+      return get(caminhoLiga(liga)).data;
+    }
 
-      match /temporadas/{temporada} {
-        allow read, delete: if dono(uid);
-        allow create, update: if dono(uid)
-          && soCampos(['palpites', 'atualizadoEm'])
-          && request.resource.data.palpites is map
-          && request.resource.data.palpites.size() <= 400
-          && request.resource.data.atualizadoEm is int;
+    function organizador(ligaId) {
+      return logado() && liga(ligaId).organizadorUid == request.auth.uid;
+    }
 
-        match /projecoes/{rodada} {
-          allow read, delete: if dono(uid);
-          allow create, update: if dono(uid)
-            && soCampos(['rodada', 'salvoEm', 'jogosPendentes', 'jogosPalpitados', 'classificacao'])
-            && request.resource.data.rodada is int
-            && string(request.resource.data.rodada) == rodada
-            && request.resource.data.rodada >= 1 && request.resource.data.rodada <= 38
-            && request.resource.data.classificacao is list
-            && request.resource.data.classificacao.size() <= 20;
+    function participante(ligaId) {
+      return logado() && exists(/databases/$(database)/documents/ligas/$(ligaId)/times/$(request.auth.uid));
+    }
+
+    function draftInicial(ligaId) {
+      return get(/databases/$(database)/documents/ligas/$(ligaId)/drafts/inicial).data;
+    }
+
+    // Time da vez pela serpentina: rodadas pares na ordem, ímpares invertidas.
+    function timeDaVez(d) {
+      let total = d.ordem.size();
+      let rodada = math.floor(d.n / total);
+      let pos = d.n % total;
+      return d.ordem[rodada % 2 == 0 ? pos : total - 1 - pos];
+    }
+
+    function prazoEstourado(d) {
+      return request.time > d.inicioEscolha + duration.value(d.prazoSegundos + 3, 's');
+    }
+
+    // Índice pessoal de ligas, para a tela inicial.
+    match /usuarios/{uid}/ligas/{ligaId} {
+      allow read, write: if logado() && request.auth.uid == uid;
+    }
+
+    match /ligas/{ligaId} {
+      allow get: if logado();
+      allow create: if logado()
+        && request.resource.data.organizadorUid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['nome', 'temporada', 'organizadorUid', 'convite', 'criadaEm'])
+        && request.resource.data.nome is string && request.resource.data.nome.size() <= 60
+        && request.resource.data.convite is string && request.resource.data.convite.size() >= 8;
+      allow update: if organizador(ligaId)
+        && request.resource.data.organizadorUid == resource.data.organizadorUid;
+      allow delete: if organizador(ligaId);
+
+      match /times/{timeId} {
+        allow read: if logado();
+        // A pessoa cria o próprio time (id = uid) com o convite, antes do draft começar.
+        allow create: if organizador(ligaId) || (
+          logado() && timeId == request.auth.uid
+          && request.resource.data.convite == liga(ligaId).convite
+          && draftInicial(ligaId).status == 'preparando'
+          && request.resource.data.keys().hasOnly(['nome', 'donoNome', 'donoFoto', 'convite', 'entrouEm'])
+          && request.resource.data.nome is string && request.resource.data.nome.size() <= 40
+        );
+        allow update: if organizador(ligaId) || (
+          logado() && timeId == request.auth.uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['nome', 'donoNome', 'donoFoto'])
+          && request.resource.data.nome is string && request.resource.data.nome.size() <= 40
+        );
+        allow delete: if organizador(ligaId)
+          || (logado() && timeId == request.auth.uid && draftInicial(ligaId).status == 'preparando');
+      }
+
+      // Fila de preferências: privada.
+      match /filas/{uid} {
+        allow read, write: if logado() && request.auth.uid == uid;
+      }
+
+      match /drafts/{draftId} {
+        allow read: if logado();
+        allow create, delete: if organizador(ligaId);
+        // Organizador: tudo. Participante: só avança a vez junto com uma escolha.
+        allow update: if organizador(ligaId) || (
+          participante(ligaId)
+          && resource.data.status == 'andamento'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['n', 'inicioEscolha', 'prazoSegundos', 'status'])
+          && request.resource.data.n == resource.data.n + 1
+          && request.resource.data.inicioEscolha == request.time
+          && request.resource.data.prazoSegundos == resource.data.config.segundos
+          && existsAfter(/databases/$(database)/documents/ligas/$(ligaId)/drafts/$(draftId)/escolhas/$(string(resource.data.n)))
+          && (
+            (request.resource.data.status == 'andamento'
+              && request.resource.data.n < resource.data.ordem.size() * resource.data.config.jogadores)
+            || (request.resource.data.status == 'encerrado'
+              && request.resource.data.n == resource.data.ordem.size() * resource.data.config.jogadores)
+          )
+        );
+
+        function draft() {
+          return get(/databases/$(database)/documents/ligas/$(ligaId)/drafts/$(draftId)).data;
+        }
+
+        function draftDepois() {
+          return getAfter(/databases/$(database)/documents/ligas/$(ligaId)/drafts/$(draftId)).data;
+        }
+
+        match /escolhas/{escolhaId} {
+          allow read: if logado();
+          allow create: if logado()
+            && draft().status == 'andamento'
+            && escolhaId == string(draft().n)
+            && request.resource.data.n == draft().n
+            && request.resource.data.timeId == timeDaVez(draft())
+            && request.resource.data.atletaId is int
+            && request.resource.data.keys().hasOnly(['n', 'rodada', 'timeId', 'atletaId', 'apelido', 'clubeId', 'posicao', 'automatica', 'porUid', 'em'])
+            && request.resource.data.porUid == request.auth.uid
+            && request.resource.data.em == request.time
+            && draftDepois().n == draft().n + 1
+            && existsAfter(/databases/$(database)/documents/ligas/$(ligaId)/drafts/$(draftId)/ocupados/$(string(request.resource.data.atletaId)))
+            && (
+              organizador(ligaId)
+              || timeDaVez(draft()) == request.auth.uid
+              || (participante(ligaId) && prazoEstourado(draft()))
+            );
+          // Desfazer ou corrigir: só o organizador.
+          allow update, delete: if organizador(ligaId);
+        }
+
+        match /ocupados/{atletaId} {
+          allow read: if logado();
+          // Só nasce junto com a escolha da vez; nunca é sobrescrito.
+          allow create: if logado()
+            && request.resource.data.keys().hasOnly(['n'])
+            && request.resource.data.n == draft().n
+            && string(getAfter(/databases/$(database)/documents/ligas/$(ligaId)/drafts/$(draftId)/escolhas/$(string(draft().n))).data.atletaId) == atletaId;
+          allow delete: if organizador(ligaId);
         }
       }
     }

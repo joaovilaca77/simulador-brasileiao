@@ -1,178 +1,106 @@
-# Simulador do Brasileirão
+# Liga Draft Cartola
 
-Site estático para palpitar os jogos restantes do Brasileirão Série A e ver a classificação se recalcular na hora. Com login Google (Firebase), cada pessoa guarda os próprios palpites na nuvem, e a **tabela final projetada** de cada rodada fica registrada para acompanhar como a sua previsão mudou ao longo do campeonato.
+Site para fazer, ao vivo, o **draft da liga de Cartola**. Cada técnico escolhe na sua vez os jogadores do Cartola FC que vão formar o elenco da temporada.
 
-- **Palpites:** digite o placar dos jogos que ainda não começaram. A tabela mostra cores de zona e setas ▲▼ comparando com a tabela real.
-- **Visões da tabela:** "Completa" mostra a classificação com resultados reais e palpites; "Só simulados" soma apenas os jogos palpitados. "Esconder tabela" deixa só os jogos da rodada, em duas colunas.
-- **Trava:** o palpite de um jogo fica bloqueado quando a bola rola.
-- **Evolução:** gráfico com a posição projetada de até 4 times por rodada, mais a tabela completa.
-- **Sem login:** funciona no modo visitante, com os palpites guardados só no navegador. Ao entrar com Google, eles são mesclados com os da nuvem.
+Esta é a **etapa 1 (o draft)**. A liga em si fica para a etapa 2: confrontos, pontuação e mercado.
 
-HTML, CSS e JavaScript puros, sem build e sem dependências.
+## Regras da liga
 
-## Rodar localmente
+- **20 times**, cada um com **23 jogadores**, no máximo **4 do mesmo clube**. Não há técnico.
+- **Composição mínima:** 2 GOL, 4 LAT, 4 ZAG, 4 MEI e 4 ATA (18 vagas). As outras **5 vagas são livres**.
+- **Duelos em pontos corridos**, turno e returno: 3 pontos pela vitória, 1 pelo empate e 0 pela derrota. A soma dos pontos do Cartola é o critério de desempate. A cada rodada, cada time escala 11 dos seus 23. *(etapa 2)*
+- **Mercado de transferências** aberto durante todo o campeonato e **segundo draft no returno**, só com os jogadores não escolhidos. *(etapa 2)*
 
-Os módulos ES não funcionam abrindo o arquivo direto (`file://`). Sirva a pasta:
+## Como funciona o draft
 
-```bash
-npm run dev            # npx serve na porta 3000
-# ou: python3 -m http.server 3000
-```
+1. **Criar a liga:** o organizador entra com a conta Google, escolhe o nome e a temporada e diz se também vai ter um time.
+2. **Convidar:** o organizador manda o link de convite. Cada técnico abre o link, entra com Google e dá nome ao time. Quem não for usar o app pode virar um **time vago**, e o organizador escolhe por ele.
+3. **Sortear:** com os 20 times inscritos, o organizador sorteia a ordem. Todos veem o sorteio ao mesmo tempo.
+4. **Iniciar:** a ordem é em **serpentina** (1→20 na 1ª rodada, 20→1 na 2ª…), num total de 460 escolhas.
+5. **Na sua vez:**
+   - **relógio de 90 s** (ajustável de 30 a 180 s);
+   - o app só deixa escolher quem cabe no elenco e explica o motivo quando não cabe (limite de clube, vagas que precisam ficar para os mínimos);
+   - cada escolha pede confirmação (dois cliques).
+6. **Fila:** marque jogadores com ☆ e ordene-os. Se o seu tempo acabar, sai o primeiro da fila que couber; sem fila, o de maior média, desempatando pelo preço. Se o dono da vez estiver offline, outro participante faz a escolha automática 3 s depois do prazo.
+7. **Organizador:** pausa e retoma, desfaz a última escolha e pode escolher pelos outros times.
+8. **Fim:** o app mostra o elenco de cada time e o organizador baixa a planilha (CSV com `;`, que abre direto no Excel).
 
-Depois, abra http://localhost:3000.
+## Jogadores (Cartola FC)
 
-Testes (Node 20+): `npm test`.
+`data/atletas.json` e os escudos em `img/escudos/` são gerados por `scripts/atualizar-atletas.mjs`, que lê a API pública do Cartola (`api.cartola.globo.com`):
+- os técnicos ficam de fora;
+- o script só grava se vierem os 20 clubes e pelo menos 400 jogadores.
 
-Depois de mudar o CSS ou algum arquivo em `js/`, rode `npm run versionar` antes do commit. O script carimba os endereços com `?v=<código>`, para o navegador não misturar arquivos novos com antigos do cache. O `npm test` avisa se faltar o carimbo.
+**Atualização automática:** o workflow **Atualizar jogadores** roda todo dia e também sob demanda (aba **Actions** → *Atualizar jogadores* → *Run workflow*). Ele commita a lista nova e o GitHub Pages republica o site.
 
-## Como atualizar os dados
+> **Próxima temporada:** o Cartola só abre a temporada nova perto do início do Brasileirão (normalmente entre janeiro e fevereiro). Até lá a lista é a da temporada atual, e o site mostra um aviso quando a temporada da liga é diferente. Faça o draft depois que o Cartola abrir o mercado da nova temporada, para ter os elencos e os clubes certos.
 
-Os jogos ficam em `data/brasileirao.json` e os escudos em `img/escudos/`. Quem gera esses arquivos é `scripts/atualizar-dados.mjs`. O site nunca chama as APIs direto, porque elas não liberam acesso de outros domínios (CORS).
+Durante o draft, cada escolha guarda um retrato do jogador (nome, posição e clube). Uma atualização da lista no meio do draft não muda o que já foi escolhido.
 
-### 1. Pelo GitHub (recomendado)
+Também dá para rodar no seu computador (Node 20+): `npm run atletas`.
 
-O workflow **Atualizar dados** roda sozinho a cada 3 horas na branch padrão. Para rodar agora:
+## Configurar o Firebase (uma vez, pelo organizador)
 
-1. Abra a aba **Actions** do repositório.
-2. Clique em **Atualizar dados** → **Run workflow** → **Run workflow**.
-3. Em cerca de 1 minuto, o bot faz um commit com os dados novos e o GitHub Pages republica o site.
+O login e a sincronização ao vivo usam o Firebase. O plano gratuito (Spark) basta.
 
-Opções do *Run workflow*: fonte (`auto`, `sofascore` ou `football-data`), ano da temporada e "baixar de novo todos os escudos".
+1. Em https://console.firebase.google.com, crie um projeto.
+2. **Authentication** → *Método de login* → ative **Google**.
+3. **Authentication** → *Configurações* → *Domínios autorizados* → adicione `joaovilaca77.github.io`.
+4. **Firestore Database** → *Criar banco de dados* (modo produção; região `southamerica-east1`, se quiser).
+5. **Firestore** → aba **Regras** → cole o conteúdo de [`firestore.rules`](firestore.rules) e publique. Faça isso de novo sempre que esse arquivo mudar.
+6. **Configurações do projeto** → *Seus apps* → **App da Web** → copie o `firebaseConfig` para [`js/firebase-config.js`](js/firebase-config.js).
 
-### 2. Se o Sofascore bloquear o GitHub: football-data.org
-
-O Sofascore às vezes recusa servidores (HTTP 403 no log do workflow). Nesse caso, use o [football-data.org](https://www.football-data.org), uma API oficial com plano gratuito que inclui a Série A:
-
-1. Crie uma conta grátis em https://www.football-data.org/client/register. A chave chega por e-mail.
-2. No GitHub: **Settings** → **Secrets and variables** → **Actions** → **New repository secret**, com o nome `FOOTBALL_DATA_TOKEN` e a chave como valor.
-3. Rode o workflow de novo.
-
-Enquanto o site ainda estiver com os dados de exemplo, o modo `auto` tenta o Sofascore e, se falhar, o football-data. Depois da primeira coleta, ele **continua na mesma fonte**. Para trocar de fonte, escolha-a no *Run workflow* ou crie a variável de repositório `FONTE_DADOS` (*Settings* → *Secrets and variables* → *Actions* → aba *Variables*) com `sofascore` ou `football-data`.
-
-> Trocar de fonte muda os IDs dos jogos: os palpites já feitos deixam de corresponder aos jogos. Prefira escolher a fonte antes de começar a palpitar.
-
-### 3. No seu computador
-
-Com Node 20 ou mais recente:
-
-```bash
-npm run dados                                   # fonte automática
-node scripts/atualizar-dados.mjs --fonte sofascore --temporada 2026
-FOOTBALL_DATA_TOKEN=sua-chave node scripts/atualizar-dados.mjs --fonte football-data
-git add data img && git commit -m "Atualiza dados" && git push
-```
-
-O script só grava se vierem os 380 jogos e se algo tiver mudado. Se a coleta falhar, o arquivo anterior fica intacto. Escudos que já existem não são baixados de novo (use `--escudos` para forçar), e um escudo que falhar é trocado pelas cores do time.
-
-O repositório vem com **dados de exemplo** (resultados fictícios, `"fonte": "exemplo"`), e o site mostra um aviso enquanto eles estiverem ativos. Para regerar o exemplo: `npm run exemplo`.
-
-## Configurar o Firebase
-
-1. Em https://console.firebase.google.com, crie um projeto (o plano gratuito Spark basta).
-2. **Authentication** → *Primeiros passos* → *Método de login* → ative **Google**.
-3. **Authentication** → *Configurações* → *Domínios autorizados* → adicione o domínio do site, por exemplo `seu-usuario.github.io`. `localhost` já vem liberado.
-4. **Firestore Database** → *Criar banco de dados* (modo produção, região `southamerica-east1`, se quiser).
-5. **Firestore** → aba *Regras* → cole o conteúdo de [`firestore.rules`](firestore.rules) e publique. Alternativa pela CLI: `npx firebase-tools deploy --only firestore:rules --project SEU_PROJETO`.
-6. **Configurações do projeto** → *Seus apps* → adicione um **App da Web** e copie o objeto `firebaseConfig` para [`js/firebase-config.js`](js/firebase-config.js).
-
-Esses valores não são segredo: quem protege os dados são as regras, que só deixam cada usuário ler e gravar em `usuarios/{seu uid}/**`.
+Os valores do `firebaseConfig` não são segredo. A proteção está nas regras:
+- só o dono da vez escolhe;
+- outro participante só escolhe depois do prazo;
+- cada jogador só pode ser escolhido uma vez;
+- a fila é privada;
+- só o organizador configura, sorteia, pausa e desfaz.
 
 ### Estrutura no Firestore
 
 ```
-usuarios/{uid}                                            { nome, foto, atualizadoEm }
-usuarios/{uid}/temporadas/{ano}                           { palpites: { [jogoId]: { m, v, salvoEm } }, atualizadoEm }
-usuarios/{uid}/temporadas/{ano}/projecoes/{rodada}        { rodada, salvoEm, jogosPendentes, jogosPalpitados, classificacao }
+ligas/{liga}                         nome, temporada, organizador, convite
+ligas/{liga}/times/{uid}             time de cada técnico (ou time vago)
+ligas/{liga}/filas/{uid}             fila de preferências (privada)
+ligas/{liga}/drafts/inicial          ordem, vez atual, relógio, configuração
+ligas/{liga}/drafts/inicial/escolhas/{n}
+ligas/{liga}/drafts/inicial/ocupados/{atleta}
+usuarios/{uid}/ligas/{liga}          lista "Minhas ligas"
 ```
 
-A "rodada atual" é a primeira com jogos pendentes. A projeção dela é regravada a cada palpite. Quando a rodada vira, a anterior congela e passa a fazer parte do histórico.
+O draft do returno vai usar `drafts/returno`, com a mesma estrutura.
 
-### Testar com os emuladores
+## Desenvolvimento
 
 ```bash
-npx firebase-tools emulators:start --project demo-simulador --only auth,firestore
+npm run dev            # serve o site em http://localhost:3000
+npm test               # regras do draft, coleta do Cartola e carimbo de versão
+npm run test:regras    # regras do Firestore no emulador (precisa de npm install e Java)
 ```
 
-Abra o site com `?emulador=1` (por exemplo, http://localhost:3000/?emulador=1) e preencha `js/firebase-config.js` com qualquer `projectId` começando por `demo-`.
+- **Emuladores:** `npx firebase-tools emulators:start --project demo-liga --only auth,firestore`. Depois abra o site com `?emulador=1`. Nesse modo o organizador tem um botão de configuração de teste (4 jogadores, relógio de 10 s).
+- **Carimbo de versão:** depois de mudar o CSS ou algum arquivo em `js/`, rode `npm run versionar` antes do commit. O script carimba os endereços com `?v=<código>`, para o navegador não misturar arquivos novos com antigos do cache.
 
-## Publicar no GitHub Pages
-
-*Settings* → *Pages* → *Deploy from a branch* → a branch padrão do repositório, pasta `/ (root)`. O site fica em `https://seu-usuario.github.io/simulador-brasileiao/`. Lembre de autorizar esse domínio no Firebase (passo 3).
-
-## Regras da classificação
-
-- **Desempate:** pontos → vitórias → saldo de gols → gols pró → confronto direto (quando só dois times estão empatados) → ordem alfabética, no lugar de cartões e sorteio.
-- **Zonas:** ficam em `ZONAS`, em [`js/tabela.js`](js/tabela.js), e o padrão é 1–4 Libertadores, 5–6 pré-Libertadores, 7–12 Sul-Americana e 17–20 rebaixamento. As vagas reais mudam conforme os campeões das copas; ajuste ali se precisar.
-
-## Identidade visual
-
-O site usa o logotipo e as cores do Brasileirão:
-- **logo:** o arquivo completo está em `img/brasileirao.png`; o cabeçalho usa só o emblema (`img/brasileirao-emblema.png`), e o favicon e o ícone do celular saem dele (`img/favicon.png`, `img/apple-touch-icon.png`);
-- **cores:** verde-limão `#c7ff00` e grafite `#131428`, definidas como variáveis no topo de `css/style.css`;
-- **fontes:** Barlow e Barlow Condensed, hospedadas em `fonts/` (licença SIL OFL, em `fonts/OFL.txt`).
-
-O verde-limão só aparece sobre o grafite ou como fundo de botões com texto grafite: sobre branco ele não tem contraste. As cores das séries do gráfico seguem uma paleta validada para daltonismo; se mudar a ordem, valide de novo.
-
-O site tem tema claro e escuro: o botão no cabeçalho alterna entre os dois e a escolha fica salva no navegador; sem escolha, vale o tema do sistema.
-
-Para trocar o logo, substitua os arquivos em `img/` mantendo os nomes.
-
-> "Brasileirão" e o seu logotipo são marcas da CBF. Este é um projeto de torcedores, sem vínculo oficial, e o rodapé do site diz isso.
-
-## Estrutura no Firestore
+### Estrutura
 
 ```
-usuarios/{uid}                                            { nome, foto, atualizadoEm }
-usuarios/{uid}/temporadas/{ano}                           { palpites: { [jogoId]: { m, v, salvoEm } }, atualizadoEm }
-usuarios/{uid}/temporadas/{ano}/projecoes/{rodada}        { rodada, salvoEm, jogosPendentes, jogosPalpitados, classificacao }
-```
-
-A "rodada atual" é a primeira com jogos pendentes. A projeção dela é regravada a cada palpite. Quando a rodada vira, a anterior congela e passa a fazer parte do histórico.
-
-### Testar com os emuladores
-
-```bash
-npx firebase-tools emulators:start --project demo-simulador --only auth,firestore
-```
-
-Abra o site com `?emulador=1` (por exemplo, http://localhost:3000/?emulador=1) e preencha `js/firebase-config.js` com qualquer `projectId` começando por `demo-`.
-
-## Publicar no GitHub Pages
-
-*Settings* → *Pages* → *Deploy from a branch* → a branch padrão do repositório, pasta `/ (root)`. O site fica em `https://seu-usuario.github.io/simulador-brasileiao/`. Lembre de autorizar esse domínio no Firebase (passo 3).
-
-## Regras da classificação
-
-- **Desempate:** pontos → vitórias → saldo de gols → gols pró → confronto direto (quando só dois times estão empatados) → ordem alfabética, no lugar de cartões e sorteio.
-- **Zonas:** ficam em `ZONAS`, em [`js/tabela.js`](js/tabela.js), e o padrão é 1–4 Libertadores, 5–6 pré-Libertadores, 7–12 Sul-Americana e 17–20 rebaixamento. As vagas reais mudam conforme os campeões das copas; ajuste ali se precisar.
-
-## Identidade visual
-
-O visual é inspirado nas transmissões do Brasileirão:
-- azul-marinho, verde e amarelo;
-- fontes **Barlow** e **Barlow Condensed**, hospedadas em `fonts/` (licença SIL OFL, em `fonts/OFL.txt`);
-- ícone de troféu próprio.
-
-O site **não usa o logotipo oficial**, que é marca registrada da CBF e do patrocinador. As cores ficam como variáveis no topo de `css/style.css`. As cores das séries do gráfico seguem uma paleta validada para daltonismo; se mudar a ordem, valide de novo.
-
-## Estrutura
-
-```
-index.html, css/style.css, fonts/, img/ (logo)
-js/tabela.js          classificação, desempate, zonas, trava (funções puras)
-js/projecao.js        rodada atual, snapshot da projeção, mesclagem de palpites
-js/armazenamento.js   LocalStore (navegador) e FirebaseStore (Firestore)
+index.html, css/style.css, fonts/, img/
+js/draft.js           regras do draft (serpentina, validação, escolha automática, CSV)
+js/liga.js            Firestore: ligas, times, escolhas, fila, ações do organizador
+js/sala.js            sala do draft (relógio, jogadores, elenco, fila, quadro)
+js/app.js             rotas, início, convite e saguão
+js/ui.js              utilitários de interface e tema claro/escuro
 js/firebase.js        carrega o SDK do Firebase pelo CDN
-js/evolucao.js        gráfico e tabela da aba Evolução
-js/app.js             interface
-scripts/              coleta de dados e gerador do exemplo
-scripts/fontes/       Sofascore e football-data.org
-img/escudos/          escudos baixados pelo workflow
-tests/                testes com node:test
+scripts/              coleta do Cartola e carimbo de versão
+tests/                testes (node:test) e regras do Firestore (tests/regras)
 ```
 
-## Limitações e próximos passos
+## Identidade visual
 
-- A trava dos palpites é aplicada no site. Como ainda não há pontuação nem ranking, as regras do Firestore não conferem o horário dos jogos. Para validar no servidor, seria preciso espelhar os horários em uma coleção `jogos` (gravada pelo workflow com uma conta de serviço) e comparar com `request.time` nas regras.
-- A API do Sofascore não é oficial: os campos ou o acesso podem mudar sem aviso. O football-data.org é a alternativa estável.
-- Escudos são marcas dos respectivos clubes.
+O site usa o emblema e as cores do Brasileirão:
+- verde-limão `#c7ff00` e grafite `#131428`;
+- fontes Barlow e Barlow Condensed (SIL OFL, em `fonts/`);
+- tema claro e escuro.
+
+> Projeto de amigos, sem vínculo com a Globo, o Cartola FC, a CBF ou os clubes. Cartola FC é marca da Globo; Brasileirão e seu logotipo são marcas da CBF; os escudos são marcas dos respectivos clubes.

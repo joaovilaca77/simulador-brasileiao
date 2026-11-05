@@ -1,0 +1,50 @@
+name: Atualizar jogadores
+
+on:
+  schedule:
+    - cron: '23 9 * * *'   # todo dia, 6h23 em Brasília
+  workflow_dispatch:
+    inputs:
+      escudos:
+        description: 'Baixar de novo todos os escudos'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: atualizar-atletas
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Baixar jogadores do Cartola
+        env:
+          ESCUDOS: ${{ inputs.escudos }}
+        run: |
+          if [ "$ESCUDOS" = "true" ]; then
+            node scripts/atualizar-atletas.mjs --escudos
+          else
+            node scripts/atualizar-atletas.mjs
+          fi
+
+      - name: Commitar se mudou
+        run: |
+          if [ -z "$(git status --porcelain -- data img)" ]; then
+            echo "Sem mudanças."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data img
+          git commit -m "Atualiza jogadores do Cartola"
+          git push
