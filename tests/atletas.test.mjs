@@ -42,6 +42,14 @@ test('normalizarClube usa nome fantasia, sigla e escudo 60x60', () => {
     { id: 262, nome: 'Flamengo', sigla: 'FLA', imagemUrl: 'g' });
 });
 
+test('normalizarClube não usa a sigla como nome', () => {
+  // A API às vezes manda só a abreviação no nome.
+  assert.equal(normalizarClube({ id: 1, nome: 'SAN', abreviacao: 'SAN' }).nome, 'Santos');
+  assert.equal(normalizarClube({ id: 2, nome: 'CAP', abreviacao: 'CAP', apelido: 'Athletico-PR' }).nome, 'Athletico-PR');
+  assert.equal(normalizarClube({ id: 3, nome: 'XYZ', abreviacao: 'XYZ' }).nome, 'XYZ');
+  assert.equal(normalizarClube({ id: 4, nome: 'SAO', abreviacao: 'SAO', nome_fantasia: 'SAO' }).nome, 'São Paulo');
+});
+
 test('montarDados filtra clubes sem jogadores, ordena e valida o tamanho', () => {
   const dados = montarDados({ status: { temporada: 2027, rodada_atual: 1 }, mercado: mercadoFalso() }, new Date('2027-02-01T00:00:00Z'));
   assert.equal(dados.temporada, '2027');

@@ -46,12 +46,26 @@ export function normalizarAtleta(a) {
   };
 }
 
+// Nomes pela sigla, para quando a API manda só a abreviação no nome.
+const NOMES_POR_SIGLA = {
+  ACG: 'Atlético-GO', AME: 'América-MG', AMG: 'América-MG', AVA: 'Avaí', BAH: 'Bahia', BOT: 'Botafogo',
+  CAM: 'Atlético-MG', CAP: 'Athletico-PR', CEA: 'Ceará', CFC: 'Coritiba', CHA: 'Chapecoense', COR: 'Corinthians',
+  CRB: 'CRB', CRI: 'Criciúma', CRU: 'Cruzeiro', CUI: 'Cuiabá', FLA: 'Flamengo', FLU: 'Fluminense',
+  FOR: 'Fortaleza', GOI: 'Goiás', GRE: 'Grêmio', INT: 'Internacional', JUV: 'Juventude', MIR: 'Mirassol',
+  NOV: 'Novorizontino', PAL: 'Palmeiras', PAY: 'Paysandu', RBB: 'Bragantino', REM: 'Remo', SAN: 'Santos',
+  SAO: 'São Paulo', SPO: 'Sport', SPT: 'Sport', VAS: 'Vasco', VIT: 'Vitória',
+};
+
+const pareceSigla = (s) => typeof s === 'string' && /^[A-Z0-9]{2,4}$/.test(s.trim());
+
 export function normalizarClube(c) {
   const escudos = c.escudos ?? {};
+  const sigla = (c.abreviacao || c.nome || '').toUpperCase().slice(0, 4);
+  const candidatos = [c.nome_fantasia, c.apelido, c.nome].filter((v) => v && !pareceSigla(v));
   return {
     id: c.id,
-    nome: c.nome_fantasia || c.nome,
-    sigla: (c.abreviacao || c.nome.slice(0, 3)).toUpperCase(),
+    nome: candidatos[0] || NOMES_POR_SIGLA[sigla] || c.nome || sigla,
+    sigla,
     imagemUrl: escudos['60x60'] || escudos['45x45'] || escudos['30x30'] || null,
   };
 }
@@ -91,7 +105,10 @@ async function principal() {
     // primeira execução
   }
 
-  const dados = montarDados(await coletar());
+  const bruto = await coletar();
+  // Registro de um clube como a API manda, para conferir os campos no log.
+  console.log('Exemplo de clube da API:', JSON.stringify(Object.values(bruto.mercado.clubes ?? {})[0] ?? null));
+  const dados = montarDados(bruto);
   console.log(`Cartola ${dados.temporada}: ${dados.clubes.length} clubes, ${dados.atletas.length} jogadores.`);
 
   await baixarEscudos(dados.clubes, {
