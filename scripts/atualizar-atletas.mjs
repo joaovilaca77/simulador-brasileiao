@@ -46,7 +46,9 @@ export function normalizarAtleta(a) {
   };
 }
 
-// Nomes pela sigla, para quando a API manda só a abreviação no nome.
+// A API do Cartola não traz o nome do clube: `nome` e `nome_fantasia` vêm com
+// a sigla ("FLA") e `apelido` é o apelido ("Mengão"). O nome sai desta tabela
+// e, para um clube que não esteja nela, do `slug` ("atletico-go" → "Atletico-GO").
 const NOMES_POR_SIGLA = {
   ACG: 'Atlético-GO', AME: 'América-MG', AMG: 'América-MG', AVA: 'Avaí', BAH: 'Bahia', BOT: 'Botafogo',
   CAM: 'Atlético-MG', CAP: 'Athletico-PR', CEA: 'Ceará', CFC: 'Coritiba', CHA: 'Chapecoense', COR: 'Corinthians',
@@ -56,15 +58,17 @@ const NOMES_POR_SIGLA = {
   SAO: 'São Paulo', SPO: 'Sport', SPT: 'Sport', VAS: 'Vasco', VIT: 'Vitória',
 };
 
-const pareceSigla = (s) => typeof s === 'string' && /^[A-Z0-9]{2,4}$/.test(s.trim());
+function nomePeloSlug(slug) {
+  if (!slug) return null;
+  return slug.split('-').map((p) => (p.length <= 2 ? p.toUpperCase() : p[0].toUpperCase() + p.slice(1))).join('-');
+}
 
 export function normalizarClube(c) {
   const escudos = c.escudos ?? {};
   const sigla = (c.abreviacao || c.nome || '').toUpperCase().slice(0, 4);
-  const candidatos = [c.nome_fantasia, c.apelido, c.nome].filter((v) => v && !pareceSigla(v));
   return {
     id: c.id,
-    nome: candidatos[0] || NOMES_POR_SIGLA[sigla] || c.nome || sigla,
+    nome: NOMES_POR_SIGLA[sigla] || nomePeloSlug(c.slug) || c.nome || sigla,
     sigla,
     imagemUrl: escudos['60x60'] || escudos['45x45'] || escudos['30x30'] || null,
   };
@@ -105,10 +109,7 @@ async function principal() {
     // primeira execução
   }
 
-  const bruto = await coletar();
-  // Registro de um clube como a API manda, para conferir os campos no log.
-  console.log('Exemplo de clube da API:', JSON.stringify(Object.values(bruto.mercado.clubes ?? {})[0] ?? null));
-  const dados = montarDados(bruto);
+  const dados = montarDados(await coletar());
   console.log(`Cartola ${dados.temporada}: ${dados.clubes.length} clubes, ${dados.atletas.length} jogadores.`);
 
   await baixarEscudos(dados.clubes, {

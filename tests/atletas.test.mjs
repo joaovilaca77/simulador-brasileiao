@@ -37,17 +37,15 @@ test('normalizarAtleta converte posição, status e foto; descarta técnicos', (
   assert.equal(normalizarAtleta({ ...base, posicao_id: 5, status_id: 99 }).status, 'nulo');
 });
 
-test('normalizarClube usa nome fantasia, sigla e escudo 60x60', () => {
-  assert.deepEqual(normalizarClube({ id: 262, nome: 'Flamengo', abreviacao: 'fla', nome_fantasia: 'Flamengo', escudos: { '30x30': 'p', '60x60': 'g' } }),
-    { id: 262, nome: 'Flamengo', sigla: 'FLA', imagemUrl: 'g' });
-});
-
-test('normalizarClube não usa a sigla como nome', () => {
-  // A API às vezes manda só a abreviação no nome.
-  assert.equal(normalizarClube({ id: 1, nome: 'SAN', abreviacao: 'SAN' }).nome, 'Santos');
-  assert.equal(normalizarClube({ id: 2, nome: 'CAP', abreviacao: 'CAP', apelido: 'Athletico-PR' }).nome, 'Athletico-PR');
-  assert.equal(normalizarClube({ id: 3, nome: 'XYZ', abreviacao: 'XYZ' }).nome, 'XYZ');
-  assert.equal(normalizarClube({ id: 4, nome: 'SAO', abreviacao: 'SAO', nome_fantasia: 'SAO' }).nome, 'São Paulo');
+test('normalizarClube tira o nome da sigla, não do apelido', () => {
+  // Formato real da API: nome e nome_fantasia trazem a sigla; apelido é o apelido da torcida.
+  const fla = { id: 262, nome: 'FLA', abreviacao: 'FLA', slug: 'flamengo', apelido: 'Mengão', nome_fantasia: 'FLA', escudos: { '30x30': 'p', '60x60': 'g' } };
+  assert.deepEqual(normalizarClube(fla), { id: 262, nome: 'Flamengo', sigla: 'FLA', imagemUrl: 'g' });
+  assert.equal(normalizarClube({ id: 1, nome: 'SAO', abreviacao: 'SAO', apelido: 'Tricolor', slug: 'sao-paulo' }).nome, 'São Paulo');
+  assert.equal(normalizarClube({ id: 2, nome: 'FLU', abreviacao: 'FLU', apelido: 'Tricolor', slug: 'fluminense' }).nome, 'Fluminense');
+  // clube fora da tabela: usa o slug
+  assert.equal(normalizarClube({ id: 3, nome: 'XYZ', abreviacao: 'XYZ', slug: 'novo-clube-sc' }).nome, 'Novo-Clube-SC');
+  assert.equal(normalizarClube({ id: 4, nome: 'ABC', abreviacao: 'ABC' }).nome, 'ABC');
 });
 
 test('montarDados filtra clubes sem jogadores, ordena e valida o tamanho', () => {
