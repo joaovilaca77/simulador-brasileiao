@@ -2,61 +2,85 @@
  "fonte": "cartola",
  "temporada": "2026",
  "rodadaAtual": 34,
- "atualizadoEm": "2026-11-05T12:14:17.850Z",
+ "atualizadoEm": "2026-11-05T12:16:04.770Z",
  "clubes": [
   {
-   "id": 285,
-   "nome": "Colorado",
-   "sigla": "INT",
-   "escudo": "img/escudos/285.png"
-  },
-  {
-   "id": 294,
-   "nome": "Coxa",
-   "sigla": "CFC",
-   "escudo": "img/escudos/294.png"
-  },
-  {
    "id": 293,
-   "nome": "Furacão",
+   "nome": "Athletico-PR",
    "sigla": "CAP",
    "escudo": "img/escudos/293.png"
   },
   {
    "id": 282,
-   "nome": "Galo",
+   "nome": "Atlético-MG",
    "sigla": "CAM",
    "escudo": "img/escudos/282.png"
   },
   {
-   "id": 267,
-   "nome": "Gigante da Colina",
-   "sigla": "VAS",
-   "escudo": "img/escudos/267.png"
+   "id": 265,
+   "nome": "Bahia",
+   "sigla": "BAH",
+   "escudo": "img/escudos/265.png"
   },
   {
    "id": 263,
-   "nome": "Glorioso",
+   "nome": "Botafogo",
    "sigla": "BOT",
    "escudo": "img/escudos/263.png"
   },
   {
-   "id": 284,
-   "nome": "Imortal",
-   "sigla": "GRE",
-   "escudo": "img/escudos/284.png"
-  },
-  {
    "id": 280,
-   "nome": "Massa Bruta",
+   "nome": "Bragantino",
    "sigla": "RBB",
    "escudo": "img/escudos/280.png"
   },
   {
+   "id": 315,
+   "nome": "Chapecoense",
+   "sigla": "CHA",
+   "escudo": "img/escudos/315.png"
+  },
+  {
+   "id": 264,
+   "nome": "Corinthians",
+   "sigla": "COR",
+   "escudo": "img/escudos/264.png"
+  },
+  {
+   "id": 294,
+   "nome": "Coritiba",
+   "sigla": "CFC",
+   "escudo": "img/escudos/294.png"
+  },
+  {
+   "id": 283,
+   "nome": "Cruzeiro",
+   "sigla": "CRU",
+   "escudo": "img/escudos/283.png"
+  },
+  {
    "id": 262,
-   "nome": "Mengão",
+   "nome": "Flamengo",
    "sigla": "FLA",
    "escudo": "img/escudos/262.png"
+  },
+  {
+   "id": 266,
+   "nome": "Fluminense",
+   "sigla": "FLU",
+   "escudo": "img/escudos/266.png"
+  },
+  {
+   "id": 284,
+   "nome": "Grêmio",
+   "sigla": "GRE",
+   "escudo": "img/escudos/284.png"
+  },
+  {
+   "id": 285,
+   "nome": "Internacional",
+   "sigla": "INT",
+   "escudo": "img/escudos/285.png"
   },
   {
    "id": 2305,
@@ -65,16 +89,10 @@
    "escudo": "img/escudos/2305.png"
   },
   {
-   "id": 277,
-   "nome": "Peixe",
-   "sigla": "SAN",
-   "escudo": "img/escudos/277.png"
-  },
-  {
-   "id": 283,
-   "nome": "Raposa",
-   "sigla": "CRU",
-   "escudo": "img/escudos/283.png"
+   "id": 275,
+   "nome": "Palmeiras",
+   "sigla": "PAL",
+   "escudo": "img/escudos/275.png"
   },
   {
    "id": 364,
@@ -83,40 +101,22 @@
    "escudo": "img/escudos/364.png"
   },
   {
-   "id": 264,
-   "nome": "Timão",
-   "sigla": "COR",
-   "escudo": "img/escudos/264.png"
-  },
-  {
-   "id": 266,
-   "nome": "Tricolor",
-   "sigla": "FLU",
-   "escudo": "img/escudos/266.png"
+   "id": 277,
+   "nome": "Santos",
+   "sigla": "SAN",
+   "escudo": "img/escudos/277.png"
   },
   {
    "id": 276,
-   "nome": "Tricolor",
+   "nome": "São Paulo",
    "sigla": "SAO",
    "escudo": "img/escudos/276.png"
   },
   {
-   "id": 265,
-   "nome": "Tricolor de Aço",
-   "sigla": "BAH",
-   "escudo": "img/escudos/265.png"
-  },
-  {
-   "id": 275,
-   "nome": "Verdão",
-   "sigla": "PAL",
-   "escudo": "img/escudos/275.png"
-  },
-  {
-   "id": 315,
-   "nome": "Verdão do Oeste",
-   "sigla": "CHA",
-   "escudo": "img/escudos/315.png"
+   "id": 267,
+   "nome": "Vasco",
+   "sigla": "VAS",
+   "escudo": "img/escudos/267.png"
   },
   {
    "id": 287,
