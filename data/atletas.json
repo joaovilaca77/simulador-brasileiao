@@ -2,7 +2,7 @@
  "fonte": "cartola",
  "temporada": "2026",
  "rodadaAtual": 35,
- "atualizadoEm": "2026-11-08T16:03:59.761Z",
+ "atualizadoEm": "2026-11-09T19:54:48.552Z",
  "clubes": [
   {
    "id": 293,
@@ -1128,7 +1128,7 @@
    "nome": "Keny Alexander Arroyo Alvarado",
    "clubeId": 283,
    "posicao": "ATA",
-   "status": "provavel",
+   "status": "duvida",
    "preco": 8.44,
    "media": 5.04,
    "jogos": 28,
@@ -5172,7 +5172,7 @@
    "nome": "Matheus Henrique de Souza",
    "clubeId": 283,
    "posicao": "MEI",
-   "status": "nulo",
+   "status": "duvida",
    "preco": 4.72,
    "media": 2.06,
    "jogos": 30,
@@ -7579,18 +7579,6 @@
    "foto": "https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/clubes_2026/silhuetas/FLA/140x140.png"
   },
   {
-   "id": 122755,
-   "apelido": "Lucas Cunha",
-   "nome": "Lucas de Souza Cunha",
-   "clubeId": 280,
-   "posicao": "ZAG",
-   "status": "nulo",
-   "preco": 3,
-   "media": 0,
-   "jogos": 0,
-   "foto": "https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/clubes_2026/silhuetas/RBB/140x140.png"
-  },
-  {
    "id": 130282,
    "apelido": "Anthony",
    "nome": "Anthony Wesley Ciriano Oliveira",
@@ -7853,18 +7841,6 @@
    "media": 0,
    "jogos": 0,
    "foto": "https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/clubes_2026/silhuetas/VIT/140x140.png"
-  },
-  {
-   "id": 143455,
-   "apelido": "PH Gama",
-   "nome": "Darilson Gama Amador",
-   "clubeId": 364,
-   "posicao": "MEI",
-   "status": "nulo",
-   "preco": 2,
-   "media": 0,
-   "jogos": 0,
-   "foto": "https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/clubes_2026/silhuetas/REM/140x140.png"
   },
   {
    "id": 144424,
@@ -9175,18 +9151,6 @@
    "foto": "https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/clubes_2026/silhuetas/SAN/140x140.png"
   },
   {
-   "id": 83048,
-   "apelido": "Rafael Thyere",
-   "nome": "Rafael Thyere de Albuquerque Marques",
-   "clubeId": 315,
-   "posicao": "ZAG",
-   "status": "nulo",
-   "preco": 1.98,
-   "media": -0.06,
-   "jogos": 5,
-   "foto": "https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/clubes_2026/silhuetas/CHA/140x140.png"
-  },
-  {
    "id": 146623,
    "apelido": "Luis Pacheco",
    "nome": "Luis Felipe Pacheco da Costa",
@@ -9225,7 +9189,7 @@
   {
    "id": 85035,
    "apelido": "Sanabria",
-   "nome": "Arnaldo Antonio Sanabria Ayala",
+   "nome": "Arnaldo Antonio Sanabria Ayala - Tonny",
    "clubeId": 285,
    "posicao": "ATA",
    "status": "contundido",
