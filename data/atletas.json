@@ -2,7 +2,7 @@
  "fonte": "cartola",
  "temporada": "2026",
  "rodadaAtual": 35,
- "atualizadoEm": "2026-11-09T19:54:48.552Z",
+ "atualizadoEm": "2026-11-10T17:08:26.992Z",
  "clubes": [
   {
    "id": 293,
@@ -1104,7 +1104,7 @@
    "nome": "Fernando dos Santos Pedro",
    "clubeId": 280,
    "posicao": "ATA",
-   "status": "contundido",
+   "status": "nulo",
    "preco": 6.04,
    "media": 5.07,
    "jogos": 18,
@@ -3432,7 +3432,7 @@
    "nome": "Bruno Santos de Oliveira",
    "clubeId": 2305,
    "posicao": "ATA",
-   "status": "nulo",
+   "status": "suspenso",
    "preco": 4.13,
    "media": 3.26,
    "jogos": 13,
@@ -4152,7 +4152,7 @@
    "nome": "Danilo Luiz da Silva",
    "clubeId": 262,
    "posicao": "ZAG",
-   "status": "contundido",
+   "status": "nulo",
    "preco": 6,
    "media": 2.78,
    "jogos": 11,
@@ -6727,18 +6727,6 @@
    "foto": "https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/clubes_2026/silhuetas/CFC/140x140.png"
   },
   {
-   "id": 112939,
-   "apelido": "Catarozzi",
-   "nome": "Franco Catarozzi Parafita",
-   "clubeId": 364,
-   "posicao": "MEI",
-   "status": "nulo",
-   "preco": 5.41,
-   "media": 0.9,
-   "jogos": 1,
-   "foto": "https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/clubes_2026/silhuetas/REM/140x140.png"
-  },
-  {
    "id": 110633,
    "apelido": "Gustavo",
    "nome": "Gustavo Silva de Oliveira",
@@ -7495,18 +7483,6 @@
    "foto": "https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/clubes_2026/silhuetas/MIR/140x140.png"
   },
   {
-   "id": 97645,
-   "apelido": "Thiago Couto",
-   "nome": "Thiago Couto Wenceslau",
-   "clubeId": 287,
-   "posicao": "GOL",
-   "status": "nulo",
-   "preco": 3,
-   "media": 0,
-   "jogos": 0,
-   "foto": "https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/clubes_2026/silhuetas/VIT/140x140.png"
-  },
-  {
    "id": 101478,
    "apelido": "Marcelo Pitaluga",
    "nome": "Marcelo de Araújo Pitaluga Filho",
@@ -7637,18 +7613,6 @@
    "media": 0,
    "jogos": 0,
    "foto": "https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/clubes_2026/silhuetas/PAL/140x140.png"
-  },
-  {
-   "id": 145782,
-   "apelido": "Tassano",
-   "nome": "Cristian Marcelo González Tassano",
-   "clubeId": 364,
-   "posicao": "ZAG",
-   "status": "nulo",
-   "preco": 3,
-   "media": 0,
-   "jogos": 0,
-   "foto": "https://s3.glbimg.com/v1/AUTH_58d78b787ec34892b5aaa0c7a146155f/clubes_2026/silhuetas/REM/140x140.png"
   },
   {
    "id": 102137,
